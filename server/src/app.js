@@ -6,7 +6,7 @@ import cors from 'cors';
 import * as OAV from 'express-openapi-validator';
 
 import { handleErrors } from './commons/middlewares/handle-errors';
-import router from './router';
+import router from './routes/scanr';
 
 const apiSpec = 'src/openapi/api.yml';
 const apiDocument = YAML.load(apiSpec);

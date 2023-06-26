@@ -1,0 +1,789 @@
+<!doctype html>
+<html lang="fr" data-fr-theme>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Icônes Health - Design System</title>
+    <meta name="theme-color" content="#000091"><!-- Défini la couleur de thème du navigateur (Safari/Android) -->
+    <link rel="apple-touch-icon" href="../../../../dist/favicon/apple-touch-icon.png"><!-- 180×180 -->
+    <link rel="icon" href="../../../../dist/favicon/favicon.svg" type="image/svg+xml">
+    <!-- si favicon.ico peut etre placé à la racine du serveur, retirer la ligne ci-dessous -->
+    <link rel="shortcut icon" href="../../../../dist/favicon/favicon.ico" type="image/x-icon"><!-- 32×32 -->
+    <link rel="manifest" href="../../../../dist/favicon/manifest.webmanifest" crossorigin="use-credentials">
+    <!-- Modifier les chemins relatifs des favicons en fonction de la structure du projet -->
+    <!-- Dans le fichier manifest.webmanifest aussi, modifier les chemins vers les images -->
+    <link href="../../../../dist/core/core.main.css" rel="stylesheet" file="main">
+    <link href="../../../../dist/scheme/scheme.css" rel="stylesheet" file="main">
+    <link href="../../../../dist/component/link/link.main.css" rel="stylesheet" file="main">
+    <link href="../../../../dist/component/accordion/accordion.main.css" rel="stylesheet" file="main">
+    <link href="../../../../dist/component/form/form.main.css" rel="stylesheet" file="main">
+    <link href="../../../../dist/component/button/button.main.css" rel="stylesheet" file="main">
+    <link href="../../../../dist/component/radio/radio.main.css" rel="stylesheet" file="main">
+    <link href="../../../../dist/component/modal/modal.main.css" rel="stylesheet" file="main">
+    <link href="../../../../dist/utility/utility.main.css" rel="stylesheet" file="main">
+    <link href="../../../../dist/core/core.legacy.css" rel="stylesheet" file="legacy">
+    <link href="../../../../dist/component/link/link.legacy.css" rel="stylesheet" file="legacy">
+    <link href="../../../../dist/component/accordion/accordion.legacy.css" rel="stylesheet" file="legacy">
+    <link href="../../../../dist/component/form/form.legacy.css" rel="stylesheet" file="legacy">
+    <link href="../../../../dist/component/button/button.legacy.css" rel="stylesheet" file="legacy">
+    <link href="../../../../dist/component/radio/radio.legacy.css" rel="stylesheet" file="legacy">
+    <link href="../../../../dist/component/modal/modal.legacy.css" rel="stylesheet" file="legacy">
+    <link href="../../../../dist/utility/utility.legacy.css" rel="stylesheet" file="legacy">
+    <style>
+        code[class*="language-"],
+        pre[class*="language-"] {
+            white-space: pre-wrap;
+        }
+
+        .example-controls {
+            z-index: 100000;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1), 0 8px 16px -16px rgba(0, 0, 0, 0.32);
+        }
+
+        .example-controls>button {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        .example-controls__content {
+            padding: 16px;
+            background-color: var(--background-elevated-white);
+        }
+
+        .example-controls .fr-collapse--expanded~[aria-expanded] {
+            display: none;
+        }
+
+        .example-controls .fr-collapse:not(.fr-collapse--expanded)~button:not([aria-expanded]) {
+            display: none;
+        }
+
+        .example-controls [class*="-form-group"] {
+            margin-bottom: 0;
+        }
+
+        .fr-display-button {
+            position: fixed;
+            bottom: 3.5rem;
+            right: 2rem;
+        }
+
+        @media screen and (-ms-high-contrast: active),
+        (-ms-high-contrast: none) {
+
+            /* IE10+ specific styles go here */
+            .example-controls {
+                display: none;
+            }
+        }
+
+    </style>
+    <script>
+        window['dsfr'] = {
+            verbose: false,
+            //mode: 'manual'
+        }
+
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/themes/prism.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" />
+</head>
+
+<body id="top" class="fr-mb-12w">
+    <div class="fr-container fr-mt-2v fr-mb-8w">
+        <a class="fr-link fr-icon-arrow-left-line fr-link--icon-left" href="../">Retour</a>
+        <h1>Icônes Health (icons-health)</h1>
+        <p>Les icônes fonctionnelles sont des symboles visuels qui accompagnent l’utilisateur dans ses actions et qui aident à sa compréhension de l’interface.</p>
+        <a href="https://gouvfr.atlassian.net/wiki/spaces/DB/pages/222331396/Ic+nes+-+Icons#Health" target="_blank">Documentation</a>
+    </div>
+    <div class="fr-mb-12w">
+        <div class="fr-container">
+            <div class="fr-grid-row fr-grid-row--center">
+                <div class="fr-col-md-8 fr-col-12">
+                    <h4>capsule-fill [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-capsule-fill " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1573">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1573">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-capsule-fill" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>capsule-line [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-capsule-line " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1574">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1574">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-capsule-line" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>dislike-fill [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-dislike-fill " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1575">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1575">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-dislike-fill" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>dislike-line [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-dislike-line " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1576">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1576">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-dislike-line" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>dossier-fill [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-dossier-fill " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1577">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1577">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-dossier-fill" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>dossier-line [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-dossier-line " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1578">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1578">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-dossier-line" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>first-aid-kit-fill [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-first-aid-kit-fill " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1579">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1579">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-first-aid-kit-fill" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>first-aid-kit-line [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-first-aid-kit-line " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1580">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1580">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-first-aid-kit-line" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>hand-sanitizer-fill [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-hand-sanitizer-fill " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1581">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1581">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-hand-sanitizer-fill" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>hand-sanitizer-line [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-hand-sanitizer-line " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1582">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1582">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-hand-sanitizer-line" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>health-book-fill [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-health-book-fill " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1583">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1583">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-health-book-fill" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>health-book-line [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-health-book-line " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1584">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1584">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-health-book-line" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>heart-fill [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-heart-fill " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1585">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1585">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-heart-fill" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>heart-line [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-heart-line " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1586">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1586">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-heart-line" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>heart-pulse-fill [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-heart-pulse-fill " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1587">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1587">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-heart-pulse-fill" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>heart-pulse-line [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-heart-pulse-line " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1588">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1588">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-heart-pulse-line" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>lungs-fill [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-lungs-fill " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1589">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1589">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-lungs-fill" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>lungs-line [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-lungs-line " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1590">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1590">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-lungs-line" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>medicine-bottle-fill [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-medicine-bottle-fill " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1591">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1591">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-medicine-bottle-fill" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>medicine-bottle-line [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-medicine-bottle-line " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1592">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1592">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-medicine-bottle-line" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>mental-health-fill [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-mental-health-fill " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1593">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1593">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-mental-health-fill" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>mental-health-line [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-mental-health-line " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1594">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1594">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-mental-health-line" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>microscope-fill [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-microscope-fill " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1595">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1595">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-microscope-fill" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>microscope-line [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-microscope-line " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1596">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1596">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-microscope-line" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>psychotherapy-fill [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-psychotherapy-fill " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1597">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1597">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-psychotherapy-fill" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>psychotherapy-line [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-psychotherapy-line " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1598">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1598">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-psychotherapy-line" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>pulse-line [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-pulse-line " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1599">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1599">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-pulse-line" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>stethoscope-fill [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-stethoscope-fill " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1600">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1600">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-stethoscope-fill" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>stethoscope-line [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-stethoscope-line " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1601">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1601">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-stethoscope-line" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>surgical-mask-fill [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-surgical-mask-fill " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1602">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1602">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-surgical-mask-fill" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>surgical-mask-line [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-surgical-mask-line " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1603">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1603">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-surgical-mask-line" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>syringe-fill [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-syringe-fill " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1604">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1604">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-syringe-fill" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>syringe-line [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-syringe-line " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1605">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1605">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-syringe-line" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>test-tube-fill [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-test-tube-fill " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1606">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1606">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-test-tube-fill" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>test-tube-line [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-test-tube-line " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1607">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1607">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-test-tube-line" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>thermometer-fill [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-thermometer-fill " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1608">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1608">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-thermometer-fill" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>thermometer-line [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-thermometer-line " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1609">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1609">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-thermometer-line" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>virus-fill [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-virus-fill " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1610">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1610">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-virus-fill" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                    <h4>virus-line [remix]</h4>
+                    <div class="fr-mb-6v">
+                        <span class="fr-icon-virus-line " aria-hidden="true"></span>
+                    </div>
+                    <div class="fr-mb-12v">
+                        <section class="fr-accordion">
+                            <h3 class="fr-accordion__title">
+                                <button class="fr-accordion__btn" aria-expanded="false" aria-controls="snippet-1611">Extrait de code</button>
+                            </h3>
+                            <div class="fr-collapse" id="snippet-1611">
+                                <pre class=" language-html"><code>&lt;span class="fr-icon-virus-line" aria-hidden="true"&gt;&lt;/span&gt;
+</code></pre>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="fr-display-button fr-background-default--grey fr-btn fr-btn--lg fr-icon-theme-fill fr-btn--secondary" aria-controls="fr-theme-modal" data-fr-opened="false" style="z-index: 1600">
+        Label bouton
+    </button>
+    <dialog id="fr-theme-modal" class="fr-modal" role="dialog" aria-labelledby="fr-theme-modal-title">
+        <div class="fr-container fr-container--fluid fr-container-md">
+            <div class="fr-grid-row fr-grid-row--center">
+                <div class="fr-col-12 fr-col-md-6 fr-col-lg-4">
+                    <div class="fr-modal__body">
+                        <div class="fr-modal__header">
+                            <button class="fr-btn--close fr-btn" aria-controls="fr-theme-modal" title="Fermer">
+                                Fermer
+                            </button>
+                        </div>
+                        <div class="fr-modal__content">
+                            <h1 id="fr-theme-modal-title" class="fr-modal__title">
+                                Paramètres d’affichage
+                            </h1>
+                            <div id="fr-display" class="fr-display">
+                                <div class="fr-form-group">
+                                    <fieldset class="fr-fieldset">
+                                        <legend class="fr-fieldset__legend fr-text--regular" id='-legend'>
+                                            Choisissez un thème pour personnaliser l’apparence du site.
+                                        </legend>
+                                        <div class="fr-fieldset__content">
+                                            <div class="fr-radio-group fr-radio-rich">
+                                                <input value="light" type="radio" id="fr-radios-theme-light" name="fr-radios-theme">
+                                                <label class="fr-label" for="fr-radios-theme-light">
+                                                    Thème clair
+                                                </label>
+                                                <div class="fr-radio-rich__img">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="fr-artwork" width="80px" height="80px" viewBox="0 0 80 80">
+                                                        <use class="fr-artwork-decorative" xlink:href="../../../../dist/artwork/light.svg#artwork-decorative"></use>
+                                                        <use class="fr-artwork-minor" xlink:href="../../../../dist/artwork/light.svg#artwork-minor"></use>
+                                                        <use class="fr-artwork-major" xlink:href="../../../../dist/artwork/light.svg#artwork-major"></use>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <div class="fr-radio-group fr-radio-rich">
+                                                <input value="dark" type="radio" id="fr-radios-theme-dark" name="fr-radios-theme">
+                                                <label class="fr-label" for="fr-radios-theme-dark">
+                                                    Thème sombre
+                                                </label>
+                                                <div class="fr-radio-rich__img">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="fr-artwork" width="80px" height="80px" viewBox="0 0 80 80">
+                                                        <use class="fr-artwork-decorative" xlink:href="../../../../dist/artwork/dark.svg#artwork-decorative"></use>
+                                                        <use class="fr-artwork-minor" xlink:href="../../../../dist/artwork/dark.svg#artwork-minor"></use>
+                                                        <use class="fr-artwork-major" xlink:href="../../../../dist/artwork/dark.svg#artwork-major"></use>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <div class="fr-radio-group fr-radio-rich">
+                                                <input value="system" type="radio" id="fr-radios-theme-system" name="fr-radios-theme">
+                                                <label class="fr-label" for="fr-radios-theme-system">
+                                                    Système
+                                                    <span class="fr-hint-text">Utilise les paramètres système.</span>
+                                                </label>
+                                                <div class="fr-radio-rich__img">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="fr-artwork" width="80px" height="80px" viewBox="0 0 80 80">
+                                                        <use class="fr-artwork-decorative" xlink:href="../../../../dist/artwork/system.svg#artwork-decorative"></use>
+                                                        <use class="fr-artwork-minor" xlink:href="../../../../dist/artwork/system.svg#artwork-minor"></use>
+                                                        <use class="fr-artwork-major" xlink:href="../../../../dist/artwork/system.svg#artwork-major"></use>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </dialog>
+    <script type="module" src="../../../../dist/core/core.module.js"></script>
+    <script type="module" src="../../../../dist/scheme/scheme.module.js"></script>
+    <script type="module" src="../../../../dist/component/accordion/accordion.module.js"></script>
+    <script type="module" src="../../../../dist/component/modal/modal.module.js"></script>
+    <script type="module" src="../../../../dist/component/display/display.module.js"></script>
+    <script type="text/javascript" nomodule src="../../../../dist/legacy/legacy.nomodule.js"></script>
+    <script type="text/javascript" nomodule src="../../../../dist/core/core.nomodule.js"></script>
+    <script type="text/javascript" nomodule src="../../../../dist/component/accordion/accordion.nomodule.js"></script>
+    <script type="text/javascript" nomodule src="../../../../dist/component/modal/modal.nomodule.js"></script>
+    <script type="text/javascript" nomodule src="../../../../dist/component/display/display.nomodule.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/plugins/toolbar/prism-toolbar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+</body>
+
+</html>

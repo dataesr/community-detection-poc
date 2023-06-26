@@ -8,7 +8,8 @@
     "server"
   ],
   "dependencies": {
-    "concurrently": "^8.0.1"
+    "concurrently": "^8.0.1",
+    "graphology": "^0.25.1"
   },
   "scripts": {
     "server": "npm -w server run dev",

@@ -1,0 +1,14 @@
+<%
+const connect = locals.connect || {}
+const data = {
+  ...connect,
+  login: getText('default.login', 'connect'),
+  brand: connect.brand || getText('default.brand', 'connect'),
+  link: connect.link || {
+    label: getText('default.link', 'connect'),
+    href: getText('default.href', 'connect')
+  },
+}
+
+%>
+<%- include('../../template/ejs/connect.ejs', {connect: data}) %>
