@@ -1,5 +1,6 @@
 import express from 'express';
 import { scanrToGraphology } from './scanr-to-graphology';
+import { makeQuery } from './make-query';
 import config from '../../config';
 
 const router = new express.Router();
@@ -7,9 +8,17 @@ const router = new express.Router();
 router.route('/scanr')
   .get(async (req, res) => {
     const query = 'athlete';
-    const data = await fetch(`${config.scanr.apiUrl}?q=${query}&size=10000`, { method: 'POST', headers: { Authorization: config.scanr.apiToken } })
+    const body = makeQuery(query);
+    const data = await fetch(
+      `${config.scanr.apiUrl}`,
+      {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: { Authorization: config.scanr.apiToken, 'Content-Type': 'application/json' }
+      }
+    )
       .then((response) => response.json())
-      .then(({ hits }) => hits?.hits?.map(({ _source }) => _source));
+      .then(({ hits }) => hits?.hits?.map(({ _source }) => _source))
     const graph = scanrToGraphology(data);
     res.json(graph);
   });

@@ -10,7 +10,7 @@ const MIN_NUMBER_OF_NEIGHBORS = 4;
 export function scanrToGraphology(scanrData) {
   const graph = new graphology.UndirectedGraph();
 
-  const scanrDataWithoutTooManyAuthors = scanrData.filter(({ authors = [] }) => authors.length <= MAX_NUMBER_OF_AUTHORS);
+  const scanrDataWithoutTooManyAuthors = scanrData.filter(({ authors = [] }) => authors.length < MAX_NUMBER_OF_AUTHORS);
 
   const nodes = scanrDataWithoutTooManyAuthors.flatMap(({ authors }) => {
     if (!authors) return [];
@@ -39,7 +39,6 @@ export function scanrToGraphology(scanrData) {
   circular.assign(graph);
   const settings = forceAtlas2.inferSettings(graph);
   forceAtlas2.assign(graph, { settings, iterations: 600 });
-  console.log(graph.getEdgeAttributes(graph.edges()[0]));
-  console.log(graph.order);
+  console.log('NODES', graph.order);
   return graph;
 }
