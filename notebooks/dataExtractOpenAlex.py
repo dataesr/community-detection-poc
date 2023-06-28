@@ -77,15 +77,19 @@ for page in range(2, nb_page + 1):
 data = pd.DataFrame(data=authors)
 
 co = {"source": [], "target": []}
+co_liste = []
 data["id_doi"] = data["title"] + data["doi"].astype(str)
 for auth in set(data["id"]):
     pub = list(data.loc[data["id"]==auth, "id_doi"])
     coa = list(data.loc[data["id_doi"].isin(pub), "id"])
     for item in coa:
         if item != auth:
-            if not auth in co["target"] and not item in co["source"]:
-                co["source"].append(auth)
-                co["target"].append(item)
+            liste = [auth, item]
+            liste.sort()
+            if not liste in co_liste:
+                co_liste.append(liste)
+                co["source"].append(liste[0])
+                co["target"].append(liste[1])
 
 coauth = pd.DataFrame(data=co)
 coauth = coauth.drop_duplicates()
@@ -94,4 +98,4 @@ G = nx.Graph()
 
 G = nx.from_pandas_edgelist(coauth, 'source', 'target')
 
-nx.write_graphml_lxml(G, '/notebooks/atheleteOA.graphml')
+nx.write_graphml_lxml(G, './notebooks/atheleteOA.graphml')
