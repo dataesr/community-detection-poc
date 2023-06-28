@@ -1,14 +1,21 @@
 import express from 'express';
 import { scanrToGraphology } from './scanr-to-graphology';
-import { makeQuery } from './make-query';
+import { makeQuery, makeIdrefQuery, makeStructureQuery } from './make-query';
 import config from '../../config';
 
 const router = new express.Router();
 
 router.route('/scanr')
   .get(async (req, res) => {
-    const { query } = req.query;
-    const body = makeQuery(query);
+    const { query, idref, structure } = req.query;
+    if (idref) { }
+    const body = query
+      ? makeQuery(query)
+      : idref
+        ? makeIdrefQuery(idref)
+        : structure
+          ? makeStructureQuery(structure)
+          : makeQuery('');
     const data = await fetch(
       `${config.scanr.apiUrl}`,
       {

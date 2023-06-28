@@ -18,8 +18,10 @@
     "express-async-errors": "^3.1.1",
     "express-openapi-validator": "^5.0.4",
     "graphology": "^0.25.1",
+    "graphology-communities-louvain": "^2.0.1",
     "graphology-layout": "^0.6.1",
     "graphology-layout-forceatlas2": "^0.10.1",
+    "graphology-operators": "^1.6.0",
     "winston": "^3.8.2",
     "yamljs": "^0.3.0"
   },

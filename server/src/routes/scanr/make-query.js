@@ -19,7 +19,7 @@ const getMustBlockFromQuery = (query) => query.split(' ').map(q => ({
       "alternativeSummary.default",
       "alternativeSummary.fr",
       "alternativeSummary.en"],
-    query: q
+    query: `"${q}"`
   }
 })
 );
@@ -33,6 +33,30 @@ export const makeQuery = (query, size = DEFAULT_SIZE, years = DEFAULT_YEARS) => 
         { terms: { year: years } }
       ],
       must: getMustBlockFromQuery(query)
+    }
+  }
+})
+export const makeIdrefQuery = (query, size = DEFAULT_SIZE, years = DEFAULT_YEARS) => ({
+  size,
+  query: {
+    bool: {
+      filter: [
+        { terms: { "authors.role.keyword": ["author", "directeurthese"] } },
+        { terms: { year: years } },
+        { terms: { "authors.person.id.keyword": query.split(' ').map(id => `idref${id}`) } }
+      ],
+    }
+  }
+})
+export const makeStructureQuery = (query, size = DEFAULT_SIZE, years = DEFAULT_YEARS) => ({
+  size,
+  query: {
+    bool: {
+      filter: [
+        { terms: { "authors.role.keyword": ["author", "directeurthese"] } },
+        { terms: { year: years } },
+        { terms: { "institutions.id.keyword": query.split(' ') } }
+      ],
     }
   }
 })
