@@ -60,7 +60,7 @@ export const makeStructureQuery = (query, size = DEFAULT_SIZE, years = DEFAULT_Y
       filter: [
         { terms: { 'authors.role.keyword': ['author', 'directeurthese'] } },
         { terms: { year: years } },
-        { terms: { 'institutions.id.keyword': query.split(' ') } },
+        { terms: { 'affiliations.id.keyword': query.split(' ') } },
       ],
     },
   },

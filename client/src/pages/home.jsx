@@ -7,8 +7,10 @@ import TagInput from '../layout/TagInput';
 export default function Home() {
   const [clicked, setClicked] = useState(false);
   const [clicked2, setClicked2] = useState(false);
-  const [tags, setTags] = useState(['athlete']);
+  const [clicked3, setClicked3] = useState(false);
   const [idref, setIdref] = useState('048743216');
+  const [structure, setStructure] = useState('');
+  const [tags, setTags] = useState(['athlete']);
 
   return (
     <Container className="fr-my-15w">
@@ -26,11 +28,9 @@ export default function Home() {
       >
         Generate graph
       </Button>
-      <div className="fr-card fr-card--shadow">
-        {clicked && <Graph tags={tags} />}
-      </div>
+      {clicked && <Graph tags={tags} />}
       <TextInput
-        label="Enter one or more idref"
+        label="Enter one or more idref separated by space"
         value={idref}
         onChange={(e) => setIdref(e.target.value)}
       />
@@ -38,6 +38,15 @@ export default function Home() {
         Generate graph for an idref
       </Button>
       {clicked2 && <Graph idref={idref} />}
+      <TextInput
+        label="Enter one or more institution id separated by space"
+        value={structure}
+        onChange={(e) => setStructure(e.target.value)}
+      />
+      <Button onClick={() => setClicked3(true)}>
+        Generate graph for an institution id
+      </Button>
+      {clicked3 && <Graph structure={structure} />}
     </Container>
   );
 }

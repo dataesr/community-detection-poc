@@ -8,7 +8,6 @@ const router = new express.Router();
 router.route('/scanr')
   .get(async (req, res) => {
     const { query, idref, structure } = req.query;
-    if (idref) {}
     const body = query
       ? makeQuery(query)
       : idref
