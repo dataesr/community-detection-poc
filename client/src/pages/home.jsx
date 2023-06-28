@@ -15,7 +15,7 @@ export default function Home() {
       </Title>
       
       <TagInput
-        label="Autres noms"
+        label="Thèmes"
         hint='Valider votre ajout avec la touche "Entrée"'
         tags={tags}
         onTagsChange={(tags) => setTags(tags)}
@@ -26,7 +26,7 @@ export default function Home() {
       >
         Generate graph
       </Button>
-      {clicked && <Graph query={query} />}
+      {clicked && <Graph tags={tags} />}
     </Container>
   );
 }

@@ -1,7 +1,7 @@
 const DEFAULT_YEARS = [2018, 2019, 2020, 2021, 2022, 2023];
 const DEFAULT_SIZE = 10000;
 
-const getMustBlockFromQuery = (query) => query.split(' ').map(q => ({
+const getMustBlockFromQuery = (query) => query.split(',').map(q => ({
   query_string: {
     fields: [
       "title.default",
@@ -32,7 +32,7 @@ export const makeQuery = (query, size = DEFAULT_SIZE, years = DEFAULT_YEARS) => 
         { terms: { "authors.role.keyword": ["author", "directeurthese"] } },
         { terms: { year: years } }
       ],
-      must: getMustBlockFromQuery(query)
+      should: getMustBlockFromQuery(query)
     }
   }
 })
