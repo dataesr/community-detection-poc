@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 import math
+import networkx as nx
 
 BASE_URL = "https://api.openalex.org/works?filter=publication_year:2023-"
 
@@ -33,6 +34,7 @@ for i in range(len(res['results'])):
         keys = res["results"][i]["authorships"][l].keys()
         dic = res["results"][i]["authorships"][l]["author"]
         dic["doi"] = res["results"][i]["doi"]
+        dic["title"] = res["results"][i]["title"]
         for key in keys:
             if key not in ["author", "institutions", "raw_affiliation_strings"]:
                 dic[key] = res["results"][i]["authorships"][l][key]
@@ -57,6 +59,7 @@ for page in range(2, nb_page + 1):
             keys = res["results"][i]["authorships"][l].keys()
             dic = res["results"][i]["authorships"][l]["author"]
             dic["doi"] = res["results"][i]["doi"]
+            dic["title"] = res["results"][i]["title"]
             for key in keys:
                 if key not in ["author", "institutions", "raw_affiliation_strings"]:
                     dic[key] = res["results"][i]["authorships"][l][key]
@@ -72,35 +75,23 @@ for page in range(2, nb_page + 1):
                     del dic[item]
             authors.append(dic)
 data = pd.DataFrame(data=authors)
-# data = data[["display_name", "doi"]].drop_duplicates()
 
-# coauth = data.groupby("doi").nunique().reset_index().rename(columns={"display_name": "nauth"})
-# partauth = data.groupby("display_name").nunique().reset_index().rename(columns={"doi": "partauth"})
+co = {"source": [], "target": []}
+data["id_doi"] = data["title"] + data["doi"].astype(str)
+for auth in set(data["id"]):
+    pub = list(data.loc[data["id"]==auth, "id_doi"])
+    coa = list(data.loc[data["id_doi"].isin(pub), "id"])
+    for item in coa:
+        if item != auth:
+            if not auth in co["target"] and not item in co["source"]:
+                co["source"].append(auth)
+                co["target"].append(item)
 
-import networkx as nx
-
-# NB_MAX_COAUTHORS = 20
-# NB_MIN_PUBLICATIONS = 5
-#
-# coauth_ov = coauth.loc[coauth["nauth"] > NB_MAX_COAUTHORS]
-# coauth_un = coauth.loc[coauth["nauth"] <= NB_MAX_COAUTHORS]
-# partauth_ov = partauth.loc[partauth["partauth"] >= NB_MIN_PUBLICATIONS]
-# partauth_un = partauth.loc[partauth["partauth"] < NB_MIN_PUBLICATIONS]
-#
-# data2 = data.loc[(data["doi"].isin(coauth_un["doi"])) & (data["display_name"].isin(partauth_ov["display_name"]))]
-#
-# nb_removed = coauth_ov["doi"].nunique()
+coauth = pd.DataFrame(data=co)
+coauth = coauth.drop_duplicates()
 
 G = nx.Graph()
 
-G = nx.from_pandas_edgelist(data, 'doi', 'display_name')
+G = nx.from_pandas_edgelist(coauth, 'source', 'target')
 
-leaderboard = {}
-for x in G.nodes:
-    leaderboard[x] = len(G[x])
-
-s = pd.Series(leaderboard, name='connections')
-df2 = s.to_frame().sort_values('connections', ascending=False)
-df2 = df2.reset_index()
-
-nx.write_graphml_lxml(G, '/run/media/julia/DATA/atheleteOA.graphml')
+nx.write_graphml_lxml(G, '/notebooks/atheleteOA.graphml')
