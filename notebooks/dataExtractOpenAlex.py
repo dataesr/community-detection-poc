@@ -2,49 +2,46 @@ import requests
 import pandas as pd
 import math
 
-BASE_URL = "https://api.openalex.org/works?filter=publication_year:2021-"
+BASE_URL = "https://api.openalex.org/works?filter=publication_year:2023-"
 
 
 def url_them(thematic):
     url = BASE_URL
     if thematic:
-        url += f"&search={thematic}"
+        url += f"&search={thematic}&cursor="
 
     return url
 
 
-def get_nb_page(url):
-    global n_page
-    try:
-        res = requests.get(url).json()
-        meta = res["meta"]
-        nb_results = meta['count']
-        n_page = math.ceil(nb_results / res['meta']['per_page'])
-    except:
-        print("echec")
+def get_nb_page(nb, ppage):
+    n_page = math.ceil(nb / ppage)
 
     return n_page
 
-
-def get_data(url, p):
-    global tmp
-    try:
-        if p > 1:
-            res = requests.get(url+f"&page={p}").json()
-        else:
-            res = requests.get(url).json()
-        tmp = pd.json_normalize(res['results'])
-    except:
-        print("echec")
-
-    return tmp
-
 thematic = "athlete"
 URL_THEME = url_them(thematic)
-nb_pages = get_nb_page(URL_THEME)
-liste = []
-for page in range(1, nb_pages + 1):
-    temp = get_data(URL_THEME, page)
-    liste.append(temp)
-data = pd.concat(liste)
-data['query'] = thematic
+res = requests.get(URL_THEME + "*&per_page=200").json()
+cur = res["meta"]["next_cursor"]
+cnt = res["meta"]["count"]
+print(f"Le nombre de résultats est de {cnt}.")
+nb_page = get_nb_page(cnt, 200)
+print(f"Le nombre de pages est de {nb_page}.")
+
+authors = []
+for i in range(len(res['results'])):
+    for l in range(len(res["results"][i]["authorships"])):
+        dic = res["results"][i]["authorships"][l]["author"]
+        dic["doi"] = res["results"][i]["doi"]
+        authors.append(dic)
+
+for page in range(2, nb_page + 1):
+    print(f"Page {page}.")
+    res = requests.get(URL_THEME + cur+ "&per_page=200").json()
+    cur = res["meta"]["next_cursor"]
+    for i in range(len(res['results'])):
+        for l in range(len(res["results"][i]["authorships"])):
+            dic = res["results"][i]["authorships"][l]["author"]
+            dic["doi"] = res["results"][i]["doi"]
+            authors.append(dic)
+data = pd.DataFrame(data=authors)
+data = data[["display_name", "doi"]].drop_duplicates()
