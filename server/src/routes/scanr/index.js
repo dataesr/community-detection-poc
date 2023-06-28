@@ -19,6 +19,7 @@ router.route('/scanr')
     )
       .then((response) => response.json())
       .then(({ hits }) => hits?.hits?.map(({ _source }) => _source));
+    console.log(data[0].keywords.default)
     const graph = scanrToGraphology(data);
     res.json(graph);
 
