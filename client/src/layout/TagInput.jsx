@@ -1,5 +1,6 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
+
 import { Col, Icon, Row, Tag, TagGroup, TextInput } from '@dataesr/react-dsfr';
 
 export default function TagInput({ label, hint, tags, onTagsChange }) {

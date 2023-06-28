@@ -1,39 +1,34 @@
-import { Button, Container, Title, TextInput} from '@dataesr/react-dsfr';
+import { Button, Container, TextInput, Title } from '@dataesr/react-dsfr';
 import { useState } from 'react';
 
 import Graph from '../layout/Graph';
-import TagInput from '../layout/tag_input'
+import TagInput from '../layout/TagInput';
 
 export default function Home() {
   const [clicked, setClicked] = useState(false);
   const [clicked2, setClicked2] = useState(false);
   const [tags, setTags] = useState(['athlete']);
-  const [idref, setIdref] = useState('');
+  const [idref, setIdref] = useState('048743216');
 
   return (
     <Container className="fr-my-15w">
       <Title as="h1">
         Community Detection POC
       </Title>
-      
       <TagInput
-        label="Thèmes"
-        hint='Valider votre ajout avec la touche "Entrée"'
+        label="Keywords"
+        hint='Validate you add by pressing "Return" key'
         tags={tags}
-        onTagsChange={(tags) => setTags(tags)}
+        onTagsChange={(_tags) => setTags(_tags)}
       />
-    
       <Button
         onClick={() => setClicked(true)}
       >
         Generate graph
       </Button>
-      <div className='fr-card fr-card--shadow'>
+      <div className="fr-card fr-card--shadow">
         {clicked && <Graph tags={tags} />}
       </div>
-      <Title as="h1">
-        Community Detection POC
-      </Title>
       <TextInput
         label="Enter one or more idref"
         value={idref}
