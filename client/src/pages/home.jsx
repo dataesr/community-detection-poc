@@ -1,22 +1,26 @@
-import { Button, Container, TextInput, Title } from '@dataesr/react-dsfr';
+import { Button, Container, Title } from '@dataesr/react-dsfr';
 import { useState } from 'react';
 
 import Graph from '../layout/Graph';
+import TagInput from '../layout/tag_input'
 
 export default function Home() {
   const [clicked, setClicked] = useState(false);
-  const [query, setQuery] = useState('athlete');
+  const [tags, setTags] = useState(['athlete']);
 
   return (
     <Container className="fr-my-15w">
       <Title as="h1">
         Community Detection POC
       </Title>
-      <TextInput
-        label="Query"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
+      
+      <TagInput
+        label="Autres noms"
+        hint='Valider votre ajout avec la touche "Entrée"'
+        tags={tags}
+        onTagsChange={(tags) => setTags(tags)}
       />
+    
       <Button
         onClick={() => setClicked(true)}
       >

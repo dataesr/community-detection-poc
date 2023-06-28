@@ -21,6 +21,7 @@ router.route('/scanr')
       .then(({ hits }) => hits?.hits?.map(({ _source }) => _source));
     const graph = scanrToGraphology(data);
     res.json(graph);
+
   });
 
 export default router;
