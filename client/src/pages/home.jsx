@@ -9,7 +9,7 @@ export default function Home() {
   const [clicked2, setClicked2] = useState(false);
   const [clicked3, setClicked3] = useState(false);
   const [idref, setIdref] = useState('048743216');
-  const [structure, setStructure] = useState('');
+  const [structure, setStructure] = useState('199712586Y');
   const [tags, setTags] = useState(['athlete']);
 
   return (
