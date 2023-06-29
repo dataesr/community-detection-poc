@@ -3,29 +3,17 @@ import { SigmaContainer } from '@react-sigma/core';
 import { useQuery } from '@tanstack/react-query';
 import { UndirectedGraph } from 'graphology';
 
-async function getScanr({ tags, idrefs, structures }) {
-  if (idrefs) {
-    return fetch(`/api/scanr?idref=${idrefs.join(',')}`).then((response) => {
-      if (response.ok) return response.json();
-      return "Oops... La requête à l'API n'a pas fonctionné";
-    });
-  }
-  if (structures) {
-    return fetch(`/api/scanr?structure=${structures.join(',')}`).then((response) => {
-      if (response.ok) return response.json();
-      return "Oops... La requête à l'API n'a pas fonctionné";
-    });
-  }
-  return fetch(`/api/scanr?query=${tags.join(',')}`).then((response) => {
+async function getScanr({ query, type }) {
+  return fetch(`/api/scanr?query=${query.join(',')}&type=${type}`).then((response) => {
     if (response.ok) return response.json();
     return "Oops... La requête à l'API n'a pas fonctionné";
   });
 }
 
-export default function Graph({ tags, idrefs, structures }) {
+export default function Graph({ query, type }) {
   const { data, isLoading } = useQuery(
     ['hello'],
-    () => getScanr({ tags, idrefs, structures }),
+    () => getScanr({ query, type }),
     { staleTime: Infinity, cacheTime: Infinity },
   );
   if (isLoading) return <div>Loading data...</div>;
