@@ -1,48 +1,71 @@
-import { Button, Container, Title, TextInput} from '@dataesr/react-dsfr';
+import { Button, Container, Select, Title } from '@dataesr/react-dsfr';
 import { useState } from 'react';
 
 import Graph from '../layout/Graph';
-import TagInput from '../layout/tag_input'
+import TagInput from '../layout/TagInput';
 
 export default function Home() {
-  const [clicked, setClicked] = useState(false);
-  const [clicked2, setClicked2] = useState(false);
-  const [tags, setTags] = useState(['athlete']);
-  const [idref, setIdref] = useState('');
+  const [counter, setCounter] = useState(0);
+  const [datasource, setDatasource] = useState('scanr');
+  const [query, setQuery] = useState(['athlete']);
+  const [type, setType] = useState('keyword');
+
+  const datasources = [
+    {
+      label: 'Scanr',
+      value: 'scanr',
+    },
+    {
+      label: 'OpenAlex',
+      value: 'openalex',
+      disabled: true,
+    },
+  ];
+
+  const types = [
+    {
+      label: 'Coauthoring by keyword',
+      value: 'keyword',
+    },
+    {
+      label: 'Coauthoring by idref',
+      value: 'author',
+    },
+    {
+      label: 'Coauthoring in a structure',
+      value: 'structure',
+    },
+  ];
 
   return (
     <Container className="fr-my-15w">
       <Title as="h1">
         Community Detection POC
       </Title>
-      
-      <TagInput
-        label="Thèmes"
-        hint='Valider votre ajout avec la touche "Entrée"'
-        tags={tags}
-        onTagsChange={(tags) => setTags(tags)}
+      <Select
+        label="Choose your datasource"
+        options={datasources}
+        selected={datasource}
+        onChange={(e) => setDatasource(e.target.value)}
       />
-    
+      <Select
+        label="Choose your graph type"
+        options={types}
+        selected={type}
+        onChange={(e) => setType(e.target.value)}
+      />
+      <TagInput
+        label="Query"
+        hint='Validate you add by pressing "Return" key'
+        tags={query}
+        onTagsChange={(tags) => setQuery(tags)}
+      />
       <Button
-        onClick={() => setClicked(true)}
+        onClick={() => setCounter(counter + 1)}
       >
         Generate graph
       </Button>
-      <div className='fr-card fr-card--shadow'>
-        {clicked && <Graph tags={tags} />}
-      </div>
-      <Title as="h1">
-        Community Detection POC
-      </Title>
-      <TextInput
-        label="Enter one or more idref"
-        value={idref}
-        onChange={(e) => setIdref(e.target.value)}
-      />
-      <Button onClick={() => setClicked2(true)}>
-        Generate graph for an idref
-      </Button>
-      {clicked2 && <Graph idref={idref} />}
+      {(counter > 0) && <Graph counter={counter} query={query} type={type} />}
     </Container>
   );
 }

@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 import math
+import networkx as nx
 
 BASE_URL = "https://api.openalex.org/works?filter=publication_year:2023-"
 
@@ -33,6 +34,8 @@ for i in range(len(res['results'])):
         keys = res["results"][i]["authorships"][l].keys()
         dic = res["results"][i]["authorships"][l]["author"]
         dic["doi"] = res["results"][i]["doi"]
+        dic["title"] = res["results"][i]["title"]
+        dic["id_pub"] = res["results"][i]["id"]
         for key in keys:
             if key not in ["author", "institutions", "raw_affiliation_strings"]:
                 dic[key] = res["results"][i]["authorships"][l][key]
@@ -57,6 +60,8 @@ for page in range(2, nb_page + 1):
             keys = res["results"][i]["authorships"][l].keys()
             dic = res["results"][i]["authorships"][l]["author"]
             dic["doi"] = res["results"][i]["doi"]
+            dic["title"] = res["results"][i]["title"]
+            dic["id_pub"] = res["results"][i]["id"]
             for key in keys:
                 if key not in ["author", "institutions", "raw_affiliation_strings"]:
                     dic[key] = res["results"][i]["authorships"][l][key]
@@ -72,35 +77,46 @@ for page in range(2, nb_page + 1):
                     del dic[item]
             authors.append(dic)
 data = pd.DataFrame(data=authors)
-# data = data[["display_name", "doi"]].drop_duplicates()
 
-# coauth = data.groupby("doi").nunique().reset_index().rename(columns={"display_name": "nauth"})
-# partauth = data.groupby("display_name").nunique().reset_index().rename(columns={"doi": "partauth"})
+pub_compte = data[["id_pub", "id"]].groupby("id_pub").nunique().reset_index().rename(columns={"id": "compte_auth"})
+aut_compte = data[["id_pub", "id"]].groupby("id").nunique().reset_index().rename(columns={"id_pub": "compte_pub"})
 
-import networkx as nx
+pub_compte2 = pub_compte.loc[pub_compte["compte_auth"] > 1].reset_index().drop(columns="index")
+aut_compte2 = aut_compte.loc[aut_compte["compte_pub"] > 1].reset_index().drop(columns="index")
 
-# NB_MAX_COAUTHORS = 20
-# NB_MIN_PUBLICATIONS = 5
-#
-# coauth_ov = coauth.loc[coauth["nauth"] > NB_MAX_COAUTHORS]
-# coauth_un = coauth.loc[coauth["nauth"] <= NB_MAX_COAUTHORS]
-# partauth_ov = partauth.loc[partauth["partauth"] >= NB_MIN_PUBLICATIONS]
-# partauth_un = partauth.loc[partauth["partauth"] < NB_MIN_PUBLICATIONS]
-#
-# data2 = data.loc[(data["doi"].isin(coauth_un["doi"])) & (data["display_name"].isin(partauth_ov["display_name"]))]
-#
-# nb_removed = coauth_ov["doi"].nunique()
+data2 = data.loc[(data["id_pub"].isin(pub_compte2["id_pub"])) & (data["id"].isin(aut_compte2["id"]))]
+
+compte = data2[["id", "id_pub"]].groupby("id_pub").nunique().reset_index().rename(columns={"id": "compte"})
+compte = compte.loc[compte["compte"] > 1]
+
+data3 = data2.loc[data2["id_pub"].isin(compte["id_pub"])]
+
+co = {"source": [], "target": []}
+co_liste = []
+
+for auth in set(data3["id"]):
+    pub = list(data3.loc[data3["id"]==auth, "id_pub"])
+    coa = list(data3.loc[data3["id_pub"].isin(pub), "id"])
+    for item in coa:
+        if item != auth:
+            liste = [auth, item]
+            liste.sort()
+            if not liste in co_liste:
+                co_liste.append(liste)
+                co["source"].append(liste[0])
+                co["target"].append(liste[1])
+
+coauth = pd.DataFrame(data=co)
+coauth = coauth.drop_duplicates()
+
+data_auth = data2[['id', 'display_name', 'orcid']].drop_duplicates()
+data_auth = data_auth.rename(columns={"id": "source"})
+
+coauth2 = pd.merge(coauth, data_auth, on="source", how="left")
+coauth2 = coauth2.fillna("")
 
 G = nx.Graph()
 
-G = nx.from_pandas_edgelist(data, 'doi', 'display_name')
+G = nx.from_pandas_edgelist(coauth2, 'source', 'target', edge_attr=['display_name', 'orcid'])
 
-leaderboard = {}
-for x in G.nodes:
-    leaderboard[x] = len(G[x])
-
-s = pd.Series(leaderboard, name='connections')
-df2 = s.to_frame().sort_values('connections', ascending=False)
-df2 = df2.reset_index()
-
-nx.write_graphml_lxml(G, '/run/media/julia/DATA/atheleteOA.graphml')
+nx.write_graphml_lxml(G, './notebooks/atheleteOA.graphml')

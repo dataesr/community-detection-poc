@@ -3,9 +3,9 @@ import random from 'graphology-layout/random';
 import forceAtlas2 from 'graphology-layout-forceatlas2';
 import louvain from 'graphology-communities-louvain';
 import subgraph from 'graphology-operators/subgraph';
+import noverlap from 'graphology-layout-noverlap';
 
 const MAX_NUMBER_OF_AUTHORS = 20;
-const MIN_NUMBER_OF_PUBLICATIONS = 1;
 const DEFAULT_NODE_COLOR = '#7b7b7b';
 const COLORS = [
   '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f',
@@ -14,7 +14,7 @@ const COLORS = [
   '#b5cf6b', '#ce6dbd', '#dadaeb', '#393b79', '#637939', '#8c6d31', '#843c39', '#ad494a',
   '#d6616b', '#e7ba52', '#e7cb94', '#843c39', '#ad494a', '#d6616b', '#e7969c', '#7b4173',
   '#a55194', '#ce6dbd', '#de9ed6', '#3182bd', '#6baed6', '#9ecae1', '#c6dbef', '#e6550d',
-  '#fd8d3c', '#fdae6b', '#fdd0a2', '#31a354'
+  '#fd8d3c', '#fdae6b', '#fdd0a2', '#31a354',
 ];
 
 function getNodesFromPublicationList(publicationList) {
@@ -41,12 +41,9 @@ function getEdgesFromPublicationList(publicationList) {
   });
 }
 
-
-
-
 export function scanrToGraphology(publicationList) {
+  console.log('nbPublis = ', publicationList.length);
   const graph = new graphology.UndirectedGraph();
-  console.log('PUBLICATIONS FETCHED COUNT', publicationList.length);
   const publicationListWithoutTooManyAuthors = publicationList.filter(({ authors = [] }) => authors.length <= MAX_NUMBER_OF_AUTHORS);
   const nodes = getNodesFromPublicationList(publicationListWithoutTooManyAuthors);
   console.log(nodes[0])
@@ -59,34 +56,51 @@ export function scanrToGraphology(publicationList) {
     `(${source}--${target})`,
     source,
     target,
-    attr => ({
+    (attr) => ({
       weight: (attr?.weight + 1) || 1,
       size: (attr?.size + 1) || 1,
-      label: `${attr?.size || 1} copublis`
-    })
+      label: `${attr?.size || 1} copublis`,
+    }),
   ));
-  console.log('NODES COUNT', graph.order);
-  console.log('EDGES COUNT', graph.size);
-  const filteredGraph = subgraph(graph, (key, attr) => attr?.size >= MIN_NUMBER_OF_PUBLICATIONS);
+  const gravity = 1.0 / (2 * graph.order);
+  let MIN_NUMBER_OF_PUBLICATIONS = 1;
+  let filteredGraph = graph;
+  while (filteredGraph.order > 100) {
+    MIN_NUMBER_OF_PUBLICATIONS += 1;
+    filteredGraph = subgraph(graph, (key, attr) => attr?.size >= MIN_NUMBER_OF_PUBLICATIONS);
+  }
+  console.log('MIN_NUMBER_OF_PUBLICATIONS', MIN_NUMBER_OF_PUBLICATIONS);
+  console.log('current order', filteredGraph.order)
+  filteredGraph.updateEachNodeAttributes((node, attr) => {
+    return {
+      ...attr,
+      size: 8 * Math.log(attr.size + 1)
+    };
+  });
+  filteredGraph.updateEachEdgeAttributes((edge, attr) => {
+    return {
+      ...attr,
+      weight: 8 * Math.log(attr.weight + 1)
+    };
+  });
   random.assign(filteredGraph);
-
   const settings = forceAtlas2.inferSettings(filteredGraph);
   console.log('SETTINGS', settings);
-  forceAtlas2.assign(filteredGraph, { settings: { ...settings, adjustSize: false, slowDown: 1, linLogMode: true, gravity: 0.01, strongGravityMode: false, edgeWeightInfluence: 1 }, iterations: 600 });
+  let linLogMode = false;
+  if (filteredGraph.order > 50) {
+    linLogMode = true;
+  }
+  console.log('linLog', linLogMode);
+  console.log('gravity', gravity);
+  console.log('order', filteredGraph.order);
+  forceAtlas2.assign(filteredGraph, { settings: { ...settings, adjustSize: true, slowDown: 1, linLogMode, gravity, strongGravityMode: false, edgeWeightInfluence: 1 }, iterations: 600 });
   louvain.assign(filteredGraph, { settings: { resolution: 1.0 } });
-  console.log('NODES', filteredGraph.order);
-  console.log('EDGES', filteredGraph.size);
-  // console.log('EDGES CARRE', filteredGraph.filterEdges(edge => {
-  //   if (edge.source === 'idref029192994') console.log(edge);
-  //   if (edge.target === 'idref029192994') console.log(edge);
-  // }))
   filteredGraph.forEachNode((node, attr) => {
     const { community } = attr;
     const color = COLORS?.[community] || DEFAULT_NODE_COLOR;
     filteredGraph.setNodeAttribute(node, 'color', color);
   });
-  //console.log(filteredGraph.getNodeAttributes('idref128108630'))
-  //console.log(filteredGraph.getNodeAttributes('idref113404492'))
-  //console.log(filteredGraph.getNodeAttributes('idref076452182'))
+  noverlap.assign(filteredGraph, {maxIterations: 50, gridSize:1, expansion:1.5, ratio: 2});
+
   return filteredGraph;
 }
