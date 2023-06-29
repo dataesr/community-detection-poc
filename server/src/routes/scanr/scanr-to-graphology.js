@@ -52,7 +52,7 @@ export function scanrToGraphology(publicationList) {
   const edges = getEdgesFromPublicationList(publicationListWithoutTooManyAuthors);
   nodes.forEach(({ id, attributes }) => graph.updateNode(id, attr => ({
     ...attributes,
-    size: 8 * Math.log(attr.weight + 2) || 1,
+    size: 8 * Math.log(1 + ((attr?.weight + 1) || 1)),
     weight: (attr?.weight + 1) || 1,
     wikis: (attr?.wikis) ? [...attr?.wikis, ...attributes?.wikis] : [...attributes?.wikis],
     publications: (attr?.publications) ? [...attr?.publications, attributes?.publication] : [attributes?.publication]
@@ -63,7 +63,7 @@ export function scanrToGraphology(publicationList) {
     target,
     (attr) => ({
       weight: (attr?.weight + 1) || 1,
-      size: 8 * Math.log(attr.weight + 2) || 1,
+      size: 8 * Math.log(1 + ((attr?.weight + 1) || 1)),
       label: `${attr?.size || 1} copublis`,
     }),
   ));
