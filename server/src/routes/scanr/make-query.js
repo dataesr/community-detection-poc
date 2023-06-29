@@ -16,6 +16,7 @@ export const makeQueryByAuthor = (query, size = DEFAULT_SIZE, years = DEFAULT_YE
 
 export const makeQueryByKeyword = (query, size = DEFAULT_SIZE, years = DEFAULT_YEARS) => ({
   size,
+  _source: ['id', 'authors', 'domains'],
   query: {
     bool: {
       filter: [
