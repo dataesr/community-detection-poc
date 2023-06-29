@@ -67,11 +67,11 @@ export default function Graph({ counter, query, type }) {
                   </Text>
                   <BadgeGroup>
                     <Badge colorFamily="purple-glycine" className="fr-ml-1w" text={`${selectedNode.weight} publications`} />
-                    {graph.getNodeAttribute(selectedNode.id, 'publications')?.map((publication) => (<p>{publication}</p>))}
                     <Badge className="fr-ml-1w" text={`${selectedNode.degree} co-autheurs`} />
-                    {graph.mapNeighbors(selectedNode.id, (node, attr) => (<p>{attr.label}</p>))}
-                    {graph.getNodeAttribute(selectedNode.id, 'keywords')?.map((keyword) => (<p>{keyword}</p>))}
                   </BadgeGroup>
+                  {graph.getNodeAttribute(selectedNode.id, 'publications')?.map((publication) => (<p>{publication}</p>))}
+                  {graph.mapNeighbors(selectedNode.id, (node, attr) => (<p>{attr.label}</p>))}
+                  {graph.getNodeAttribute(selectedNode.id, 'wikis')?.map((keyword) => (<p>{keyword}</p>))}
                 </div>
               </div>
             )}

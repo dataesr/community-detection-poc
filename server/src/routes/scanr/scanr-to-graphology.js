@@ -51,13 +51,9 @@ export function scanrToGraphology(publicationList) {
   nodes.forEach(({ id, attributes }) => graph.updateNode(id, attr => ({
     ...attributes,
     size: 8 * Math.log(attr.weight + 2) || 1,
+    weight: (attr?.weight + 1) || 1,
     wikis: (attr?.wikis) ? [...attr?.wikis, ...attributes?.wikis] : [...attributes?.wikis],
     publications: (attr?.publications) ? [...attr?.publications, attributes?.publication] : [attributes?.publication]
-  })));
-  nodes.forEach(({ id, attributes }) => graph.updateNode(id, (attr) => ({
-    ...attributes,
-    size: 8 * Math.log(attr.weight + 2) || 1,
-    weight: (attr?.weight + 1) || 1
   })));
   edges.forEach(({ source, target }) => graph.updateUndirectedEdgeWithKey(
     `(${source}--${target})`,
