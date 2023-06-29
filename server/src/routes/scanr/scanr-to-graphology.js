@@ -3,9 +3,10 @@ import random from 'graphology-layout/random';
 import forceAtlas2 from 'graphology-layout-forceatlas2';
 import louvain from 'graphology-communities-louvain';
 import subgraph from 'graphology-operators/subgraph';
+import noverlap from 'graphology-layout-noverlap';
 
 const MAX_NUMBER_OF_AUTHORS = 20;
-const MIN_NUMBER_OF_PUBLICATIONS = 1;
+let MIN_NUMBER_OF_PUBLICATIONS = 1;
 const DEFAULT_NODE_COLOR = '#7b7b7b';
 const COLORS = [
   '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f',
@@ -56,21 +57,35 @@ export function scanrToGraphology(publicationList) {
       label: `${attr?.size || 1} copublis`,
     }),
   ));
-  const filteredGraph = subgraph(graph, (key, attr) => attr?.size >= MIN_NUMBER_OF_PUBLICATIONS);
+  const gravity = 1.0 / (2 * graph.order);
+  let filteredGraph = graph;
+  while (filteredGraph.order > 100) {
+    MIN_NUMBER_OF_PUBLICATIONS += 1;
+    filteredGraph = subgraph(graph, (key, attr) => attr?.size >= MIN_NUMBER_OF_PUBLICATIONS);
+  }
+  console.log('MIN_NUMBER_OF_PUBLICATIONS', MIN_NUMBER_OF_PUBLICATIONS);
   filteredGraph.updateEachNodeAttributes((node, attr) => {
     return {
       ...attr,
       size: 8 * Math.log(attr.size + 1)
     };
   });
+  filteredGraph.updateEachEdgeAttributes((edge, attr) => {
+    return {
+      ...attr,
+      weight: 8 * Math.log(attr.weight + 1)
+    };
+  });
   random.assign(filteredGraph);
   const settings = forceAtlas2.inferSettings(filteredGraph);
   console.log('SETTINGS', settings);
   let linLogMode = false;
-  const gravity = 1.0 / graph.order;
-  if (graph.order > 100) {
+  if (filteredGraph.order > 50) {
     linLogMode = true;
   }
+  console.log('linLog', linLogMode);
+  console.log('gravity', gravity);
+  console.log('order', filteredGraph.order);
   forceAtlas2.assign(filteredGraph, { settings: { ...settings, adjustSize: true, slowDown: 1, linLogMode, gravity, strongGravityMode: false, edgeWeightInfluence: 1 }, iterations: 600 });
   louvain.assign(filteredGraph, { settings: { resolution: 1.0 } });
   filteredGraph.forEachNode((node, attr) => {
@@ -78,6 +93,7 @@ export function scanrToGraphology(publicationList) {
     const color = COLORS?.[community] || DEFAULT_NODE_COLOR;
     filteredGraph.setNodeAttribute(node, 'color', color);
   });
+  noverlap.assign(filteredGraph, {maxIterations: 50, gridSize:1, expansion:1.5, ratio: 2});
 
   return filteredGraph;
 }
