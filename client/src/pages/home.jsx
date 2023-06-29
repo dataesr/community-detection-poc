@@ -1,14 +1,30 @@
 import { Button, Container, Select, Title } from '@dataesr/react-dsfr';
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+
 
 import Graph from '../layout/Graph';
 import TagInput from '../layout/TagInput';
 
+async function getScanr({ query, type }) {
+  return fetch(`/api/scanr?query=${query.join(',')}&type=${type}`).then((response) => {
+    if (response.ok) return response.json();
+    return "Oops... La requête à l'API n'a pas fonctionné";
+  });
+}
+
 export default function Home() {
-  const [counter, setCounter] = useState(0);
   const [datasource, setDatasource] = useState('scanr');
-  const [query, setQuery] = useState(['athlete']);
+  const [query, setQuery] = useState([]);
   const [type, setType] = useState('keyword');
+
+  const { data, isFetching, refetch } = useQuery({
+    queryKey: ['graph'],
+    queryFn: () => getScanr({ query, type }),
+    enabled: false,
+    staleTime: Infinity,
+    cacheTime: Infinity
+  });
 
   const datasources = [
     {
@@ -69,12 +85,11 @@ export default function Home() {
         tags={query}
         onTagsChange={(tags) => setQuery(tags)}
       />
-      <Button
-        onClick={() => setCounter(counter + 1)}
-      >
+      <Button onClick={refetch} >
         Generate graph
       </Button>
-      {(counter > 0) && <Graph counter={counter} query={query} type={type} />}
+      {(isFetching) && (<div>Fetching data...</div>)}
+      {data && <Graph data={data} />}
     </Container>
   );
 }

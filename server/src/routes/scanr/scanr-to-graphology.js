@@ -41,6 +41,8 @@ function getEdgesFromPublicationList(publicationList) {
   });
 }
 
+
+
 export function scanrToGraphology(publicationList) {
   console.log('nbPublis = ', publicationList.length);
   const graph = new graphology.UndirectedGraph();

@@ -2,7 +2,6 @@ import '@react-sigma/core/lib/react-sigma.min.css';
 import { useState, useEffect } from 'react';
 import { Badge, BadgeGroup, Col, Container, Row, Text, Title } from '@dataesr/react-dsfr';
 import { SigmaContainer, useRegisterEvents } from '@react-sigma/core';
-import { useQuery } from '@tanstack/react-query';
 import { UndirectedGraph } from 'graphology';
 
 const GraphEvents = ({ onNodeClick }) => {
@@ -17,21 +16,8 @@ const GraphEvents = ({ onNodeClick }) => {
   return null;
 };
 
-async function getScanr({ query, type }) {
-  return fetch(`/api/scanr?query=${query.join(',')}&type=${type}`).then((response) => {
-    if (response.ok) return response.json();
-    return "Oops... La requête à l'API n'a pas fonctionné";
-  });
-}
-
-export default function Graph({ counter, query, type }) {
+export default function Graph({ data }) {
   const [selectedNode, setSelectedNode] = useState(null);
-  const { data, isLoading } = useQuery(
-    [counter],
-    () => getScanr({ query, type }),
-    { staleTime: Infinity, cacheTime: Infinity },
-  );
-  if (isLoading) return <div>Loading data...</div>;
   const graph = UndirectedGraph.from(data);
   const communities = graph.reduceNodes((acc, node, attr) => {
     const { label, size, color } = attr;
