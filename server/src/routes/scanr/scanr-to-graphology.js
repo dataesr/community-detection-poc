@@ -62,11 +62,21 @@ export function scanrToGraphology(publicationList) {
   console.log('NODES COUNT', graph.order);
   console.log('EDGES COUNT', graph.size);
   const filteredGraph = subgraph(graph, (key, attr) => attr?.size >= MIN_NUMBER_OF_PUBLICATIONS);
+  filteredGraph.updateEachNodeAttributes((node, attr) => {
+    return {
+      ...attr,
+      size: 8 * Math.log(attr.size + 1)
+    };
+  });
   random.assign(filteredGraph);
-
   const settings = forceAtlas2.inferSettings(filteredGraph);
   console.log('SETTINGS', settings);
-  forceAtlas2.assign(filteredGraph, { settings: { ...settings, adjustSize: false, slowDown: 1, linLogMode: true, gravity: 0.01, strongGravityMode: false, edgeWeightInfluence: 1 }, iterations: 600 });
+  let linLogMode = false;
+  const gravity = 1.0 / graph.order;
+  if (graph.order > 100) {
+    linLogMode = true;
+  }
+  forceAtlas2.assign(filteredGraph, { settings: { ...settings, adjustSize: true, slowDown: 1, linLogMode, gravity, strongGravityMode: false, edgeWeightInfluence: 1 }, iterations: 600 });
   louvain.assign(filteredGraph, { settings: { resolution: 1.0 } });
   console.log('NODES', filteredGraph.order);
   console.log('EDGES', filteredGraph.size);
