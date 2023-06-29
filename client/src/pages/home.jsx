@@ -5,7 +5,7 @@ import Graph from '../layout/Graph';
 import TagInput from '../layout/TagInput';
 
 export default function Home() {
-  const [clicked, setClicked] = useState(false);
+  const [counter, setCounter] = useState(0);
   const [type, setType] = useState('keyword');
   const [query, setQuery] = useState(['athlete']);
 
@@ -42,11 +42,11 @@ export default function Home() {
         onTagsChange={(tags) => setQuery(tags)}
       />
       <Button
-        onClick={() => setClicked(true)}
+        onClick={() => setCounter(counter + 1)}
       >
         Generate graph
       </Button>
-      {clicked && <Graph type={type} query={query} />}
+      {(counter > 0) && <Graph counter={counter} query={query} type={type} />}
     </Container>
   );
 }

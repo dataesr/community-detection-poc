@@ -10,9 +10,9 @@ async function getScanr({ query, type }) {
   });
 }
 
-export default function Graph({ query, type }) {
+export default function Graph({ counter, query, type }) {
   const { data, isLoading } = useQuery(
-    ['hello'],
+    [counter],
     () => getScanr({ query, type }),
     { staleTime: Infinity, cacheTime: Infinity },
   );
