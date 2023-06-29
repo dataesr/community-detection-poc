@@ -93,6 +93,7 @@ data3 = data2.loc[data2["id_pub"].isin(compte["id_pub"])]
 
 co = {"source": [], "target": []}
 co_liste = []
+co_liste2 = []
 
 for auth in set(data3["id"]):
     pub = list(data3.loc[data3["id"]==auth, "id_pub"])
@@ -101,10 +102,20 @@ for auth in set(data3["id"]):
         if item != auth:
             liste = [auth, item]
             liste.sort()
+            co_liste2.append(", ".join(liste))
             if not liste in co_liste:
                 co_liste.append(liste)
                 co["source"].append(liste[0])
                 co["target"].append(liste[1])
+
+co_liste2.sort()
+from collections import Counter
+
+we = Counter(co_liste2)
+
+wed = pd.DataFrame(data={"coauthors": list(dict(we).keys()), "weight": list(dict(we).values())})
+wed["weight"] = wed["weight"] / 2
+wed["weight"] = wed["weight"].astype(int)
 
 coauth = pd.DataFrame(data=co)
 coauth = coauth.drop_duplicates()
@@ -114,9 +125,18 @@ data_auth = data_auth.rename(columns={"id": "source"})
 
 coauth2 = pd.merge(coauth, data_auth, on="source", how="left")
 coauth2 = coauth2.fillna("")
+coauth2 = coauth2.rename(columns={"source": "id_oa_source", "display_name": "source", "orcid": "orcid_source"})
+data_auth2 = data_auth.rename(columns={"source": "target"})
+coauth2 = pd.merge(coauth2, data_auth2, on="target", how="left")
+coauth2 = coauth2.fillna("")
+coauth2 = coauth2.rename(columns={"target": "id_oa_target", "display_name": "target", "orcid": "orcid_target"})
+coauth2["coauthors"] = coauth2["id_oa_source"] + ", " + coauth2["id_oa_target"]
+coauth2 = pd.merge(coauth2, wed, on="coauthors", how="left")
+coauth2 = coauth2.drop(columns="coauthors")
 
 G = nx.Graph()
 
-G = nx.from_pandas_edgelist(coauth2, 'source', 'target', edge_attr=['display_name', 'orcid'])
+G = nx.from_pandas_edgelist(coauth2, 'source', 'target', edge_attr=['id_oa_source', 'id_oa_target', 'orcid_source',
+                                                                    'orcid_target', "weight"])
 
-nx.write_graphml_lxml(G, './notebooks/atheleteOA.graphml')
+nx.write_graphml_lxml(G, 'atheleteOA.graphml')
