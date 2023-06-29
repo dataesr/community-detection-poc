@@ -1,10 +1,17 @@
 import '@react-sigma/core/lib/react-sigma.min.css';
 import { useState, useEffect } from 'react';
 import { Badge, BadgeGroup, Col, Container, Row, Text, Title } from '@dataesr/react-dsfr';
-import { SigmaContainer, useRegisterEvents } from '@react-sigma/core';
+import {
+  SigmaContainer, useRegisterEvents, ControlsContainer,
+  ZoomControl,
+  SearchControl,
+  FullScreenControl,
+  useSigma,
+} from '@react-sigma/core';
+import { LayoutForceAtlas2Control } from '@react-sigma/layout-forceatlas2';
 import { UndirectedGraph } from 'graphology';
 
-const GraphEvents = ({ onNodeClick }) => {
+function GraphEvents({ onNodeClick }) {
   const registerEvents = useRegisterEvents();
   useEffect(() => {
     // Register the events
@@ -14,7 +21,7 @@ const GraphEvents = ({ onNodeClick }) => {
     });
   }, [registerEvents]);
   return null;
-};
+}
 
 export default function Graph({ data }) {
   const [selectedNode, setSelectedNode] = useState(null);
@@ -33,15 +40,23 @@ export default function Graph({ data }) {
     <>
       <Container fluid className="fr-my-3w">
         <Row gutters>
-          <Col n={selectedNode ? "8" : "12"}>
+          <Col n={selectedNode ? '8' : '12'}>
             <SigmaContainer
               style={{ height: '500px' }}
               graph={graph}
             >
               <GraphEvents onNodeClick={(event) => setSelectedNode({ id: event.node, degree: graph.degree(event.node), ...graph.getNodeAttributes(event.node) })} />
+              <ControlsContainer position="bottom-right">
+                <ZoomControl />
+                <FullScreenControl />
+                <LayoutForceAtlas2Control settings={{ settings: { slowDown: 10 } }} />
+              </ControlsContainer>
+              <ControlsContainer position="top-right">
+                <SearchControl style={{ width: '200px' }} />
+              </ControlsContainer>
             </SigmaContainer>
           </Col>
-          <Col n={selectedNode ? "4" : "0"}>
+          <Col n={selectedNode ? '4' : '0'}>
             {selectedNode && (
               <div className="fr-card fr-card--shadow">
                 <div className="fr-card__body">
@@ -49,7 +64,9 @@ export default function Graph({ data }) {
                     {selectedNode.label}
                   </Text>
                   <Text bold className="fr-mb-1v">
-                    Cluster: {selectedNode.color}
+                    Cluster:
+                    {' '}
+                    {selectedNode.color}
                   </Text>
                   <BadgeGroup>
                     <Badge colorFamily="purple-glycine" className="fr-ml-1w" text={`${selectedNode.weight} publications`} />
