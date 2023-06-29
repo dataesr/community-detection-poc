@@ -6,7 +6,6 @@ import subgraph from 'graphology-operators/subgraph';
 import noverlap from 'graphology-layout-noverlap';
 
 const MAX_NUMBER_OF_AUTHORS = 20;
-let MIN_NUMBER_OF_PUBLICATIONS = 1;
 const DEFAULT_NODE_COLOR = '#7b7b7b';
 const COLORS = [
   '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f',
@@ -42,6 +41,7 @@ function getEdgesFromPublicationList(publicationList) {
 }
 
 export function scanrToGraphology(publicationList) {
+  console.log('nbPublis = ', publicationList.length);
   const graph = new graphology.UndirectedGraph();
   const publicationListWithoutTooManyAuthors = publicationList.filter(({ authors = [] }) => authors.length <= MAX_NUMBER_OF_AUTHORS);
   const nodes = getNodesFromPublicationList(publicationListWithoutTooManyAuthors);
@@ -58,12 +58,14 @@ export function scanrToGraphology(publicationList) {
     }),
   ));
   const gravity = 1.0 / (2 * graph.order);
+  let MIN_NUMBER_OF_PUBLICATIONS = 1;
   let filteredGraph = graph;
   while (filteredGraph.order > 100) {
     MIN_NUMBER_OF_PUBLICATIONS += 1;
     filteredGraph = subgraph(graph, (key, attr) => attr?.size >= MIN_NUMBER_OF_PUBLICATIONS);
   }
   console.log('MIN_NUMBER_OF_PUBLICATIONS', MIN_NUMBER_OF_PUBLICATIONS);
+  console.log('current order', filteredGraph.order)
   filteredGraph.updateEachNodeAttributes((node, attr) => {
     return {
       ...attr,
