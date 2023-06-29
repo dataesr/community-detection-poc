@@ -6,10 +6,23 @@ import TagInput from '../layout/TagInput';
 
 export default function Home() {
   const [counter, setCounter] = useState(0);
-  const [type, setType] = useState('keyword');
+  const [datasource, setDatasource] = useState('scanr');
   const [query, setQuery] = useState(['athlete']);
+  const [type, setType] = useState('keyword');
 
-  const options = [
+  const datasources = [
+    {
+      label: 'Scanr',
+      value: 'scanr',
+    },
+    {
+      label: 'OpenAlex',
+      value: 'openalex',
+      disabled: true,
+    },
+  ];
+
+  const types = [
     {
       label: 'Coauthoring by keyword',
       value: 'keyword',
@@ -30,8 +43,14 @@ export default function Home() {
         Community Detection POC
       </Title>
       <Select
-        label="Choose your network"
-        options={options}
+        label="Choose your datasource"
+        options={datasources}
+        selected={datasource}
+        onChange={(e) => setDatasource(e.target.value)}
+      />
+      <Select
+        label="Choose your graph type"
+        options={types}
         selected={type}
         onChange={(e) => setType(e.target.value)}
       />
