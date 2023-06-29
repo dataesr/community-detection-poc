@@ -47,7 +47,7 @@ export const makeIdrefQuery = (query, size = DEFAULT_SIZE, years = DEFAULT_YEARS
       filter: [
         { terms: { 'authors.role.keyword': ['author', 'directeurthese'] } },
         { terms: { year: years } },
-        { terms: { 'authors.person.id.keyword': query.split(' ').map((id) => `idref${id}`) } },
+        { terms: { 'authors.person.id.keyword': query.split(',').map((id) => `idref${id}`) } },
       ],
     },
   },
@@ -60,7 +60,7 @@ export const makeStructureQuery = (query, size = DEFAULT_SIZE, years = DEFAULT_Y
       filter: [
         { terms: { 'authors.role.keyword': ['author', 'directeurthese'] } },
         { terms: { year: years } },
-        { terms: { 'affiliations.id.keyword': query.split(' ') } },
+        { terms: { 'affiliations.id.keyword': query.split(',') } },
       ],
     },
   },
