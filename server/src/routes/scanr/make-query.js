@@ -32,7 +32,7 @@ export const makeQuery = (query, size = DEFAULT_SIZE, years = DEFAULT_YEARS) => 
         { terms: { "authors.role.keyword": ["author", "directeurthese"] } },
         { terms: { year: years } }
       ],
-      should: getMustBlockFromQuery(query)
+      must: getMustBlockFromQuery(query)
     }
   }
 })

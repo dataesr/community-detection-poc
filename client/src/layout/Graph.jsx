@@ -23,6 +23,7 @@ export default function Graph({ tags, idref }) {
     { staleTime: Infinity, cacheTime: Infinity }
   );
   if (isLoading) return <div>Chargement...</div>;
+  console.log(data);
   const graph = UndirectedGraph.from(data);
   return <SigmaContainer style={{ height: '500px', backgroundColor: 'transparent !important' }} graph={graph} />;
 }

@@ -16,13 +16,15 @@ const COLORS = [
   '#a55194', '#ce6dbd', '#de9ed6', '#3182bd', '#6baed6', '#9ecae1', '#c6dbef', '#e6550d',
   '#fd8d3c', '#fdae6b', '#fdd0a2', '#31a354'
 ];
+
 function getNodesFromPublicationList(publicationList) {
-  return publicationList.flatMap(({ authors }) => {
+  return publicationList.flatMap(({ authors, domains=[] }) => {
     if (!authors) return [];
+    const wikis = domains.filter((domain) => domain.type === 'wikidata').map((wiki) => wiki.label.default)
     return authors.reduce((acc, { person }) => {
       if (!person?.id) return [...acc];
       const { id, fullName: label } = person;
-      return [...acc, { id, attributes: { id, label } }];
+      return [...acc, { id, attributes: { id, label, wikis } }];
     }, []);
   });
 }
@@ -47,8 +49,12 @@ export function scanrToGraphology(publicationList) {
   console.log('PUBLICATIONS FETCHED COUNT', publicationList.length);
   const publicationListWithoutTooManyAuthors = publicationList.filter(({ authors = [] }) => authors.length <= MAX_NUMBER_OF_AUTHORS);
   const nodes = getNodesFromPublicationList(publicationListWithoutTooManyAuthors);
+  console.log(nodes[0])
   const edges = getEdgesFromPublicationList(publicationListWithoutTooManyAuthors);
-  nodes.forEach(({ id, attributes }) => graph.updateNode(id, attr => ({ ...attributes, size: (attr?.size + 1) || 1 })));
+  nodes.forEach(({ id, attributes }) => graph.updateNode(id, attr => ({ 
+    ...attributes, 
+    size: (attr?.size + 1) || 1, 
+    wikis: (attr?.wikis) ? [...attr?.wikis, ...attributes?.wikis] : [...attributes?.wikis]})));
   edges.forEach(({ source, target }) => graph.updateUndirectedEdgeWithKey(
     `(${source}--${target})`,
     source,
@@ -79,6 +85,8 @@ export function scanrToGraphology(publicationList) {
     const color = COLORS?.[community] || DEFAULT_NODE_COLOR;
     filteredGraph.setNodeAttribute(node, 'color', color);
   });
-
+  //console.log(filteredGraph.getNodeAttributes('idref128108630'))
+  //console.log(filteredGraph.getNodeAttributes('idref113404492'))
+  //console.log(filteredGraph.getNodeAttributes('idref076452182'))
   return filteredGraph;
 }
