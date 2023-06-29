@@ -12,7 +12,7 @@ export default function Home() {
 
   const datasources = [
     {
-      label: 'Scanr',
+      label: 'scanR',
       value: 'scanr',
     },
     {
@@ -28,14 +28,20 @@ export default function Home() {
       value: 'keyword',
     },
     {
-      label: 'Coauthoring by idref',
+      label: 'Coauthoring by author id (idref)',
       value: 'author',
     },
     {
-      label: 'Coauthoring in a structure',
+      label: 'Coauthoring by structure id',
       value: 'structure',
     },
   ];
+
+  const defaultQuery = {
+    author: ['048743216'],
+    keyword: ['athlete'],
+    structure: ['199712586Y'],
+  };
 
   return (
     <Container className="fr-my-15w">
@@ -52,7 +58,10 @@ export default function Home() {
         label="Choose your graph type"
         options={types}
         selected={type}
-        onChange={(e) => setType(e.target.value)}
+        onChange={(e) => {
+          setType(e.target.value);
+          setQuery(defaultQuery[e.target.value]);
+        }}
       />
       <TagInput
         label="Query"
