@@ -18,13 +18,13 @@ const COLORS = [
 ];
 
 function getNodesFromPublicationList(publicationList) {
-  return publicationList.flatMap(({ authors, domains=[] }) => {
+  return publicationList.flatMap(({ authors, domains = [], title }) => {
     if (!authors) return [];
     const wikis = domains.filter((domain) => domain.type === 'wikidata').map((wiki) => wiki.label.default)
     return authors.reduce((acc, { person }) => {
       if (!person?.id) return [...acc];
       const { id, fullName: label } = person;
-      return [...acc, { id, attributes: { id, label, wikis } }];
+      return [...acc, { id, attributes: { id, label, wikis, publication: title?.default } }];
     }, []);
   });
 }
@@ -48,17 +48,24 @@ export function scanrToGraphology(publicationList) {
   const nodes = getNodesFromPublicationList(publicationListWithoutTooManyAuthors);
   console.log(nodes[0])
   const edges = getEdgesFromPublicationList(publicationListWithoutTooManyAuthors);
-  nodes.forEach(({ id, attributes }) => graph.updateNode(id, attr => ({ 
-    ...attributes, 
-    size: (attr?.size + 1) || 1, 
-    wikis: (attr?.wikis) ? [...attr?.wikis, ...attributes?.wikis] : [...attributes?.wikis]})));
+  nodes.forEach(({ id, attributes }) => graph.updateNode(id, attr => ({
+    ...attributes,
+    size: 8 * Math.log(attr.weight + 2) || 1,
+    wikis: (attr?.wikis) ? [...attr?.wikis, ...attributes?.wikis] : [...attributes?.wikis],
+    publications: (attr?.publications) ? [...attr?.publications, attributes?.publication] : [attributes?.publication]
+  })));
+  nodes.forEach(({ id, attributes }) => graph.updateNode(id, (attr) => ({
+    ...attributes,
+    size: 8 * Math.log(attr.weight + 2) || 1,
+    weight: (attr?.weight + 1) || 1
+  })));
   edges.forEach(({ source, target }) => graph.updateUndirectedEdgeWithKey(
     `(${source}--${target})`,
     source,
     target,
     (attr) => ({
       weight: (attr?.weight + 1) || 1,
-      size: (attr?.size + 1) || 1,
+      size: 8 * Math.log(attr.weight + 2) || 1,
       label: `${attr?.size || 1} copublis`,
     }),
   ));
@@ -67,22 +74,10 @@ export function scanrToGraphology(publicationList) {
   let filteredGraph = graph;
   while (filteredGraph.order > 100) {
     MIN_NUMBER_OF_PUBLICATIONS += 1;
-    filteredGraph = subgraph(graph, (key, attr) => attr?.size >= MIN_NUMBER_OF_PUBLICATIONS);
+    filteredGraph = subgraph(graph, (key, attr) => attr?.weight >= MIN_NUMBER_OF_PUBLICATIONS);
   }
   console.log('MIN_NUMBER_OF_PUBLICATIONS', MIN_NUMBER_OF_PUBLICATIONS);
   console.log('current order', filteredGraph.order)
-  filteredGraph.updateEachNodeAttributes((node, attr) => {
-    return {
-      ...attr,
-      size: 8 * Math.log(attr.size + 1)
-    };
-  });
-  filteredGraph.updateEachEdgeAttributes((edge, attr) => {
-    return {
-      ...attr,
-      weight: 8 * Math.log(attr.weight + 1)
-    };
-  });
   random.assign(filteredGraph);
   const settings = forceAtlas2.inferSettings(filteredGraph);
   console.log('SETTINGS', settings);
@@ -100,7 +95,7 @@ export function scanrToGraphology(publicationList) {
     const color = COLORS?.[community] || DEFAULT_NODE_COLOR;
     filteredGraph.setNodeAttribute(node, 'color', color);
   });
-  noverlap.assign(filteredGraph, {maxIterations: 50, gridSize:1, expansion:1.5, ratio: 2});
+  noverlap.assign(filteredGraph, { maxIterations: 50, gridSize: 1, expansion: 1.5, ratio: 2 });
 
   return filteredGraph;
 }
