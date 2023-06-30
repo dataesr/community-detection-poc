@@ -78,33 +78,41 @@ export default function Graph({ data }) {
                     {selectedNode.label}
                   </Title>
                   <Text bold className="fr-mb-1v">
-                    Cluster:
-                    {' '}
-                    {selectedNode.color}
-                  </Text>
-                  <Text bold className="fr-mb-1v">
                     idRef:
                     {' '}
                     {selectedNode.id.split('idref')[1]}
                   </Text>
+                  <Text bold className="fr-mb-1v">
+                    Cluster wordcloud:
+                    <BadgeGroup>
+                      {getThematicFromCluster(communities[selectedNode.color]).map((wiki) => (
+                        <Badge type='info' text={`${wiki.label} (${wiki.count})`} />))
+                      }
+                    </BadgeGroup>
+                  </Text>
                   <Row gutters>
-                    <Col n="4">
+                    <Col n="12">
+                      <Text bold className="fr-mb-1v">
+                        Author wordcloud:
+                      </Text>
+                      <BadgeGroup>
+                        {getThematicFromCluster([graph.getNodeAttributes(selectedNode.id)])?.map((wiki) => (
+                          <Badge type='info' text={`${wiki.label} (${wiki.count})`} />))}
+                      </BadgeGroup>
+                    </Col>
+                    <Col n="12">
+                      <BadgeGroup>
+                        <Badge className="fr-ml-1w" text={`${selectedNode.degree} co-authors`} />
+                      </BadgeGroup>
+                      {graph
+                        .mapNeighbors(selectedNode.id, (node, attr) => attr.label)
+                        .join(', ')}
+                    </Col>
+                    <Col n="12">
                       <BadgeGroup>
                         <Badge colorFamily="purple-glycine" className="fr-ml-1w" text={`${selectedNode.weight} publications`} />
                       </BadgeGroup>
                       {graph.getNodeAttribute(selectedNode.id, 'publications')?.map((publication) => (<p>{publication}</p>))}
-                    </Col>
-                    <Col n="4">
-                      <BadgeGroup>
-                        <Badge className="fr-ml-1w" text={`${selectedNode.degree} co-authors`} />
-                      </BadgeGroup>
-                      {graph.mapNeighbors(selectedNode.id, (node, attr) => (<p>{attr.label}</p>))}
-                    </Col>
-                    <Col n="4">
-                      <BadgeGroup>
-                        <Badge colorFamily="blue-cumulus" className="fr-ml-1w" text="Mot clés" />
-                      </BadgeGroup>
-                      {graph.getNodeAttribute(selectedNode.id, 'wikis')?.map((keyword) => (<p>{keyword}</p>))}
                     </Col>
                   </Row>
                 </div>
