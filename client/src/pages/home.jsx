@@ -17,9 +17,9 @@ async function getScanr({ query, type }) {
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { datasource = 'scanr', query = 'athlete', type = 'keyword' } = Object.fromEntries(searchParams.entries());
+  const { datasource = 'scanr', query, type = 'keyword' } = Object.fromEntries(searchParams.entries());
   const [formDatasource, setFormDatasource] = useState(datasource);
-  const [formQuery, setFormQuery] = useState(query.split(','));
+  const [formQuery, setFormQuery] = useState(query?.split(',') || []);
   const [formType, setFormType] = useState(type);
   const [isError, setFormIsError] = useState(false);
 
