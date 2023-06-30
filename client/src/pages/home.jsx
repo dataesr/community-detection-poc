@@ -2,7 +2,6 @@ import { Button, Container, Select, Title } from '@dataesr/react-dsfr';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
-
 import Graph from '../layout/Graph';
 import TagInput from '../layout/TagInput';
 
@@ -23,7 +22,7 @@ export default function Home() {
     queryFn: () => getScanr({ query, type }),
     enabled: false,
     staleTime: Infinity,
-    cacheTime: Infinity
+    cacheTime: Infinity,
   });
 
   const datasources = [
@@ -53,12 +52,6 @@ export default function Home() {
     },
   ];
 
-  const defaultQuery = {
-    author: ['048743216'],
-    keyword: ['athlete'],
-    structure: ['199712586Y'],
-  };
-
   return (
     <Container className="fr-my-15w">
       <Title as="h1">
@@ -76,7 +69,6 @@ export default function Home() {
         selected={type}
         onChange={(e) => {
           setType(e.target.value);
-          setQuery(defaultQuery[e.target.value]);
         }}
       />
       <TagInput
@@ -85,7 +77,7 @@ export default function Home() {
         tags={query}
         onTagsChange={(tags) => setQuery(tags)}
       />
-      <Button onClick={refetch} >
+      <Button onClick={refetch}>
         Generate graph
       </Button>
       {(isFetching) && (<div>Fetching data...</div>)}
