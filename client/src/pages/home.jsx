@@ -1,8 +1,7 @@
-import { Button, Container, Select, Title } from '@dataesr/react-dsfr';
+import { Alert, Button, Container, Select, Title } from '@dataesr/react-dsfr';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { PageSpinner } from '../components/spinner';
-
 
 import Graph from '../layout/Graph';
 import TagInput from '../layout/TagInput';
@@ -18,6 +17,7 @@ export default function Home() {
   const [datasource, setDatasource] = useState('scanr');
   const [query, setQuery] = useState([]);
   const [type, setType] = useState('keyword');
+  const [isError, setIsError] = useState(false);
 
   const { data, isFetching, refetch } = useQuery({
     queryKey: ['graph'],
@@ -84,9 +84,10 @@ export default function Home() {
         tags={query}
         onTagsChange={(tags) => setQuery(tags)}
       />
-      <Button onClick={refetch}>
+      <Button onClick={() => (query.length === 0 ? setIsError(true) : (setIsError(false), refetch()))}>
         Generate graph
       </Button>
+      <Alert title="Error" description="Your query is empty" type="error" show={isError} closable onClose={() => setIsError(false)} />
       {(isFetching) && (<Container><PageSpinner /></Container>)}
       {(!isFetching && data) && <Graph data={data} />}
     </Container>
