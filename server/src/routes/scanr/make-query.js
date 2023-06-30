@@ -3,7 +3,7 @@ const DEFAULT_SIZE = 5000;
 const ELASTIC_SOURCE_FIELDS = ['id', 'authors', 'domains', 'title'];
 
 
-export const makeQueryByAuthor = (query, size = DEFAULT_SIZE, years = DEFAULT_YEARS) => ({
+export const makeQueryByAuthor = (query, size = DEFAULT_SIZE) => ({
   size,
   _source: ELASTIC_SOURCE_FIELDS,
   query: {
@@ -12,7 +12,7 @@ export const makeQueryByAuthor = (query, size = DEFAULT_SIZE, years = DEFAULT_YE
         bool: {
           filter: [
             { terms: { 'authors.role.keyword': ['author', 'directeurthese'] } },
-            { terms: { year: years } },
+            // { terms: { year: years } },
             { terms: { 'authors.person.id.keyword': query.split(',').map((id) => `idref${id}`) } },
           ],
         },
