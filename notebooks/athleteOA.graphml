@@ -4,243 +4,288 @@
 <key id="d2" for="edge" attr.name="orcid_source" attr.type="string"/>
 <key id="d1" for="edge" attr.name="id_oa_target" attr.type="string"/>
 <key id="d0" for="edge" attr.name="id_oa_source" attr.type="string"/>
-<graph edgedefault="undirected"><node id="Gregory D. Myer"/>
-<node id="Timothy E. Hewett"/>
-<node id="Andrea Stracciolini"/>
-<node id="Daniele Detanico"/>
-<node id="Rafael Lima Kons"/>
-<node id="Emerson Franchini"/>
+<graph edgedefault="undirected"><node id="Franck Brocherie"/>
+<node id="Grégoire P. Millet"/>
+<node id="Jean-François Kaux"/>
+<node id="Suzanne Leclerc"/>
+<node id="Mathieu Nedelec"/>
+<node id="Gaël Guilhem"/>
+<node id="Pascal Edouard"/>
+<node id="Helmi Ben Saad"/>
 <node id="Khaled Trabelsi"/>
 <node id="Achraf Ammar"/>
-<node id="Nicola Luigi Bragazzi"/>
-<node id="Hamdi Chtourou"/>
+<node id="Omar Boukhris"/>
+<node id="C. Randall Clark"/>
+<node id="Tarak Driss"/>
 <node id="Karim Chamari"/>
+<node id="Hamdi Chtourou"/>
+<node id="Jad Adrian Washif"/>
+<node id="Abdulaziz Farooq"/>
 <node id="David B. Pyne"/>
-<node id="Gary W. Slater"/>
-<node id="Emily Kroshus"/>
-<node id="Brian Hainline"/>
-<node id="Cheri A. Blauwet"/>
-<node id="Lars Engebretsen"/>
-<node id="Margo Mountjoy"/>
-<node id="Rosemary Purcell"/>
-<node id="Margot Putukian"/>
-<node id="Claudia L. Reardon"/>
-<node id="Simon M Rice"/>
-<node id="Zachary Y. Kerr"/>
-<node id="Kimberly G. Harmon"/>
-<node id="Nathaniel Moulson"/>
-<node id="Stephanie Kliethermes"/>
-<node id="Bradley J. Petek"/>
-<node id="Jonathan A. Drezner"/>
-<node id="Aaron L. Baggish"/>
-<node id="Andrew J. Watson"/>
-<node id="M. L. Brooks"/>
-<node id="Rhodri S. Lloyd"/>
-<node id="Kaisa Aunola"/>
-<node id="Tatiana V. Ryba"/>
-<node id="Beat Knechtle"/>
-<node id="David R. Maldonado"/>
-<node id="Benjamin G. Domb"/>
-<node id="Ajay C. Lall"/>
-<node id="Andrew E. Jimenez"/>
-<node id="Jade S. Owens"/>
-<node id="Benjamin R. Saks"/>
-<node id="Sanjay Sharma"/>
-<node id="Katrien Fransen"/>
-<node id="Todd M. Loughead"/>
-<node id="Dai Sugimoto"/>
-<node id="Jon L. Oliver"/>
-<node id="William P. Meehan"/>
-<node id="David R. Howell"/>
-<node id="Martin Schwellnus"/>
-<node id="James H. Hull"/>
-<node id="Wayne Derman"/>
-<node id="Paolo Emilio Adami"/>
-<node id="Daniel J. Madigan"/>
-<node id="Henrik Gustafsson"/>
+<node id="Hélène Joncheray"/>
+<node id="Fabrice Burlot"/>
+<node id="Karim Khalladi"/>
+<node id="Sebastien Racinais"/>
+<node id="Gürhan Dönmez"/>
+<node id="Valérian Cece"/>
+<node id="Virginie Nicaise"/>
+<node id="Emma Guillet-Descas"/>
+<node id="Noémie Lienhart"/>
 <node id="Guillaume Martinent"/>
-<node id="Michael McCrea"/>
-<node id="Anthony P. Kontos"/>
-<node id="Steven P. Broglio"/>
-<node id="Julianne D. Schmidt"/>
-<node id="Kathryn E. Ackerman"/>
-<node id="Trent Stellingwerff"/>
-<node id="Toomas Timpka"/>
-<node id="Louise M. Burke"/>
-<node id="Jonathan M. Oliver"/>
+<node id="Henrik Gustafsson"/>
+<node id="Sandrine Isoard-Gautheur"/>
+<node id="Paolo Emilio Adami"/>
+<node id="Stéphane Bermon"/>
+<node id="Lee Taylor"/>
+<node id="Nick Webborn"/>
+<node id="Wayne Derman"/>
+<node id="Valérie Bougault"/>
+<node id="Nicola Sewry"/>
+<node id="Martin Schwellnus"/>
+<node id="Yohan Grandperrin"/>
+<node id="Laurent Mourot"/>
+<node id="Magali Nicolier"/>
+<node id="Philippe Gimenez"/>
+<node id="Chrystelle Vidal"/>
+<node id="Emmanuel Haffen"/>
+<node id="Djamila Bennabi"/>
+<node id="Renzo Bianchi"/>
+<node id="Markus Gerber"/>
+<node id="Sebastian Ludyga"/>
+<node id="Serge Brand"/>
+<node id="Lars Pedersen"/>
+<node id="James H. Hull"/>
+<node id="Omar Hammouda"/>
+<node id="Nizar Souissi"/>
+<node id="Mohamed Romdhani"/>
+<node id="Imen Moussa-Chamari"/>
+<node id="Frédéric Schnell"/>
+<node id="François Carré"/>
+<node id="Anne-Charlotte Dupont"/>
+<node id="Antonio Tessitore"/>
+<node id="Ciaran MacDonncha"/>
 <node id="Laura Capranica"/>
-<node id="Patrik Drid"/>
-<node id="Antonino Bianco"/>
-<node id="Douglas J. Casa"/>
-<node id="Johna K. Register-Mihalik"/>
-<node id="Jessica Wallace"/>
-<node id="Erica Beidler"/>
-<node id="Abigail C. Bretzin"/>
-<node id="Stefano Caselli"/>
-<node id="Andre La Gerche"/>
-<node id="Michael Papadakis"/>
-<node id="Domenico Corrado"/>
-<node id="Alessandro Zorzi"/>
-<node id="Flavio D'Ascenzi"/>
-<node id="Andrew R. Jagim"/>
-<node id="Margaret T. Jones"/>
-<node id="R J Elbin"/>
-<node id="Tracey Covassin"/>
-<node id="Ioanna K Bolia"/>
-<node id="Alexander E. Weber"/>
-<node id="Peter Peeling"/>
-<node id="Shona L. Halson"/>
-<node id="Gretchen Kerr"/>
-<node id="Katherine A. Tamminen"/>
-<node id="Paul D. Berkner"/>
-<node id="Analiza M. Silva"/>
-<node id="Luís B. Sardinha"/>
-<node id="Matthew W. Driller"/>
-<node id="Pantelis T. Nikolaidis"/>
-<node id="Felipe J. Aidar"/>
-<node id="Paulo Gentil"/>
-<node id="Susan H. Backhouse"/>
-<node id="Jürgen M. Steinacker"/>
-<node id="Tomás Herrera-Valenzuela"/>
-<edge source="Gregory D. Myer" target="Timothy E. Hewett">
-  <data key="d0">https://openalex.org/A4357169849</data>
-  <data key="d1">https://openalex.org/A4358605845</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">8</data>
-</edge>
-<edge source="Gregory D. Myer" target="Dai Sugimoto">
-  <data key="d0">https://openalex.org/A2329835334</data>
-  <data key="d1">https://openalex.org/A4357169849</data>
-  <data key="d2">https://orcid.org/0000-0001-6858-4434</data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Gregory D. Myer" target="Jon L. Oliver">
-  <data key="d0">https://openalex.org/A4353745064</data>
-  <data key="d1">https://openalex.org/A4357169849</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">3</data>
-</edge>
-<edge source="Gregory D. Myer" target="Rhodri S. Lloyd">
-  <data key="d0">https://openalex.org/A4355344440</data>
-  <data key="d1">https://openalex.org/A4357169849</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">3</data>
-</edge>
-<edge source="Gregory D. Myer" target="Andrea Stracciolini">
-  <data key="d0">https://openalex.org/A4342474622</data>
-  <data key="d1">https://openalex.org/A4357169849</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Gregory D. Myer" target="William P. Meehan">
-  <data key="d0">https://openalex.org/A4357169849</data>
-  <data key="d1">https://openalex.org/A4359358298</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">3</data>
-</edge>
-<edge source="Gregory D. Myer" target="David R. Howell">
-  <data key="d0">https://openalex.org/A4357169849</data>
-  <data key="d1">https://openalex.org/A4357752512</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">3</data>
-</edge>
-<edge source="Timothy E. Hewett" target="Andrea Stracciolini">
-  <data key="d0">https://openalex.org/A4342474622</data>
-  <data key="d1">https://openalex.org/A4358605845</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Andrea Stracciolini" target="David R. Howell">
-  <data key="d0">https://openalex.org/A4342474622</data>
-  <data key="d1">https://openalex.org/A4357752512</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Andrea Stracciolini" target="Dai Sugimoto">
-  <data key="d0">https://openalex.org/A2329835334</data>
-  <data key="d1">https://openalex.org/A4342474622</data>
-  <data key="d2">https://orcid.org/0000-0001-6858-4434</data>
-  <data key="d3"></data>
-  <data key="d4">9</data>
-</edge>
-<edge source="Andrea Stracciolini" target="William P. Meehan">
-  <data key="d0">https://openalex.org/A4342474622</data>
-  <data key="d1">https://openalex.org/A4359358298</data>
-  <data key="d2"></data>
+<node id="Giles D. Warrington"/>
+<node id="Mojca Doupona"/>
+<node id="Syrine Khemila"/>
+<node id="Sergio Garbarino"/>
+<node id="Nicola Luigi Bragazzi"/>
+<node id="Hassane Zouhal"/>
+<node id="Urs Granacher"/>
+<node id="Lars Engebretsen"/>
+<node id="Ali Guermazi"/>
+<node id="Frank W. Roemer"/>
+<node id="Mohamed Jarraya"/>
+<node id="Michel D. Crema"/>
+<node id="Anthony Birat"/>
+<node id="Anthony J. Blazevich"/>
+<node id="Stéphane Nottin"/>
+<node id="Sébastien Ratel"/>
+<node id="Patrick Mucci"/>
+<node id="Martine Duclos"/>
+<node id="Jean-François Toussaint"/>
+<edge source="Franck Brocherie" target="Grégoire P. Millet">
+  <data key="d0">https://openalex.org/A2609994202</data>
+  <data key="d1">https://openalex.org/A4359743723</data>
+  <data key="d2">https://orcid.org/0000-0002-0808-7986</data>
   <data key="d3"></data>
   <data key="d4">2</data>
 </edge>
-<edge source="Andrea Stracciolini" target="Kathryn E. Ackerman">
-  <data key="d0">https://openalex.org/A4342474622</data>
-  <data key="d1">https://openalex.org/A4354980832</data>
+<edge source="Franck Brocherie" target="Jean-François Kaux">
+  <data key="d0">https://openalex.org/A2180444749</data>
+  <data key="d1">https://openalex.org/A2609994202</data>
+  <data key="d2">https://orcid.org/0000-0003-1939-3652</data>
+  <data key="d3">https://orcid.org/0000-0002-0808-7986</data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Franck Brocherie" target="Suzanne Leclerc">
+  <data key="d0">https://openalex.org/A2070020539</data>
+  <data key="d1">https://openalex.org/A2609994202</data>
+  <data key="d2"></data>
+  <data key="d3">https://orcid.org/0000-0002-0808-7986</data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Franck Brocherie" target="Mathieu Nedelec">
+  <data key="d0">https://openalex.org/A2609994202</data>
+  <data key="d1">https://openalex.org/A4336280858</data>
+  <data key="d2">https://orcid.org/0000-0002-0808-7986</data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Franck Brocherie" target="Gaël Guilhem">
+  <data key="d0">https://openalex.org/A2212995703</data>
+  <data key="d1">https://openalex.org/A2609994202</data>
+  <data key="d2">https://orcid.org/0000-0002-0377-2060</data>
+  <data key="d3">https://orcid.org/0000-0002-0808-7986</data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Franck Brocherie" target="Pascal Edouard">
+  <data key="d0">https://openalex.org/A2609994202</data>
+  <data key="d1">https://openalex.org/A3104309309</data>
+  <data key="d2">https://orcid.org/0000-0002-0808-7986</data>
+  <data key="d3">https://orcid.org/0000-0003-1969-3612</data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Jean-François Kaux" target="Gürhan Dönmez">
+  <data key="d0">https://openalex.org/A2168673575</data>
+  <data key="d1">https://openalex.org/A2180444749</data>
+  <data key="d2">https://orcid.org/0000-0001-6379-669X</data>
+  <data key="d3">https://orcid.org/0000-0003-1939-3652</data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Jean-François Kaux" target="Gaël Guilhem">
+  <data key="d0">https://openalex.org/A2180444749</data>
+  <data key="d1">https://openalex.org/A2212995703</data>
+  <data key="d2">https://orcid.org/0000-0003-1939-3652</data>
+  <data key="d3">https://orcid.org/0000-0002-0377-2060</data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Jean-François Kaux" target="Mathieu Nedelec">
+  <data key="d0">https://openalex.org/A2180444749</data>
+  <data key="d1">https://openalex.org/A4336280858</data>
+  <data key="d2">https://orcid.org/0000-0003-1939-3652</data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Jean-François Kaux" target="Suzanne Leclerc">
+  <data key="d0">https://openalex.org/A2070020539</data>
+  <data key="d1">https://openalex.org/A2180444749</data>
+  <data key="d2"></data>
+  <data key="d3">https://orcid.org/0000-0003-1939-3652</data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Jean-François Kaux" target="Pascal Edouard">
+  <data key="d0">https://openalex.org/A2180444749</data>
+  <data key="d1">https://openalex.org/A3104309309</data>
+  <data key="d2">https://orcid.org/0000-0003-1939-3652</data>
+  <data key="d3">https://orcid.org/0000-0003-1969-3612</data>
+  <data key="d4">3</data>
+</edge>
+<edge source="Suzanne Leclerc" target="Gaël Guilhem">
+  <data key="d0">https://openalex.org/A2070020539</data>
+  <data key="d1">https://openalex.org/A2212995703</data>
+  <data key="d2"></data>
+  <data key="d3">https://orcid.org/0000-0002-0377-2060</data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Suzanne Leclerc" target="Mathieu Nedelec">
+  <data key="d0">https://openalex.org/A2070020539</data>
+  <data key="d1">https://openalex.org/A4336280858</data>
   <data key="d2"></data>
   <data key="d3"></data>
   <data key="d4">1</data>
 </edge>
-<edge source="Daniele Detanico" target="Rafael Lima Kons">
-  <data key="d0">https://openalex.org/A4356534499</data>
-  <data key="d1">https://openalex.org/A4358129560</data>
+<edge source="Suzanne Leclerc" target="Pascal Edouard">
+  <data key="d0">https://openalex.org/A2070020539</data>
+  <data key="d1">https://openalex.org/A3104309309</data>
   <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">24</data>
+  <data key="d3">https://orcid.org/0000-0003-1969-3612</data>
+  <data key="d4">2</data>
 </edge>
-<edge source="Daniele Detanico" target="Emerson Franchini">
-  <data key="d0">https://openalex.org/A4355955083</data>
-  <data key="d1">https://openalex.org/A4356534499</data>
-  <data key="d2"></data>
+<edge source="Mathieu Nedelec" target="Gaël Guilhem">
+  <data key="d0">https://openalex.org/A2212995703</data>
+  <data key="d1">https://openalex.org/A4336280858</data>
+  <data key="d2">https://orcid.org/0000-0002-0377-2060</data>
   <data key="d3"></data>
-  <data key="d4">4</data>
+  <data key="d4">1</data>
 </edge>
-<edge source="Rafael Lima Kons" target="Emerson Franchini">
-  <data key="d0">https://openalex.org/A4355955083</data>
-  <data key="d1">https://openalex.org/A4358129560</data>
-  <data key="d2"></data>
+<edge source="Mathieu Nedelec" target="Hélène Joncheray">
+  <data key="d0">https://openalex.org/A1629792555</data>
+  <data key="d1">https://openalex.org/A4336280858</data>
+  <data key="d2">https://orcid.org/0000-0002-7048-0658</data>
   <data key="d3"></data>
-  <data key="d4">4</data>
+  <data key="d4">1</data>
 </edge>
-<edge source="Emerson Franchini" target="Hamdi Chtourou">
-  <data key="d0">https://openalex.org/A4354098812</data>
-  <data key="d1">https://openalex.org/A4355955083</data>
-  <data key="d2"></data>
+<edge source="Mathieu Nedelec" target="Pascal Edouard">
+  <data key="d0">https://openalex.org/A3104309309</data>
+  <data key="d1">https://openalex.org/A4336280858</data>
+  <data key="d2">https://orcid.org/0000-0003-1969-3612</data>
   <data key="d3"></data>
-  <data key="d4">6</data>
+  <data key="d4">1</data>
 </edge>
-<edge source="Emerson Franchini" target="Tomás Herrera-Valenzuela">
-  <data key="d0">https://openalex.org/A4355955083</data>
-  <data key="d1">https://openalex.org/A4358491824</data>
-  <data key="d2"></data>
+<edge source="Gaël Guilhem" target="Pascal Edouard">
+  <data key="d0">https://openalex.org/A2212995703</data>
+  <data key="d1">https://openalex.org/A3104309309</data>
+  <data key="d2">https://orcid.org/0000-0002-0377-2060</data>
+  <data key="d3">https://orcid.org/0000-0003-1969-3612</data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Pascal Edouard" target="Sebastien Racinais">
+  <data key="d0">https://openalex.org/A3104309309</data>
+  <data key="d1">https://openalex.org/A4358381111</data>
+  <data key="d2">https://orcid.org/0000-0003-1969-3612</data>
   <data key="d3"></data>
-  <data key="d4">5</data>
+  <data key="d4">1</data>
 </edge>
-<edge source="Khaled Trabelsi" target="Achraf Ammar">
-  <data key="d0">https://openalex.org/A2306074919</data>
+<edge source="Helmi Ben Saad" target="Khaled Trabelsi">
+  <data key="d0">https://openalex.org/A2252202742</data>
+  <data key="d1">https://openalex.org/A2306074919</data>
+  <data key="d2">https://orcid.org/0000-0002-7477-2965</data>
+  <data key="d3">https://orcid.org/0000-0003-0207-9819</data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Helmi Ben Saad" target="Achraf Ammar">
+  <data key="d0">https://openalex.org/A2252202742</data>
   <data key="d1">https://openalex.org/A4354515368</data>
-  <data key="d2">https://orcid.org/0000-0003-0207-9819</data>
+  <data key="d2">https://orcid.org/0000-0002-7477-2965</data>
   <data key="d3"></data>
-  <data key="d4">10</data>
+  <data key="d4">1</data>
 </edge>
-<edge source="Khaled Trabelsi" target="Hamdi Chtourou">
-  <data key="d0">https://openalex.org/A2306074919</data>
-  <data key="d1">https://openalex.org/A4354098812</data>
-  <data key="d2">https://orcid.org/0000-0003-0207-9819</data>
+<edge source="Helmi Ben Saad" target="Omar Boukhris">
+  <data key="d0">https://openalex.org/A2252202742</data>
+  <data key="d1">https://openalex.org/A2889878344</data>
+  <data key="d2">https://orcid.org/0000-0002-7477-2965</data>
+  <data key="d3">https://orcid.org/0000-0002-2861-0164</data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Helmi Ben Saad" target="C. Randall Clark">
+  <data key="d0">https://openalex.org/A2252202742</data>
+  <data key="d1">https://openalex.org/A4357076172</data>
+  <data key="d2">https://orcid.org/0000-0002-7477-2965</data>
   <data key="d3"></data>
-  <data key="d4">9</data>
+  <data key="d4">1</data>
 </edge>
-<edge source="Khaled Trabelsi" target="Karim Chamari">
-  <data key="d0">https://openalex.org/A2306074919</data>
+<edge source="Helmi Ben Saad" target="Tarak Driss">
+  <data key="d0">https://openalex.org/A2252202742</data>
+  <data key="d1">https://openalex.org/A4357925455</data>
+  <data key="d2">https://orcid.org/0000-0002-7477-2965</data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Helmi Ben Saad" target="Karim Chamari">
+  <data key="d0">https://openalex.org/A2252202742</data>
   <data key="d1">https://openalex.org/A4353464565</data>
+  <data key="d2">https://orcid.org/0000-0002-7477-2965</data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Helmi Ben Saad" target="Hamdi Chtourou">
+  <data key="d0">https://openalex.org/A2252202742</data>
+  <data key="d1">https://openalex.org/A4354098812</data>
+  <data key="d2">https://orcid.org/0000-0002-7477-2965</data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Khaled Trabelsi" target="Jad Adrian Washif">
+  <data key="d0">https://openalex.org/A2306074919</data>
+  <data key="d1">https://openalex.org/A3094931365</data>
   <data key="d2">https://orcid.org/0000-0003-0207-9819</data>
   <data key="d3"></data>
-  <data key="d4">3</data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Khaled Trabelsi" target="Abdulaziz Farooq">
+  <data key="d0">https://openalex.org/A2140868878</data>
+  <data key="d1">https://openalex.org/A2306074919</data>
+  <data key="d2">https://orcid.org/0000-0002-9162-4948</data>
+  <data key="d3">https://orcid.org/0000-0003-0207-9819</data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Khaled Trabelsi" target="Tarak Driss">
+  <data key="d0">https://openalex.org/A2306074919</data>
+  <data key="d1">https://openalex.org/A4357925455</data>
+  <data key="d2">https://orcid.org/0000-0003-0207-9819</data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
 </edge>
 <edge source="Khaled Trabelsi" target="David B. Pyne">
   <data key="d0">https://openalex.org/A2306074919</data>
@@ -249,11 +294,53 @@
   <data key="d3"></data>
   <data key="d4">1</data>
 </edge>
-<edge source="Khaled Trabelsi" target="Gary W. Slater">
-  <data key="d0">https://openalex.org/A2110367379</data>
+<edge source="Khaled Trabelsi" target="Nizar Souissi">
+  <data key="d0">https://openalex.org/A2026453917</data>
   <data key="d1">https://openalex.org/A2306074919</data>
-  <data key="d2">https://orcid.org/0000-0003-0895-7117</data>
+  <data key="d2">https://orcid.org/0000-0003-1227-8221</data>
   <data key="d3">https://orcid.org/0000-0003-0207-9819</data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Khaled Trabelsi" target="Karim Chamari">
+  <data key="d0">https://openalex.org/A2306074919</data>
+  <data key="d1">https://openalex.org/A4353464565</data>
+  <data key="d2">https://orcid.org/0000-0003-0207-9819</data>
+  <data key="d3"></data>
+  <data key="d4">3</data>
+</edge>
+<edge source="Khaled Trabelsi" target="C. Randall Clark">
+  <data key="d0">https://openalex.org/A2306074919</data>
+  <data key="d1">https://openalex.org/A4357076172</data>
+  <data key="d2">https://orcid.org/0000-0003-0207-9819</data>
+  <data key="d3"></data>
+  <data key="d4">3</data>
+</edge>
+<edge source="Khaled Trabelsi" target="Sergio Garbarino">
+  <data key="d0">https://openalex.org/A2306074919</data>
+  <data key="d1">https://openalex.org/A4353755389</data>
+  <data key="d2">https://orcid.org/0000-0003-0207-9819</data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Khaled Trabelsi" target="Achraf Ammar">
+  <data key="d0">https://openalex.org/A2306074919</data>
+  <data key="d1">https://openalex.org/A4354515368</data>
+  <data key="d2">https://orcid.org/0000-0003-0207-9819</data>
+  <data key="d3"></data>
+  <data key="d4">6</data>
+</edge>
+<edge source="Khaled Trabelsi" target="Hamdi Chtourou">
+  <data key="d0">https://openalex.org/A2306074919</data>
+  <data key="d1">https://openalex.org/A4354098812</data>
+  <data key="d2">https://orcid.org/0000-0003-0207-9819</data>
+  <data key="d3"></data>
+  <data key="d4">6</data>
+</edge>
+<edge source="Khaled Trabelsi" target="Omar Hammouda">
+  <data key="d0">https://openalex.org/A2306074919</data>
+  <data key="d1">https://openalex.org/A4354708703</data>
+  <data key="d2">https://orcid.org/0000-0003-0207-9819</data>
+  <data key="d3"></data>
   <data key="d4">1</data>
 </edge>
 <edge source="Khaled Trabelsi" target="Nicola Luigi Bragazzi">
@@ -261,28 +348,35 @@
   <data key="d1">https://openalex.org/A4354305022</data>
   <data key="d2">https://orcid.org/0000-0003-0207-9819</data>
   <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Khaled Trabelsi" target="Omar Boukhris">
+  <data key="d0">https://openalex.org/A2306074919</data>
+  <data key="d1">https://openalex.org/A2889878344</data>
+  <data key="d2">https://orcid.org/0000-0003-0207-9819</data>
+  <data key="d3">https://orcid.org/0000-0002-2861-0164</data>
   <data key="d4">4</data>
 </edge>
-<edge source="Achraf Ammar" target="Nicola Luigi Bragazzi">
-  <data key="d0">https://openalex.org/A4354305022</data>
+<edge source="Achraf Ammar" target="Jad Adrian Washif">
+  <data key="d0">https://openalex.org/A3094931365</data>
   <data key="d1">https://openalex.org/A4354515368</data>
   <data key="d2"></data>
   <data key="d3"></data>
-  <data key="d4">4</data>
+  <data key="d4">1</data>
 </edge>
-<edge source="Achraf Ammar" target="Hamdi Chtourou">
-  <data key="d0">https://openalex.org/A4354098812</data>
+<edge source="Achraf Ammar" target="Abdulaziz Farooq">
+  <data key="d0">https://openalex.org/A2140868878</data>
   <data key="d1">https://openalex.org/A4354515368</data>
-  <data key="d2"></data>
+  <data key="d2">https://orcid.org/0000-0002-9162-4948</data>
   <data key="d3"></data>
-  <data key="d4">8</data>
+  <data key="d4">1</data>
 </edge>
-<edge source="Achraf Ammar" target="Karim Chamari">
-  <data key="d0">https://openalex.org/A4353464565</data>
-  <data key="d1">https://openalex.org/A4354515368</data>
+<edge source="Achraf Ammar" target="Tarak Driss">
+  <data key="d0">https://openalex.org/A4354515368</data>
+  <data key="d1">https://openalex.org/A4357925455</data>
   <data key="d2"></data>
   <data key="d3"></data>
-  <data key="d4">3</data>
+  <data key="d4">1</data>
 </edge>
 <edge source="Achraf Ammar" target="David B. Pyne">
   <data key="d0">https://openalex.org/A4354515368</data>
@@ -291,45 +385,213 @@
   <data key="d3"></data>
   <data key="d4">1</data>
 </edge>
-<edge source="Achraf Ammar" target="Gary W. Slater">
-  <data key="d0">https://openalex.org/A2110367379</data>
+<edge source="Achraf Ammar" target="Nizar Souissi">
+  <data key="d0">https://openalex.org/A2026453917</data>
   <data key="d1">https://openalex.org/A4354515368</data>
-  <data key="d2">https://orcid.org/0000-0003-0895-7117</data>
+  <data key="d2">https://orcid.org/0000-0003-1227-8221</data>
   <data key="d3"></data>
   <data key="d4">1</data>
 </edge>
-<edge source="Nicola Luigi Bragazzi" target="Hamdi Chtourou">
-  <data key="d0">https://openalex.org/A4354098812</data>
-  <data key="d1">https://openalex.org/A4354305022</data>
+<edge source="Achraf Ammar" target="Karim Chamari">
+  <data key="d0">https://openalex.org/A4353464565</data>
+  <data key="d1">https://openalex.org/A4354515368</data>
   <data key="d2"></data>
   <data key="d3"></data>
   <data key="d4">3</data>
 </edge>
-<edge source="Nicola Luigi Bragazzi" target="Karim Chamari">
-  <data key="d0">https://openalex.org/A4353464565</data>
-  <data key="d1">https://openalex.org/A4354305022</data>
+<edge source="Achraf Ammar" target="C. Randall Clark">
+  <data key="d0">https://openalex.org/A4354515368</data>
+  <data key="d1">https://openalex.org/A4357076172</data>
   <data key="d2"></data>
   <data key="d3"></data>
   <data key="d4">3</data>
 </edge>
-<edge source="Hamdi Chtourou" target="Beat Knechtle">
-  <data key="d0">https://openalex.org/A21683132</data>
-  <data key="d1">https://openalex.org/A4354098812</data>
-  <data key="d2">https://orcid.org/0000-0002-2412-9103</data>
+<edge source="Achraf Ammar" target="Sergio Garbarino">
+  <data key="d0">https://openalex.org/A4353755389</data>
+  <data key="d1">https://openalex.org/A4354515368</data>
+  <data key="d2"></data>
   <data key="d3"></data>
   <data key="d4">1</data>
 </edge>
-<edge source="Hamdi Chtourou" target="Karim Chamari">
-  <data key="d0">https://openalex.org/A4353464565</data>
-  <data key="d1">https://openalex.org/A4354098812</data>
+<edge source="Achraf Ammar" target="Nicola Luigi Bragazzi">
+  <data key="d0">https://openalex.org/A4354305022</data>
+  <data key="d1">https://openalex.org/A4354515368</data>
   <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Achraf Ammar" target="Omar Boukhris">
+  <data key="d0">https://openalex.org/A2889878344</data>
+  <data key="d1">https://openalex.org/A4354515368</data>
+  <data key="d2">https://orcid.org/0000-0002-2861-0164</data>
   <data key="d3"></data>
   <data key="d4">4</data>
 </edge>
-<edge source="Hamdi Chtourou" target="Gary W. Slater">
-  <data key="d0">https://openalex.org/A2110367379</data>
+<edge source="Achraf Ammar" target="Hamdi Chtourou">
+  <data key="d0">https://openalex.org/A4354098812</data>
+  <data key="d1">https://openalex.org/A4354515368</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">5</data>
+</edge>
+<edge source="Achraf Ammar" target="Omar Hammouda">
+  <data key="d0">https://openalex.org/A4354515368</data>
+  <data key="d1">https://openalex.org/A4354708703</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Omar Boukhris" target="Tarak Driss">
+  <data key="d0">https://openalex.org/A2889878344</data>
+  <data key="d1">https://openalex.org/A4357925455</data>
+  <data key="d2">https://orcid.org/0000-0002-2861-0164</data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Omar Boukhris" target="Karim Chamari">
+  <data key="d0">https://openalex.org/A2889878344</data>
+  <data key="d1">https://openalex.org/A4353464565</data>
+  <data key="d2">https://orcid.org/0000-0002-2861-0164</data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Omar Boukhris" target="C. Randall Clark">
+  <data key="d0">https://openalex.org/A2889878344</data>
+  <data key="d1">https://openalex.org/A4357076172</data>
+  <data key="d2">https://orcid.org/0000-0002-2861-0164</data>
+  <data key="d3"></data>
+  <data key="d4">3</data>
+</edge>
+<edge source="Omar Boukhris" target="Sergio Garbarino">
+  <data key="d0">https://openalex.org/A2889878344</data>
+  <data key="d1">https://openalex.org/A4353755389</data>
+  <data key="d2">https://orcid.org/0000-0002-2861-0164</data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Omar Boukhris" target="Hamdi Chtourou">
+  <data key="d0">https://openalex.org/A2889878344</data>
   <data key="d1">https://openalex.org/A4354098812</data>
-  <data key="d2">https://orcid.org/0000-0003-0895-7117</data>
+  <data key="d2">https://orcid.org/0000-0002-2861-0164</data>
+  <data key="d3"></data>
+  <data key="d4">4</data>
+</edge>
+<edge source="Omar Boukhris" target="Nicola Luigi Bragazzi">
+  <data key="d0">https://openalex.org/A2889878344</data>
+  <data key="d1">https://openalex.org/A4354305022</data>
+  <data key="d2">https://orcid.org/0000-0002-2861-0164</data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="C. Randall Clark" target="Tarak Driss">
+  <data key="d0">https://openalex.org/A4357076172</data>
+  <data key="d1">https://openalex.org/A4357925455</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="C. Randall Clark" target="Karim Chamari">
+  <data key="d0">https://openalex.org/A4353464565</data>
+  <data key="d1">https://openalex.org/A4357076172</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="C. Randall Clark" target="Hassane Zouhal">
+  <data key="d0">https://openalex.org/A4355856561</data>
+  <data key="d1">https://openalex.org/A4357076172</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">3</data>
+</edge>
+<edge source="C. Randall Clark" target="Sergio Garbarino">
+  <data key="d0">https://openalex.org/A4353755389</data>
+  <data key="d1">https://openalex.org/A4357076172</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="C. Randall Clark" target="Nicola Luigi Bragazzi">
+  <data key="d0">https://openalex.org/A4354305022</data>
+  <data key="d1">https://openalex.org/A4357076172</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="C. Randall Clark" target="Hamdi Chtourou">
+  <data key="d0">https://openalex.org/A4354098812</data>
+  <data key="d1">https://openalex.org/A4357076172</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">3</data>
+</edge>
+<edge source="C. Randall Clark" target="Urs Granacher">
+  <data key="d0">https://openalex.org/A2410732</data>
+  <data key="d1">https://openalex.org/A4357076172</data>
+  <data key="d2">https://orcid.org/0000-0002-7095-813X</data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Tarak Driss" target="Omar Hammouda">
+  <data key="d0">https://openalex.org/A4354708703</data>
+  <data key="d1">https://openalex.org/A4357925455</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Tarak Driss" target="Karim Chamari">
+  <data key="d0">https://openalex.org/A4353464565</data>
+  <data key="d1">https://openalex.org/A4357925455</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">3</data>
+</edge>
+<edge source="Tarak Driss" target="Nizar Souissi">
+  <data key="d0">https://openalex.org/A2026453917</data>
+  <data key="d1">https://openalex.org/A4357925455</data>
+  <data key="d2">https://orcid.org/0000-0003-1227-8221</data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Tarak Driss" target="Hamdi Chtourou">
+  <data key="d0">https://openalex.org/A4354098812</data>
+  <data key="d1">https://openalex.org/A4357925455</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Tarak Driss" target="Mohamed Romdhani">
+  <data key="d0">https://openalex.org/A4357668834</data>
+  <data key="d1">https://openalex.org/A4357925455</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Tarak Driss" target="Imen Moussa-Chamari">
+  <data key="d0">https://openalex.org/A2975272463</data>
+  <data key="d1">https://openalex.org/A4357925455</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Karim Chamari" target="Jad Adrian Washif">
+  <data key="d0">https://openalex.org/A3094931365</data>
+  <data key="d1">https://openalex.org/A4353464565</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Karim Chamari" target="Abdulaziz Farooq">
+  <data key="d0">https://openalex.org/A2140868878</data>
+  <data key="d1">https://openalex.org/A4353464565</data>
+  <data key="d2">https://orcid.org/0000-0002-9162-4948</data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Karim Chamari" target="Sebastien Racinais">
+  <data key="d0">https://openalex.org/A4353464565</data>
+  <data key="d1">https://openalex.org/A4358381111</data>
+  <data key="d2"></data>
   <data key="d3"></data>
   <data key="d4">1</data>
 </edge>
@@ -340,1397 +602,1075 @@
   <data key="d3"></data>
   <data key="d4">1</data>
 </edge>
-<edge source="Karim Chamari" target="Gary W. Slater">
-  <data key="d0">https://openalex.org/A2110367379</data>
+<edge source="Karim Chamari" target="Imen Moussa-Chamari">
+  <data key="d0">https://openalex.org/A2975272463</data>
   <data key="d1">https://openalex.org/A4353464565</data>
-  <data key="d2">https://orcid.org/0000-0003-0895-7117</data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="David B. Pyne" target="Martin Schwellnus">
-  <data key="d0">https://openalex.org/A4354619294</data>
-  <data key="d1">https://openalex.org/A4357010701</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">3</data>
-</edge>
-<edge source="David B. Pyne" target="Peter Peeling">
-  <data key="d0">https://openalex.org/A4354120346</data>
-  <data key="d1">https://openalex.org/A4357010701</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">5</data>
-</edge>
-<edge source="David B. Pyne" target="Louise M. Burke">
-  <data key="d0">https://openalex.org/A4357010701</data>
-  <data key="d1">https://openalex.org/A4357752915</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">5</data>
-</edge>
-<edge source="David B. Pyne" target="James H. Hull">
-  <data key="d0">https://openalex.org/A4357010701</data>
-  <data key="d1">https://openalex.org/A4357622908</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">3</data>
-</edge>
-<edge source="David B. Pyne" target="Shona L. Halson">
-  <data key="d0">https://openalex.org/A4357010701</data>
-  <data key="d1">https://openalex.org/A4358109076</data>
   <data key="d2"></data>
   <data key="d3"></data>
   <data key="d4">1</data>
 </edge>
-<edge source="Gary W. Slater" target="Margo Mountjoy">
-  <data key="d0">https://openalex.org/A2110367379</data>
-  <data key="d1">https://openalex.org/A2147721403</data>
-  <data key="d2">https://orcid.org/0000-0003-0895-7117</data>
-  <data key="d3">https://orcid.org/0000-0001-8604-2014</data>
+<edge source="Karim Chamari" target="Nizar Souissi">
+  <data key="d0">https://openalex.org/A2026453917</data>
+  <data key="d1">https://openalex.org/A4353464565</data>
+  <data key="d2">https://orcid.org/0000-0003-1227-8221</data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Karim Chamari" target="Omar Hammouda">
+  <data key="d0">https://openalex.org/A4353464565</data>
+  <data key="d1">https://openalex.org/A4354708703</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Karim Chamari" target="Sergio Garbarino">
+  <data key="d0">https://openalex.org/A4353464565</data>
+  <data key="d1">https://openalex.org/A4353755389</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
   <data key="d4">1</data>
 </edge>
-<edge source="Gary W. Slater" target="Louise M. Burke">
-  <data key="d0">https://openalex.org/A2110367379</data>
-  <data key="d1">https://openalex.org/A4357752915</data>
-  <data key="d2">https://orcid.org/0000-0003-0895-7117</data>
+<edge source="Karim Chamari" target="Nicola Luigi Bragazzi">
+  <data key="d0">https://openalex.org/A4353464565</data>
+  <data key="d1">https://openalex.org/A4354305022</data>
+  <data key="d2"></data>
   <data key="d3"></data>
-  <data key="d4">3</data>
+  <data key="d4">1</data>
 </edge>
-<edge source="Emily Kroshus" target="Brian Hainline">
-  <data key="d0">https://openalex.org/A1045646349</data>
-  <data key="d1">https://openalex.org/A4344371058</data>
-  <data key="d2">https://orcid.org/0000-0002-7484-2601</data>
+<edge source="Karim Chamari" target="Hamdi Chtourou">
+  <data key="d0">https://openalex.org/A4353464565</data>
+  <data key="d1">https://openalex.org/A4354098812</data>
+  <data key="d2"></data>
   <data key="d3"></data>
   <data key="d4">4</data>
 </edge>
-<edge source="Emily Kroshus" target="Cheri A. Blauwet">
-  <data key="d0">https://openalex.org/A1045646349</data>
-  <data key="d1">https://openalex.org/A2335994776</data>
-  <data key="d2">https://orcid.org/0000-0002-7484-2601</data>
-  <data key="d3">https://orcid.org/0000-0001-8568-1009</data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Emily Kroshus" target="Lars Engebretsen">
-  <data key="d0">https://openalex.org/A1045646349</data>
-  <data key="d1">https://openalex.org/A4354258376</data>
-  <data key="d2">https://orcid.org/0000-0002-7484-2601</data>
+<edge source="Karim Chamari" target="Karim Khalladi">
+  <data key="d0">https://openalex.org/A2807060294</data>
+  <data key="d1">https://openalex.org/A4353464565</data>
+  <data key="d2">https://orcid.org/0000-0002-1522-4598</data>
   <data key="d3"></data>
   <data key="d4">1</data>
 </edge>
-<edge source="Emily Kroshus" target="Margo Mountjoy">
-  <data key="d0">https://openalex.org/A1045646349</data>
-  <data key="d1">https://openalex.org/A2147721403</data>
-  <data key="d2">https://orcid.org/0000-0002-7484-2601</data>
-  <data key="d3">https://orcid.org/0000-0001-8604-2014</data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Emily Kroshus" target="Rosemary Purcell">
-  <data key="d0">https://openalex.org/A1045646349</data>
-  <data key="d1">https://openalex.org/A4354976311</data>
-  <data key="d2">https://orcid.org/0000-0002-7484-2601</data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Emily Kroshus" target="Margot Putukian">
-  <data key="d0">https://openalex.org/A1045646349</data>
-  <data key="d1">https://openalex.org/A4359888319</data>
-  <data key="d2">https://orcid.org/0000-0002-7484-2601</data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Emily Kroshus" target="Claudia L. Reardon">
-  <data key="d0">https://openalex.org/A1045646349</data>
-  <data key="d1">https://openalex.org/A4353130746</data>
-  <data key="d2">https://orcid.org/0000-0002-7484-2601</data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Emily Kroshus" target="Simon M Rice">
-  <data key="d0">https://openalex.org/A1045646349</data>
-  <data key="d1">https://openalex.org/A2131681198</data>
-  <data key="d2">https://orcid.org/0000-0002-7484-2601</data>
-  <data key="d3">https://orcid.org/0000-0003-4045-8553</data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Emily Kroshus" target="Zachary Y. Kerr">
-  <data key="d0">https://openalex.org/A1045646349</data>
-  <data key="d1">https://openalex.org/A4356987433</data>
-  <data key="d2">https://orcid.org/0000-0002-7484-2601</data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Emily Kroshus" target="Kimberly G. Harmon">
-  <data key="d0">https://openalex.org/A1045646349</data>
-  <data key="d1">https://openalex.org/A4355837081</data>
-  <data key="d2">https://orcid.org/0000-0002-7484-2601</data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Brian Hainline" target="Margot Putukian">
-  <data key="d0">https://openalex.org/A4344371058</data>
-  <data key="d1">https://openalex.org/A4359888319</data>
+<edge source="Karim Chamari" target="Mohamed Romdhani">
+  <data key="d0">https://openalex.org/A4353464565</data>
+  <data key="d1">https://openalex.org/A4357668834</data>
   <data key="d2"></data>
   <data key="d3"></data>
-  <data key="d4">3</data>
+  <data key="d4">1</data>
 </edge>
-<edge source="Brian Hainline" target="Margo Mountjoy">
-  <data key="d0">https://openalex.org/A2147721403</data>
-  <data key="d1">https://openalex.org/A4344371058</data>
-  <data key="d2">https://orcid.org/0000-0001-8604-2014</data>
+<edge source="Hamdi Chtourou" target="Abdulaziz Farooq">
+  <data key="d0">https://openalex.org/A2140868878</data>
+  <data key="d1">https://openalex.org/A4354098812</data>
+  <data key="d2">https://orcid.org/0000-0002-9162-4948</data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Hamdi Chtourou" target="Sebastien Racinais">
+  <data key="d0">https://openalex.org/A4354098812</data>
+  <data key="d1">https://openalex.org/A4358381111</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Hamdi Chtourou" target="Imen Moussa-Chamari">
+  <data key="d0">https://openalex.org/A2975272463</data>
+  <data key="d1">https://openalex.org/A4354098812</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Hamdi Chtourou" target="Nizar Souissi">
+  <data key="d0">https://openalex.org/A2026453917</data>
+  <data key="d1">https://openalex.org/A4354098812</data>
+  <data key="d2">https://orcid.org/0000-0003-1227-8221</data>
   <data key="d3"></data>
   <data key="d4">3</data>
 </edge>
-<edge source="Brian Hainline" target="Wayne Derman">
+<edge source="Hamdi Chtourou" target="Mohamed Romdhani">
+  <data key="d0">https://openalex.org/A4354098812</data>
+  <data key="d1">https://openalex.org/A4357668834</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Hamdi Chtourou" target="Sergio Garbarino">
+  <data key="d0">https://openalex.org/A4353755389</data>
+  <data key="d1">https://openalex.org/A4354098812</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Hamdi Chtourou" target="Syrine Khemila">
+  <data key="d0">https://openalex.org/A3152767141</data>
+  <data key="d1">https://openalex.org/A4354098812</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Hamdi Chtourou" target="Nicola Luigi Bragazzi">
+  <data key="d0">https://openalex.org/A4354098812</data>
+  <data key="d1">https://openalex.org/A4354305022</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Hamdi Chtourou" target="Omar Hammouda">
+  <data key="d0">https://openalex.org/A4354098812</data>
+  <data key="d1">https://openalex.org/A4354708703</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Hamdi Chtourou" target="Karim Khalladi">
+  <data key="d0">https://openalex.org/A2807060294</data>
+  <data key="d1">https://openalex.org/A4354098812</data>
+  <data key="d2">https://orcid.org/0000-0002-1522-4598</data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Jad Adrian Washif" target="Abdulaziz Farooq">
+  <data key="d0">https://openalex.org/A2140868878</data>
+  <data key="d1">https://openalex.org/A3094931365</data>
+  <data key="d2">https://orcid.org/0000-0002-9162-4948</data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Jad Adrian Washif" target="David B. Pyne">
+  <data key="d0">https://openalex.org/A3094931365</data>
+  <data key="d1">https://openalex.org/A4357010701</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Abdulaziz Farooq" target="David B. Pyne">
+  <data key="d0">https://openalex.org/A2140868878</data>
+  <data key="d1">https://openalex.org/A4357010701</data>
+  <data key="d2">https://orcid.org/0000-0002-9162-4948</data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Abdulaziz Farooq" target="Karim Khalladi">
+  <data key="d0">https://openalex.org/A2140868878</data>
+  <data key="d1">https://openalex.org/A2807060294</data>
+  <data key="d2">https://orcid.org/0000-0002-9162-4948</data>
+  <data key="d3">https://orcid.org/0000-0002-1522-4598</data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Abdulaziz Farooq" target="Sebastien Racinais">
+  <data key="d0">https://openalex.org/A2140868878</data>
+  <data key="d1">https://openalex.org/A4358381111</data>
+  <data key="d2">https://orcid.org/0000-0002-9162-4948</data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Hélène Joncheray" target="Fabrice Burlot">
+  <data key="d0">https://openalex.org/A1629792555</data>
+  <data key="d1">https://openalex.org/A4354557113</data>
+  <data key="d2">https://orcid.org/0000-0002-7048-0658</data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Karim Khalladi" target="Sebastien Racinais">
+  <data key="d0">https://openalex.org/A2807060294</data>
+  <data key="d1">https://openalex.org/A4358381111</data>
+  <data key="d2">https://orcid.org/0000-0002-1522-4598</data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Sebastien Racinais" target="Paolo Emilio Adami">
+  <data key="d0">https://openalex.org/A2077962870</data>
+  <data key="d1">https://openalex.org/A4358381111</data>
+  <data key="d2">https://orcid.org/0000-0001-5975-5342</data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Sebastien Racinais" target="Lee Taylor">
+  <data key="d0">https://openalex.org/A4354398137</data>
+  <data key="d1">https://openalex.org/A4358381111</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Sebastien Racinais" target="Stéphane Bermon">
+  <data key="d0">https://openalex.org/A4353989022</data>
+  <data key="d1">https://openalex.org/A4358381111</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Sebastien Racinais" target="Nick Webborn">
+  <data key="d0">https://openalex.org/A2014715295</data>
+  <data key="d1">https://openalex.org/A4358381111</data>
+  <data key="d2">https://orcid.org/0000-0003-3636-5557</data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Sebastien Racinais" target="Wayne Derman">
   <data key="d0">https://openalex.org/A2614649896</data>
-  <data key="d1">https://openalex.org/A4344371058</data>
+  <data key="d1">https://openalex.org/A4358381111</data>
   <data key="d2">https://orcid.org/0000-0002-8879-177X</data>
   <data key="d3"></data>
-  <data key="d4">4</data>
+  <data key="d4">1</data>
 </edge>
-<edge source="Brian Hainline" target="Cheri A. Blauwet">
-  <data key="d0">https://openalex.org/A2335994776</data>
-  <data key="d1">https://openalex.org/A4344371058</data>
-  <data key="d2">https://orcid.org/0000-0001-8568-1009</data>
+<edge source="Valérian Cece" target="Virginie Nicaise">
+  <data key="d0">https://openalex.org/A2761633935</data>
+  <data key="d1">https://openalex.org/A4358596050</data>
+  <data key="d2">https://orcid.org/0000-0002-1778-496X</data>
   <data key="d3"></data>
   <data key="d4">3</data>
 </edge>
-<edge source="Brian Hainline" target="Douglas J. Casa">
-  <data key="d0">https://openalex.org/A4344371058</data>
-  <data key="d1">https://openalex.org/A4357778737</data>
-  <data key="d2"></data>
+<edge source="Valérian Cece" target="Guillaume Martinent">
+  <data key="d0">https://openalex.org/A2761633935</data>
+  <data key="d1">https://openalex.org/A4336776014</data>
+  <data key="d2">https://orcid.org/0000-0002-1778-496X</data>
   <data key="d3"></data>
-  <data key="d4">2</data>
+  <data key="d4">6</data>
 </edge>
-<edge source="Brian Hainline" target="Rosemary Purcell">
-  <data key="d0">https://openalex.org/A4344371058</data>
-  <data key="d1">https://openalex.org/A4354976311</data>
+<edge source="Valérian Cece" target="Emma Guillet-Descas">
+  <data key="d0">https://openalex.org/A1878733623</data>
+  <data key="d1">https://openalex.org/A2761633935</data>
+  <data key="d2">https://orcid.org/0000-0003-2248-3720</data>
+  <data key="d3">https://orcid.org/0000-0002-1778-496X</data>
+  <data key="d4">6</data>
+</edge>
+<edge source="Valérian Cece" target="Noémie Lienhart">
+  <data key="d0">https://openalex.org/A2761633935</data>
+  <data key="d1">https://openalex.org/A4332650071</data>
+  <data key="d2">https://orcid.org/0000-0002-1778-496X</data>
+  <data key="d3"></data>
+  <data key="d4">3</data>
+</edge>
+<edge source="Virginie Nicaise" target="Emma Guillet-Descas">
+  <data key="d0">https://openalex.org/A1878733623</data>
+  <data key="d1">https://openalex.org/A4358596050</data>
+  <data key="d2">https://orcid.org/0000-0003-2248-3720</data>
+  <data key="d3"></data>
+  <data key="d4">5</data>
+</edge>
+<edge source="Virginie Nicaise" target="Noémie Lienhart">
+  <data key="d0">https://openalex.org/A4332650071</data>
+  <data key="d1">https://openalex.org/A4358596050</data>
   <data key="d2"></data>
   <data key="d3"></data>
   <data key="d4">5</data>
 </edge>
-<edge source="Brian Hainline" target="Claudia L. Reardon">
-  <data key="d0">https://openalex.org/A4344371058</data>
-  <data key="d1">https://openalex.org/A4353130746</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">15</data>
-</edge>
-<edge source="Brian Hainline" target="Simon M Rice">
-  <data key="d0">https://openalex.org/A2131681198</data>
-  <data key="d1">https://openalex.org/A4344371058</data>
-  <data key="d2">https://orcid.org/0000-0003-4045-8553</data>
-  <data key="d3"></data>
-  <data key="d4">5</data>
-</edge>
-<edge source="Brian Hainline" target="Lars Engebretsen">
-  <data key="d0">https://openalex.org/A4344371058</data>
-  <data key="d1">https://openalex.org/A4354258376</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Cheri A. Blauwet" target="Margot Putukian">
-  <data key="d0">https://openalex.org/A2335994776</data>
-  <data key="d1">https://openalex.org/A4359888319</data>
-  <data key="d2">https://orcid.org/0000-0001-8568-1009</data>
-  <data key="d3"></data>
-  <data key="d4">3</data>
-</edge>
-<edge source="Cheri A. Blauwet" target="Martin Schwellnus">
-  <data key="d0">https://openalex.org/A2335994776</data>
-  <data key="d1">https://openalex.org/A4354619294</data>
-  <data key="d2">https://orcid.org/0000-0001-8568-1009</data>
-  <data key="d3"></data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Cheri A. Blauwet" target="Margo Mountjoy">
-  <data key="d0">https://openalex.org/A2147721403</data>
-  <data key="d1">https://openalex.org/A2335994776</data>
-  <data key="d2">https://orcid.org/0000-0001-8604-2014</data>
-  <data key="d3">https://orcid.org/0000-0001-8568-1009</data>
-  <data key="d4">3</data>
-</edge>
-<edge source="Cheri A. Blauwet" target="Wayne Derman">
-  <data key="d0">https://openalex.org/A2335994776</data>
-  <data key="d1">https://openalex.org/A2614649896</data>
-  <data key="d2">https://orcid.org/0000-0001-8568-1009</data>
-  <data key="d3">https://orcid.org/0000-0002-8879-177X</data>
-  <data key="d4">7</data>
-</edge>
-<edge source="Cheri A. Blauwet" target="Claudia L. Reardon">
-  <data key="d0">https://openalex.org/A2335994776</data>
-  <data key="d1">https://openalex.org/A4353130746</data>
-  <data key="d2">https://orcid.org/0000-0001-8568-1009</data>
-  <data key="d3"></data>
-  <data key="d4">3</data>
-</edge>
-<edge source="Cheri A. Blauwet" target="Rosemary Purcell">
-  <data key="d0">https://openalex.org/A2335994776</data>
-  <data key="d1">https://openalex.org/A4354976311</data>
-  <data key="d2">https://orcid.org/0000-0001-8568-1009</data>
-  <data key="d3"></data>
-  <data key="d4">3</data>
-</edge>
-<edge source="Cheri A. Blauwet" target="Simon M Rice">
-  <data key="d0">https://openalex.org/A2131681198</data>
-  <data key="d1">https://openalex.org/A2335994776</data>
-  <data key="d2">https://orcid.org/0000-0003-4045-8553</data>
-  <data key="d3">https://orcid.org/0000-0001-8568-1009</data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Cheri A. Blauwet" target="Lars Engebretsen">
-  <data key="d0">https://openalex.org/A2335994776</data>
-  <data key="d1">https://openalex.org/A4354258376</data>
-  <data key="d2">https://orcid.org/0000-0001-8568-1009</data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Cheri A. Blauwet" target="Paolo Emilio Adami">
-  <data key="d0">https://openalex.org/A2077962870</data>
-  <data key="d1">https://openalex.org/A2335994776</data>
-  <data key="d2">https://orcid.org/0000-0001-5975-5342</data>
-  <data key="d3">https://orcid.org/0000-0001-8568-1009</data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Lars Engebretsen" target="Margot Putukian">
-  <data key="d0">https://openalex.org/A4354258376</data>
-  <data key="d1">https://openalex.org/A4359888319</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Lars Engebretsen" target="Margo Mountjoy">
-  <data key="d0">https://openalex.org/A2147721403</data>
-  <data key="d1">https://openalex.org/A4354258376</data>
-  <data key="d2">https://orcid.org/0000-0001-8604-2014</data>
-  <data key="d3"></data>
-  <data key="d4">3</data>
-</edge>
-<edge source="Lars Engebretsen" target="Rosemary Purcell">
-  <data key="d0">https://openalex.org/A4354258376</data>
-  <data key="d1">https://openalex.org/A4354976311</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Lars Engebretsen" target="Claudia L. Reardon">
-  <data key="d0">https://openalex.org/A4353130746</data>
-  <data key="d1">https://openalex.org/A4354258376</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Lars Engebretsen" target="Louise M. Burke">
-  <data key="d0">https://openalex.org/A4354258376</data>
-  <data key="d1">https://openalex.org/A4357752915</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Lars Engebretsen" target="Simon M Rice">
-  <data key="d0">https://openalex.org/A2131681198</data>
-  <data key="d1">https://openalex.org/A4354258376</data>
-  <data key="d2">https://orcid.org/0000-0003-4045-8553</data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Margo Mountjoy" target="Margot Putukian">
-  <data key="d0">https://openalex.org/A2147721403</data>
-  <data key="d1">https://openalex.org/A4359888319</data>
-  <data key="d2">https://orcid.org/0000-0001-8604-2014</data>
-  <data key="d3"></data>
-  <data key="d4">3</data>
-</edge>
-<edge source="Margo Mountjoy" target="Martin Schwellnus">
-  <data key="d0">https://openalex.org/A2147721403</data>
-  <data key="d1">https://openalex.org/A4354619294</data>
-  <data key="d2">https://orcid.org/0000-0001-8604-2014</data>
-  <data key="d3"></data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Margo Mountjoy" target="Claudia L. Reardon">
-  <data key="d0">https://openalex.org/A2147721403</data>
-  <data key="d1">https://openalex.org/A4353130746</data>
-  <data key="d2">https://orcid.org/0000-0001-8604-2014</data>
-  <data key="d3"></data>
-  <data key="d4">3</data>
-</edge>
-<edge source="Margo Mountjoy" target="Rosemary Purcell">
-  <data key="d0">https://openalex.org/A2147721403</data>
-  <data key="d1">https://openalex.org/A4354976311</data>
-  <data key="d2">https://orcid.org/0000-0001-8604-2014</data>
-  <data key="d3"></data>
-  <data key="d4">3</data>
-</edge>
-<edge source="Margo Mountjoy" target="Simon M Rice">
-  <data key="d0">https://openalex.org/A2131681198</data>
-  <data key="d1">https://openalex.org/A2147721403</data>
-  <data key="d2">https://orcid.org/0000-0003-4045-8553</data>
-  <data key="d3">https://orcid.org/0000-0001-8604-2014</data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Margo Mountjoy" target="Kathryn E. Ackerman">
-  <data key="d0">https://openalex.org/A2147721403</data>
-  <data key="d1">https://openalex.org/A4354980832</data>
-  <data key="d2">https://orcid.org/0000-0001-8604-2014</data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Margo Mountjoy" target="Trent Stellingwerff">
-  <data key="d0">https://openalex.org/A145549633</data>
-  <data key="d1">https://openalex.org/A2147721403</data>
-  <data key="d2">https://orcid.org/0000-0002-4704-8250</data>
-  <data key="d3">https://orcid.org/0000-0001-8604-2014</data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Margo Mountjoy" target="Toomas Timpka">
-  <data key="d0">https://openalex.org/A2147721403</data>
-  <data key="d1">https://openalex.org/A2164525654</data>
-  <data key="d2">https://orcid.org/0000-0001-8604-2014</data>
-  <data key="d3">https://orcid.org/0000-0001-6049-5402</data>
-  <data key="d4">3</data>
-</edge>
-<edge source="Margo Mountjoy" target="Louise M. Burke">
-  <data key="d0">https://openalex.org/A2147721403</data>
-  <data key="d1">https://openalex.org/A4357752915</data>
-  <data key="d2">https://orcid.org/0000-0001-8604-2014</data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Margo Mountjoy" target="Jonathan M. Oliver">
-  <data key="d0">https://openalex.org/A2147721403</data>
-  <data key="d1">https://openalex.org/A4357323124</data>
-  <data key="d2">https://orcid.org/0000-0001-8604-2014</data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Margo Mountjoy" target="Wayne Derman">
-  <data key="d0">https://openalex.org/A2147721403</data>
-  <data key="d1">https://openalex.org/A2614649896</data>
-  <data key="d2">https://orcid.org/0000-0001-8604-2014</data>
-  <data key="d3">https://orcid.org/0000-0002-8879-177X</data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Rosemary Purcell" target="Margot Putukian">
-  <data key="d0">https://openalex.org/A4354976311</data>
-  <data key="d1">https://openalex.org/A4359888319</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">3</data>
-</edge>
-<edge source="Rosemary Purcell" target="Simon M Rice">
-  <data key="d0">https://openalex.org/A2131681198</data>
-  <data key="d1">https://openalex.org/A4354976311</data>
-  <data key="d2">https://orcid.org/0000-0003-4045-8553</data>
-  <data key="d3"></data>
-  <data key="d4">18</data>
-</edge>
-<edge source="Rosemary Purcell" target="Claudia L. Reardon">
-  <data key="d0">https://openalex.org/A4353130746</data>
-  <data key="d1">https://openalex.org/A4354976311</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">6</data>
-</edge>
-<edge source="Margot Putukian" target="Aaron L. Baggish">
-  <data key="d0">https://openalex.org/A4355126889</data>
-  <data key="d1">https://openalex.org/A4359888319</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Margot Putukian" target="Claudia L. Reardon">
-  <data key="d0">https://openalex.org/A4353130746</data>
-  <data key="d1">https://openalex.org/A4359888319</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">6</data>
-</edge>
-<edge source="Margot Putukian" target="Simon M Rice">
-  <data key="d0">https://openalex.org/A2131681198</data>
-  <data key="d1">https://openalex.org/A4359888319</data>
-  <data key="d2">https://orcid.org/0000-0003-4045-8553</data>
-  <data key="d3"></data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Claudia L. Reardon" target="Stephanie Kliethermes">
-  <data key="d0">https://openalex.org/A4353130746</data>
-  <data key="d1">https://openalex.org/A4355333215</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Claudia L. Reardon" target="Andrew J. Watson">
-  <data key="d0">https://openalex.org/A4353130746</data>
-  <data key="d1">https://openalex.org/A4356724918</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Claudia L. Reardon" target="M. L. Brooks">
-  <data key="d0">https://openalex.org/A4353130746</data>
-  <data key="d1">https://openalex.org/A4354033129</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Claudia L. Reardon" target="Simon M Rice">
-  <data key="d0">https://openalex.org/A2131681198</data>
-  <data key="d1">https://openalex.org/A4353130746</data>
-  <data key="d2">https://orcid.org/0000-0003-4045-8553</data>
-  <data key="d3"></data>
-  <data key="d4">6</data>
-</edge>
-<edge source="Zachary Y. Kerr" target="Douglas J. Casa">
-  <data key="d0">https://openalex.org/A4356987433</data>
-  <data key="d1">https://openalex.org/A4357778737</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Zachary Y. Kerr" target="Johna K. Register-Mihalik">
-  <data key="d0">https://openalex.org/A4356987433</data>
-  <data key="d1">https://openalex.org/A4357994835</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">8</data>
-</edge>
-<edge source="Zachary Y. Kerr" target="Jessica Wallace">
-  <data key="d0">https://openalex.org/A4356987433</data>
-  <data key="d1">https://openalex.org/A4358147062</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Zachary Y. Kerr" target="Erica Beidler">
-  <data key="d0">https://openalex.org/A4356987433</data>
-  <data key="d1">https://openalex.org/A4359907554</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Zachary Y. Kerr" target="Abigail C. Bretzin">
-  <data key="d0">https://openalex.org/A2681885675</data>
-  <data key="d1">https://openalex.org/A4356987433</data>
-  <data key="d2">https://orcid.org/0000-0003-3730-2849</data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Kimberly G. Harmon" target="Stephanie Kliethermes">
-  <data key="d0">https://openalex.org/A4355333215</data>
-  <data key="d1">https://openalex.org/A4355837081</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">4</data>
-</edge>
-<edge source="Kimberly G. Harmon" target="Nathaniel Moulson">
-  <data key="d0">https://openalex.org/A2797811136</data>
-  <data key="d1">https://openalex.org/A4355837081</data>
-  <data key="d2">https://orcid.org/0000-0002-1577-5197</data>
-  <data key="d3"></data>
-  <data key="d4">4</data>
-</edge>
-<edge source="Kimberly G. Harmon" target="Michael McCrea">
-  <data key="d0">https://openalex.org/A4354440510</data>
-  <data key="d1">https://openalex.org/A4355837081</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Kimberly G. Harmon" target="Anthony P. Kontos">
-  <data key="d0">https://openalex.org/A4355837081</data>
-  <data key="d1">https://openalex.org/A4356812048</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Kimberly G. Harmon" target="Bradley J. Petek">
-  <data key="d0">https://openalex.org/A2000470717</data>
-  <data key="d1">https://openalex.org/A4355837081</data>
-  <data key="d2">https://orcid.org/0000-0002-6603-2262</data>
-  <data key="d3"></data>
-  <data key="d4">7</data>
-</edge>
-<edge source="Kimberly G. Harmon" target="Jonathan A. Drezner">
-  <data key="d0">https://openalex.org/A4355280571</data>
-  <data key="d1">https://openalex.org/A4355837081</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">12</data>
-</edge>
-<edge source="Kimberly G. Harmon" target="Aaron L. Baggish">
-  <data key="d0">https://openalex.org/A4355126889</data>
-  <data key="d1">https://openalex.org/A4355837081</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">4</data>
-</edge>
-<edge source="Kimberly G. Harmon" target="Julianne D. Schmidt">
-  <data key="d0">https://openalex.org/A4354702542</data>
-  <data key="d1">https://openalex.org/A4355837081</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Kimberly G. Harmon" target="Steven P. Broglio">
-  <data key="d0">https://openalex.org/A4355837081</data>
-  <data key="d1">https://openalex.org/A4356306326</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Nathaniel Moulson" target="Stephanie Kliethermes">
-  <data key="d0">https://openalex.org/A2797811136</data>
-  <data key="d1">https://openalex.org/A4355333215</data>
-  <data key="d2">https://orcid.org/0000-0002-1577-5197</data>
-  <data key="d3"></data>
-  <data key="d4">4</data>
-</edge>
-<edge source="Nathaniel Moulson" target="Bradley J. Petek">
-  <data key="d0">https://openalex.org/A2000470717</data>
-  <data key="d1">https://openalex.org/A2797811136</data>
-  <data key="d2">https://orcid.org/0000-0002-6603-2262</data>
-  <data key="d3">https://orcid.org/0000-0002-1577-5197</data>
-  <data key="d4">6</data>
-</edge>
-<edge source="Nathaniel Moulson" target="Jonathan A. Drezner">
-  <data key="d0">https://openalex.org/A2797811136</data>
-  <data key="d1">https://openalex.org/A4355280571</data>
-  <data key="d2">https://orcid.org/0000-0002-1577-5197</data>
-  <data key="d3"></data>
-  <data key="d4">4</data>
-</edge>
-<edge source="Nathaniel Moulson" target="Aaron L. Baggish">
-  <data key="d0">https://openalex.org/A2797811136</data>
-  <data key="d1">https://openalex.org/A4355126889</data>
-  <data key="d2">https://orcid.org/0000-0002-1577-5197</data>
-  <data key="d3"></data>
-  <data key="d4">7</data>
-</edge>
-<edge source="Nathaniel Moulson" target="Sanjay Sharma">
-  <data key="d0">https://openalex.org/A2797811136</data>
-  <data key="d1">https://openalex.org/A4356722249</data>
-  <data key="d2">https://orcid.org/0000-0002-1577-5197</data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Stephanie Kliethermes" target="Bradley J. Petek">
-  <data key="d0">https://openalex.org/A2000470717</data>
-  <data key="d1">https://openalex.org/A4355333215</data>
-  <data key="d2">https://orcid.org/0000-0002-6603-2262</data>
-  <data key="d3"></data>
-  <data key="d4">4</data>
-</edge>
-<edge source="Stephanie Kliethermes" target="Jonathan A. Drezner">
-  <data key="d0">https://openalex.org/A4355280571</data>
-  <data key="d1">https://openalex.org/A4355333215</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">4</data>
-</edge>
-<edge source="Stephanie Kliethermes" target="Aaron L. Baggish">
-  <data key="d0">https://openalex.org/A4355126889</data>
-  <data key="d1">https://openalex.org/A4355333215</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">4</data>
-</edge>
-<edge source="Stephanie Kliethermes" target="Andrew J. Watson">
-  <data key="d0">https://openalex.org/A4355333215</data>
-  <data key="d1">https://openalex.org/A4356724918</data>
+<edge source="Virginie Nicaise" target="Guillaume Martinent">
+  <data key="d0">https://openalex.org/A4336776014</data>
+  <data key="d1">https://openalex.org/A4358596050</data>
   <data key="d2"></data>
   <data key="d3"></data>
   <data key="d4">5</data>
 </edge>
-<edge source="Stephanie Kliethermes" target="M. L. Brooks">
-  <data key="d0">https://openalex.org/A4354033129</data>
-  <data key="d1">https://openalex.org/A4355333215</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">8</data>
-</edge>
-<edge source="Stephanie Kliethermes" target="Rhodri S. Lloyd">
-  <data key="d0">https://openalex.org/A4355333215</data>
-  <data key="d1">https://openalex.org/A4355344440</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Bradley J. Petek" target="Jonathan A. Drezner">
-  <data key="d0">https://openalex.org/A2000470717</data>
-  <data key="d1">https://openalex.org/A4355280571</data>
-  <data key="d2">https://orcid.org/0000-0002-6603-2262</data>
-  <data key="d3"></data>
-  <data key="d4">7</data>
-</edge>
-<edge source="Bradley J. Petek" target="Aaron L. Baggish">
-  <data key="d0">https://openalex.org/A2000470717</data>
-  <data key="d1">https://openalex.org/A4355126889</data>
-  <data key="d2">https://orcid.org/0000-0002-6603-2262</data>
-  <data key="d3"></data>
-  <data key="d4">12</data>
-</edge>
-<edge source="Jonathan A. Drezner" target="Sanjay Sharma">
-  <data key="d0">https://openalex.org/A4354579919</data>
-  <data key="d1">https://openalex.org/A4355280571</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Jonathan A. Drezner" target="Alessandro Zorzi">
-  <data key="d0">https://openalex.org/A4353145026</data>
-  <data key="d1">https://openalex.org/A4355280571</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">4</data>
-</edge>
-<edge source="Jonathan A. Drezner" target="Aaron L. Baggish">
-  <data key="d0">https://openalex.org/A4355126889</data>
-  <data key="d1">https://openalex.org/A4355280571</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">4</data>
-</edge>
-<edge source="Jonathan A. Drezner" target="Domenico Corrado">
-  <data key="d0">https://openalex.org/A4353413968</data>
-  <data key="d1">https://openalex.org/A4355280571</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">4</data>
-</edge>
-<edge source="Jonathan A. Drezner" target="Flavio D'Ascenzi">
-  <data key="d0">https://openalex.org/A4353605681</data>
-  <data key="d1">https://openalex.org/A4355280571</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Jonathan A. Drezner" target="James H. Hull">
-  <data key="d0">https://openalex.org/A4355280571</data>
-  <data key="d1">https://openalex.org/A4357622908</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Jonathan A. Drezner" target="Andre La Gerche">
-  <data key="d0">https://openalex.org/A106596856</data>
-  <data key="d1">https://openalex.org/A4355280571</data>
-  <data key="d2">https://orcid.org/0000-0002-3906-3784</data>
-  <data key="d3"></data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Aaron L. Baggish" target="Kathryn E. Ackerman">
-  <data key="d0">https://openalex.org/A4354980832</data>
-  <data key="d1">https://openalex.org/A4355126889</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Aaron L. Baggish" target="Sanjay Sharma">
-  <data key="d0">https://openalex.org/A4355126889</data>
-  <data key="d1">https://openalex.org/A4356722249</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Andrew J. Watson" target="M. L. Brooks">
-  <data key="d0">https://openalex.org/A4354033129</data>
-  <data key="d1">https://openalex.org/A4356724918</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">7</data>
-</edge>
-<edge source="Rhodri S. Lloyd" target="Jon L. Oliver">
-  <data key="d0">https://openalex.org/A4353745064</data>
-  <data key="d1">https://openalex.org/A4355344440</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">17</data>
-</edge>
-<edge source="Kaisa Aunola" target="Tatiana V. Ryba">
-  <data key="d0">https://openalex.org/A311196816</data>
-  <data key="d1">https://openalex.org/A4355036036</data>
-  <data key="d2">https://orcid.org/0000-0001-8866-6736</data>
-  <data key="d3"></data>
-  <data key="d4">15</data>
-</edge>
-<edge source="Beat Knechtle" target="Pantelis T. Nikolaidis">
-  <data key="d0">https://openalex.org/A21683132</data>
-  <data key="d1">https://openalex.org/A4360020116</data>
-  <data key="d2">https://orcid.org/0000-0002-2412-9103</data>
-  <data key="d3"></data>
-  <data key="d4">13</data>
-</edge>
-<edge source="Beat Knechtle" target="Felipe J. Aidar">
-  <data key="d0">https://openalex.org/A21683132</data>
-  <data key="d1">https://openalex.org/A4353928131</data>
-  <data key="d2">https://orcid.org/0000-0002-2412-9103</data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="David R. Maldonado" target="Benjamin G. Domb">
-  <data key="d0">https://openalex.org/A4355792317</data>
-  <data key="d1">https://openalex.org/A4357865767</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">30</data>
-</edge>
-<edge source="David R. Maldonado" target="Ajay C. Lall">
-  <data key="d0">https://openalex.org/A4355792317</data>
-  <data key="d1">https://openalex.org/A4356376077</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">24</data>
-</edge>
-<edge source="David R. Maldonado" target="Andrew E. Jimenez">
-  <data key="d0">https://openalex.org/A4355680666</data>
-  <data key="d1">https://openalex.org/A4355792317</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">24</data>
-</edge>
-<edge source="David R. Maldonado" target="Jade S. Owens">
-  <data key="d0">https://openalex.org/A3154865758</data>
-  <data key="d1">https://openalex.org/A4355792317</data>
-  <data key="d2">https://orcid.org/0000-0002-4733-4978</data>
-  <data key="d3"></data>
-  <data key="d4">21</data>
-</edge>
-<edge source="David R. Maldonado" target="Benjamin R. Saks">
-  <data key="d0">https://openalex.org/A3156739716</data>
-  <data key="d1">https://openalex.org/A4355792317</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">15</data>
-</edge>
-<edge source="Benjamin G. Domb" target="Benjamin R. Saks">
-  <data key="d0">https://openalex.org/A3156739716</data>
-  <data key="d1">https://openalex.org/A4357865767</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">16</data>
-</edge>
-<edge source="Benjamin G. Domb" target="Andrew E. Jimenez">
-  <data key="d0">https://openalex.org/A4355680666</data>
-  <data key="d1">https://openalex.org/A4357865767</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">26</data>
-</edge>
-<edge source="Benjamin G. Domb" target="Ajay C. Lall">
-  <data key="d0">https://openalex.org/A4356376077</data>
-  <data key="d1">https://openalex.org/A4357865767</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">26</data>
-</edge>
-<edge source="Benjamin G. Domb" target="Jade S. Owens">
-  <data key="d0">https://openalex.org/A3154865758</data>
-  <data key="d1">https://openalex.org/A4357865767</data>
-  <data key="d2">https://orcid.org/0000-0002-4733-4978</data>
-  <data key="d3"></data>
-  <data key="d4">21</data>
-</edge>
-<edge source="Ajay C. Lall" target="Benjamin R. Saks">
-  <data key="d0">https://openalex.org/A3156739716</data>
-  <data key="d1">https://openalex.org/A4356376077</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">16</data>
-</edge>
-<edge source="Ajay C. Lall" target="Jade S. Owens">
-  <data key="d0">https://openalex.org/A3154865758</data>
-  <data key="d1">https://openalex.org/A4356376077</data>
-  <data key="d2">https://orcid.org/0000-0002-4733-4978</data>
-  <data key="d3"></data>
-  <data key="d4">16</data>
-</edge>
-<edge source="Ajay C. Lall" target="Andrew E. Jimenez">
-  <data key="d0">https://openalex.org/A4355680666</data>
-  <data key="d1">https://openalex.org/A4356376077</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">21</data>
-</edge>
-<edge source="Andrew E. Jimenez" target="Benjamin R. Saks">
-  <data key="d0">https://openalex.org/A3156739716</data>
-  <data key="d1">https://openalex.org/A4355680666</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">16</data>
-</edge>
-<edge source="Andrew E. Jimenez" target="Jade S. Owens">
-  <data key="d0">https://openalex.org/A3154865758</data>
-  <data key="d1">https://openalex.org/A4355680666</data>
-  <data key="d2">https://orcid.org/0000-0002-4733-4978</data>
-  <data key="d3"></data>
-  <data key="d4">19</data>
-</edge>
-<edge source="Jade S. Owens" target="Benjamin R. Saks">
-  <data key="d0">https://openalex.org/A3154865758</data>
-  <data key="d1">https://openalex.org/A3156739716</data>
-  <data key="d2">https://orcid.org/0000-0002-4733-4978</data>
+<edge source="Emma Guillet-Descas" target="Guillaume Martinent">
+  <data key="d0">https://openalex.org/A1878733623</data>
+  <data key="d1">https://openalex.org/A4336776014</data>
+  <data key="d2">https://orcid.org/0000-0003-2248-3720</data>
   <data key="d3"></data>
   <data key="d4">10</data>
 </edge>
-<edge source="Sanjay Sharma" target="Stefano Caselli">
-  <data key="d0">https://openalex.org/A300548163</data>
-  <data key="d1">https://openalex.org/A4356722249</data>
-  <data key="d2">https://orcid.org/0000-0002-9897-5839</data>
-  <data key="d3"></data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Sanjay Sharma" target="Paolo Emilio Adami">
-  <data key="d0">https://openalex.org/A2077962870</data>
-  <data key="d1">https://openalex.org/A4356722249</data>
-  <data key="d2">https://orcid.org/0000-0001-5975-5342</data>
+<edge source="Emma Guillet-Descas" target="Henrik Gustafsson">
+  <data key="d0">https://openalex.org/A1878733623</data>
+  <data key="d1">https://openalex.org/A4359787250</data>
+  <data key="d2">https://orcid.org/0000-0003-2248-3720</data>
   <data key="d3"></data>
   <data key="d4">1</data>
 </edge>
-<edge source="Sanjay Sharma" target="Andre La Gerche">
-  <data key="d0">https://openalex.org/A106596856</data>
-  <data key="d1">https://openalex.org/A4356722249</data>
-  <data key="d2">https://orcid.org/0000-0002-3906-3784</data>
-  <data key="d3"></data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Sanjay Sharma" target="Michael Papadakis">
-  <data key="d0">https://openalex.org/A4342309411</data>
-  <data key="d1">https://openalex.org/A4356722249</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">13</data>
-</edge>
-<edge source="Sanjay Sharma" target="Sanjay Sharma">
-  <data key="d0">https://openalex.org/A4354579919</data>
-  <data key="d1">https://openalex.org/A4356722249</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">3</data>
-</edge>
-<edge source="Sanjay Sharma" target="Domenico Corrado">
-  <data key="d0">https://openalex.org/A4353413968</data>
-  <data key="d1">https://openalex.org/A4356722249</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
+<edge source="Emma Guillet-Descas" target="Sandrine Isoard-Gautheur">
+  <data key="d0">https://openalex.org/A1878733623</data>
+  <data key="d1">https://openalex.org/A2778271417</data>
+  <data key="d2">https://orcid.org/0000-0003-2248-3720</data>
+  <data key="d3">https://orcid.org/0000-0003-1019-3371</data>
   <data key="d4">1</data>
 </edge>
-<edge source="Sanjay Sharma" target="Alessandro Zorzi">
-  <data key="d0">https://openalex.org/A4353145026</data>
-  <data key="d1">https://openalex.org/A4354579919</data>
+<edge source="Emma Guillet-Descas" target="Noémie Lienhart">
+  <data key="d0">https://openalex.org/A1878733623</data>
+  <data key="d1">https://openalex.org/A4332650071</data>
+  <data key="d2">https://orcid.org/0000-0003-2248-3720</data>
+  <data key="d3"></data>
+  <data key="d4">5</data>
+</edge>
+<edge source="Noémie Lienhart" target="Guillaume Martinent">
+  <data key="d0">https://openalex.org/A4332650071</data>
+  <data key="d1">https://openalex.org/A4336776014</data>
   <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Sanjay Sharma" target="Flavio D'Ascenzi">
-  <data key="d0">https://openalex.org/A4353605681</data>
-  <data key="d1">https://openalex.org/A4356722249</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Sanjay Sharma" target="James H. Hull">
-  <data key="d0">https://openalex.org/A4356722249</data>
-  <data key="d1">https://openalex.org/A4357622908</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Katrien Fransen" target="Todd M. Loughead">
-  <data key="d0">https://openalex.org/A2990682871</data>
-  <data key="d1">https://openalex.org/A4357052587</data>
-  <data key="d2">https://orcid.org/0000-0001-6294-7257</data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Dai Sugimoto" target="David R. Howell">
-  <data key="d0">https://openalex.org/A2329835334</data>
-  <data key="d1">https://openalex.org/A4357752512</data>
-  <data key="d2">https://orcid.org/0000-0001-6858-4434</data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Dai Sugimoto" target="William P. Meehan">
-  <data key="d0">https://openalex.org/A2329835334</data>
-  <data key="d1">https://openalex.org/A4359358298</data>
-  <data key="d2">https://orcid.org/0000-0001-6858-4434</data>
-  <data key="d3"></data>
-  <data key="d4">3</data>
-</edge>
-<edge source="William P. Meehan" target="Paul D. Berkner">
-  <data key="d0">https://openalex.org/A2028053934</data>
-  <data key="d1">https://openalex.org/A4359358298</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="William P. Meehan" target="David R. Howell">
-  <data key="d0">https://openalex.org/A4357752512</data>
-  <data key="d1">https://openalex.org/A4359358298</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">15</data>
-</edge>
-<edge source="David R. Howell" target="Paul D. Berkner">
-  <data key="d0">https://openalex.org/A2028053934</data>
-  <data key="d1">https://openalex.org/A4357752512</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Martin Schwellnus" target="James H. Hull">
-  <data key="d0">https://openalex.org/A4354619294</data>
-  <data key="d1">https://openalex.org/A4357622908</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">7</data>
-</edge>
-<edge source="Martin Schwellnus" target="Wayne Derman">
-  <data key="d0">https://openalex.org/A2614649896</data>
-  <data key="d1">https://openalex.org/A4354619294</data>
-  <data key="d2">https://orcid.org/0000-0002-8879-177X</data>
   <data key="d3"></data>
   <data key="d4">6</data>
 </edge>
-<edge source="Martin Schwellnus" target="Paolo Emilio Adami">
-  <data key="d0">https://openalex.org/A2077962870</data>
-  <data key="d1">https://openalex.org/A4354619294</data>
-  <data key="d2">https://orcid.org/0000-0001-5975-5342</data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="James H. Hull" target="Wayne Derman">
-  <data key="d0">https://openalex.org/A2614649896</data>
-  <data key="d1">https://openalex.org/A4357622908</data>
-  <data key="d2">https://orcid.org/0000-0002-8879-177X</data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="James H. Hull" target="Susan H. Backhouse">
-  <data key="d0">https://openalex.org/A4355413187</data>
-  <data key="d1">https://openalex.org/A4357622908</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">3</data>
-</edge>
-<edge source="Wayne Derman" target="Paolo Emilio Adami">
-  <data key="d0">https://openalex.org/A2077962870</data>
-  <data key="d1">https://openalex.org/A2614649896</data>
-  <data key="d2">https://orcid.org/0000-0001-5975-5342</data>
-  <data key="d3">https://orcid.org/0000-0002-8879-177X</data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Paolo Emilio Adami" target="Toomas Timpka">
-  <data key="d0">https://openalex.org/A2077962870</data>
-  <data key="d1">https://openalex.org/A2164525654</data>
-  <data key="d2">https://orcid.org/0000-0001-5975-5342</data>
-  <data key="d3">https://orcid.org/0000-0001-6049-5402</data>
-  <data key="d4">4</data>
-</edge>
-<edge source="Paolo Emilio Adami" target="Michael Papadakis">
-  <data key="d0">https://openalex.org/A2077962870</data>
-  <data key="d1">https://openalex.org/A4342309411</data>
-  <data key="d2">https://orcid.org/0000-0001-5975-5342</data>
-  <data key="d3"></data>
-  <data key="d4">3</data>
-</edge>
-<edge source="Paolo Emilio Adami" target="Stefano Caselli">
-  <data key="d0">https://openalex.org/A2077962870</data>
-  <data key="d1">https://openalex.org/A300548163</data>
-  <data key="d2">https://orcid.org/0000-0001-5975-5342</data>
-  <data key="d3">https://orcid.org/0000-0002-9897-5839</data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Paolo Emilio Adami" target="Andre La Gerche">
-  <data key="d0">https://openalex.org/A106596856</data>
-  <data key="d1">https://openalex.org/A2077962870</data>
-  <data key="d2">https://orcid.org/0000-0002-3906-3784</data>
-  <data key="d3">https://orcid.org/0000-0001-5975-5342</data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Daniel J. Madigan" target="Henrik Gustafsson">
-  <data key="d0">https://openalex.org/A4359281070</data>
-  <data key="d1">https://openalex.org/A4359787250</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">4</data>
-</edge>
-<edge source="Henrik Gustafsson" target="Guillaume Martinent">
+<edge source="Guillaume Martinent" target="Henrik Gustafsson">
   <data key="d0">https://openalex.org/A4336776014</data>
   <data key="d1">https://openalex.org/A4359787250</data>
   <data key="d2"></data>
   <data key="d3"></data>
   <data key="d4">1</data>
 </edge>
-<edge source="Michael McCrea" target="Anthony P. Kontos">
-  <data key="d0">https://openalex.org/A4353889559</data>
-  <data key="d1">https://openalex.org/A4356812048</data>
+<edge source="Guillaume Martinent" target="Sandrine Isoard-Gautheur">
+  <data key="d0">https://openalex.org/A2778271417</data>
+  <data key="d1">https://openalex.org/A4336776014</data>
+  <data key="d2">https://orcid.org/0000-0003-1019-3371</data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Henrik Gustafsson" target="Renzo Bianchi">
+  <data key="d0">https://openalex.org/A1975934212</data>
+  <data key="d1">https://openalex.org/A4359787250</data>
+  <data key="d2">https://orcid.org/0000-0003-2336-0407</data>
+  <data key="d3"></data>
+  <data key="d4">4</data>
+</edge>
+<edge source="Henrik Gustafsson" target="Markus Gerber">
+  <data key="d0">https://openalex.org/A4359787250</data>
+  <data key="d1">https://openalex.org/A4359986046</data>
   <data key="d2"></data>
   <data key="d3"></data>
-  <data key="d4">3</data>
+  <data key="d4">4</data>
 </edge>
-<edge source="Michael McCrea" target="Steven P. Broglio">
-  <data key="d0">https://openalex.org/A4353889559</data>
-  <data key="d1">https://openalex.org/A4356306326</data>
+<edge source="Henrik Gustafsson" target="Serge Brand">
+  <data key="d0">https://openalex.org/A2289577598</data>
+  <data key="d1">https://openalex.org/A4359787250</data>
+  <data key="d2">https://orcid.org/0000-0003-2175-2765</data>
+  <data key="d3"></data>
+  <data key="d4">4</data>
+</edge>
+<edge source="Henrik Gustafsson" target="Sebastian Ludyga">
+  <data key="d0">https://openalex.org/A4357860719</data>
+  <data key="d1">https://openalex.org/A4359787250</data>
   <data key="d2"></data>
   <data key="d3"></data>
-  <data key="d4">10</data>
+  <data key="d4">4</data>
 </edge>
-<edge source="Michael McCrea" target="Julianne D. Schmidt">
-  <data key="d0">https://openalex.org/A4354440510</data>
-  <data key="d1">https://openalex.org/A4354702542</data>
-  <data key="d2"></data>
+<edge source="Henrik Gustafsson" target="Sandrine Isoard-Gautheur">
+  <data key="d0">https://openalex.org/A2778271417</data>
+  <data key="d1">https://openalex.org/A4359787250</data>
+  <data key="d2">https://orcid.org/0000-0003-1019-3371</data>
   <data key="d3"></data>
-  <data key="d4">3</data>
+  <data key="d4">5</data>
 </edge>
-<edge source="Michael McCrea" target="R J Elbin">
-  <data key="d0">https://openalex.org/A4353889559</data>
-  <data key="d1">https://openalex.org/A4355809727</data>
-  <data key="d2"></data>
+<edge source="Sandrine Isoard-Gautheur" target="Renzo Bianchi">
+  <data key="d0">https://openalex.org/A1975934212</data>
+  <data key="d1">https://openalex.org/A2778271417</data>
+  <data key="d2">https://orcid.org/0000-0003-2336-0407</data>
+  <data key="d3">https://orcid.org/0000-0003-1019-3371</data>
+  <data key="d4">4</data>
+</edge>
+<edge source="Sandrine Isoard-Gautheur" target="Markus Gerber">
+  <data key="d0">https://openalex.org/A2778271417</data>
+  <data key="d1">https://openalex.org/A4359986046</data>
+  <data key="d2">https://orcid.org/0000-0003-1019-3371</data>
   <data key="d3"></data>
-  <data key="d4">2</data>
+  <data key="d4">4</data>
 </edge>
-<edge source="Michael McCrea" target="Johna K. Register-Mihalik">
-  <data key="d0">https://openalex.org/A4353889559</data>
-  <data key="d1">https://openalex.org/A4357994835</data>
+<edge source="Sandrine Isoard-Gautheur" target="Serge Brand">
+  <data key="d0">https://openalex.org/A2289577598</data>
+  <data key="d1">https://openalex.org/A2778271417</data>
+  <data key="d2">https://orcid.org/0000-0003-2175-2765</data>
+  <data key="d3">https://orcid.org/0000-0003-1019-3371</data>
+  <data key="d4">4</data>
+</edge>
+<edge source="Sandrine Isoard-Gautheur" target="Sebastian Ludyga">
+  <data key="d0">https://openalex.org/A2778271417</data>
+  <data key="d1">https://openalex.org/A4357860719</data>
+  <data key="d2">https://orcid.org/0000-0003-1019-3371</data>
+  <data key="d3"></data>
+  <data key="d4">4</data>
+</edge>
+<edge source="Paolo Emilio Adami" target="Stéphane Bermon">
+  <data key="d0">https://openalex.org/A2077962870</data>
+  <data key="d1">https://openalex.org/A4353989022</data>
+  <data key="d2">https://orcid.org/0000-0001-5975-5342</data>
+  <data key="d3"></data>
+  <data key="d4">5</data>
+</edge>
+<edge source="Paolo Emilio Adami" target="Lee Taylor">
+  <data key="d0">https://openalex.org/A2077962870</data>
+  <data key="d1">https://openalex.org/A4354398137</data>
+  <data key="d2">https://orcid.org/0000-0001-5975-5342</data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Paolo Emilio Adami" target="Nick Webborn">
+  <data key="d0">https://openalex.org/A2014715295</data>
+  <data key="d1">https://openalex.org/A2077962870</data>
+  <data key="d2">https://orcid.org/0000-0003-3636-5557</data>
+  <data key="d3">https://orcid.org/0000-0001-5975-5342</data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Paolo Emilio Adami" target="Wayne Derman">
+  <data key="d0">https://openalex.org/A2077962870</data>
+  <data key="d1">https://openalex.org/A2614649896</data>
+  <data key="d2">https://orcid.org/0000-0001-5975-5342</data>
+  <data key="d3">https://orcid.org/0000-0002-8879-177X</data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Paolo Emilio Adami" target="Valérie Bougault">
+  <data key="d0">https://openalex.org/A2077962870</data>
+  <data key="d1">https://openalex.org/A2523592818</data>
+  <data key="d2">https://orcid.org/0000-0001-5975-5342</data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Paolo Emilio Adami" target="Nicola Sewry">
+  <data key="d0">https://openalex.org/A2077962870</data>
+  <data key="d1">https://openalex.org/A4358154500</data>
+  <data key="d2">https://orcid.org/0000-0001-5975-5342</data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Paolo Emilio Adami" target="Martin Schwellnus">
+  <data key="d0">https://openalex.org/A2077962870</data>
+  <data key="d1">https://openalex.org/A4354619294</data>
+  <data key="d2">https://orcid.org/0000-0001-5975-5342</data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Stéphane Bermon" target="Lee Taylor">
+  <data key="d0">https://openalex.org/A4353989022</data>
+  <data key="d1">https://openalex.org/A4354398137</data>
   <data key="d2"></data>
   <data key="d3"></data>
   <data key="d4">1</data>
 </edge>
-<edge source="Anthony P. Kontos" target="Steven P. Broglio">
-  <data key="d0">https://openalex.org/A4356306326</data>
-  <data key="d1">https://openalex.org/A4356812048</data>
+<edge source="Stéphane Bermon" target="Wayne Derman">
+  <data key="d0">https://openalex.org/A2614649896</data>
+  <data key="d1">https://openalex.org/A4353989022</data>
+  <data key="d2">https://orcid.org/0000-0002-8879-177X</data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Stéphane Bermon" target="Nick Webborn">
+  <data key="d0">https://openalex.org/A2014715295</data>
+  <data key="d1">https://openalex.org/A4353989022</data>
+  <data key="d2">https://orcid.org/0000-0003-3636-5557</data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Nick Webborn" target="Martin Schwellnus">
+  <data key="d0">https://openalex.org/A2014715295</data>
+  <data key="d1">https://openalex.org/A4354619294</data>
+  <data key="d2">https://orcid.org/0000-0003-3636-5557</data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Nick Webborn" target="Wayne Derman">
+  <data key="d0">https://openalex.org/A2014715295</data>
+  <data key="d1">https://openalex.org/A2614649896</data>
+  <data key="d2">https://orcid.org/0000-0003-3636-5557</data>
+  <data key="d3">https://orcid.org/0000-0002-8879-177X</data>
+  <data key="d4">3</data>
+</edge>
+<edge source="Wayne Derman" target="Martin Schwellnus">
+  <data key="d0">https://openalex.org/A2614649896</data>
+  <data key="d1">https://openalex.org/A4354619294</data>
+  <data key="d2">https://orcid.org/0000-0002-8879-177X</data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Valérie Bougault" target="Martin Schwellnus">
+  <data key="d0">https://openalex.org/A2523592818</data>
+  <data key="d1">https://openalex.org/A4354619294</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">3</data>
+</edge>
+<edge source="Valérie Bougault" target="Nicola Sewry">
+  <data key="d0">https://openalex.org/A2523592818</data>
+  <data key="d1">https://openalex.org/A4358154500</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">3</data>
+</edge>
+<edge source="Valérie Bougault" target="Lars Pedersen">
+  <data key="d0">https://openalex.org/A2523592818</data>
+  <data key="d1">https://openalex.org/A4359962665</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Valérie Bougault" target="James H. Hull">
+  <data key="d0">https://openalex.org/A2523592818</data>
+  <data key="d1">https://openalex.org/A4357622908</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Nicola Sewry" target="Martin Schwellnus">
+  <data key="d0">https://openalex.org/A4354619294</data>
+  <data key="d1">https://openalex.org/A4358154500</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">3</data>
+</edge>
+<edge source="Nicola Sewry" target="Lars Pedersen">
+  <data key="d0">https://openalex.org/A4358154500</data>
+  <data key="d1">https://openalex.org/A4359962665</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Nicola Sewry" target="James H. Hull">
+  <data key="d0">https://openalex.org/A4357622908</data>
+  <data key="d1">https://openalex.org/A4358154500</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Martin Schwellnus" target="Lars Pedersen">
+  <data key="d0">https://openalex.org/A4354619294</data>
+  <data key="d1">https://openalex.org/A4359962665</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Martin Schwellnus" target="James H. Hull">
+  <data key="d0">https://openalex.org/A4354619294</data>
+  <data key="d1">https://openalex.org/A4357622908</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Yohan Grandperrin" target="Laurent Mourot">
+  <data key="d0">https://openalex.org/A3030244926</data>
+  <data key="d1">https://openalex.org/A4359877442</data>
+  <data key="d2">https://orcid.org/0000-0001-7697-9989</data>
+  <data key="d3"></data>
+  <data key="d4">5</data>
+</edge>
+<edge source="Yohan Grandperrin" target="Emmanuel Haffen">
+  <data key="d0">https://openalex.org/A3030244926</data>
+  <data key="d1">https://openalex.org/A4352885063</data>
+  <data key="d2">https://orcid.org/0000-0001-7697-9989</data>
+  <data key="d3"></data>
+  <data key="d4">5</data>
+</edge>
+<edge source="Yohan Grandperrin" target="Djamila Bennabi">
+  <data key="d0">https://openalex.org/A1942273484</data>
+  <data key="d1">https://openalex.org/A3030244926</data>
+  <data key="d2"></data>
+  <data key="d3">https://orcid.org/0000-0001-7697-9989</data>
+  <data key="d4">5</data>
+</edge>
+<edge source="Yohan Grandperrin" target="Philippe Gimenez">
+  <data key="d0">https://openalex.org/A3030244926</data>
+  <data key="d1">https://openalex.org/A4342185723</data>
+  <data key="d2">https://orcid.org/0000-0001-7697-9989</data>
+  <data key="d3"></data>
+  <data key="d4">5</data>
+</edge>
+<edge source="Yohan Grandperrin" target="Magali Nicolier">
+  <data key="d0">https://openalex.org/A3030244926</data>
+  <data key="d1">https://openalex.org/A4339099299</data>
+  <data key="d2">https://orcid.org/0000-0001-7697-9989</data>
+  <data key="d3"></data>
+  <data key="d4">5</data>
+</edge>
+<edge source="Yohan Grandperrin" target="Chrystelle Vidal">
+  <data key="d0">https://openalex.org/A2308915567</data>
+  <data key="d1">https://openalex.org/A3030244926</data>
+  <data key="d2"></data>
+  <data key="d3">https://orcid.org/0000-0001-7697-9989</data>
+  <data key="d4">4</data>
+</edge>
+<edge source="Laurent Mourot" target="Magali Nicolier">
+  <data key="d0">https://openalex.org/A4339099299</data>
+  <data key="d1">https://openalex.org/A4359877442</data>
   <data key="d2"></data>
   <data key="d3"></data>
   <data key="d4">5</data>
 </edge>
-<edge source="Anthony P. Kontos" target="R J Elbin">
-  <data key="d0">https://openalex.org/A4355809727</data>
-  <data key="d1">https://openalex.org/A4356812048</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">7</data>
-</edge>
-<edge source="Anthony P. Kontos" target="Julianne D. Schmidt">
-  <data key="d0">https://openalex.org/A4354702542</data>
-  <data key="d1">https://openalex.org/A4356812048</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Anthony P. Kontos" target="Tracey Covassin">
-  <data key="d0">https://openalex.org/A4355280185</data>
-  <data key="d1">https://openalex.org/A4356812048</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Anthony P. Kontos" target="Erica Beidler">
-  <data key="d0">https://openalex.org/A4356812048</data>
-  <data key="d1">https://openalex.org/A4359907554</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Anthony P. Kontos" target="Jessica Wallace">
-  <data key="d0">https://openalex.org/A4356812048</data>
-  <data key="d1">https://openalex.org/A4358147062</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Steven P. Broglio" target="R J Elbin">
-  <data key="d0">https://openalex.org/A4355809727</data>
-  <data key="d1">https://openalex.org/A4356306326</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Steven P. Broglio" target="Julianne D. Schmidt">
-  <data key="d0">https://openalex.org/A4354702542</data>
-  <data key="d1">https://openalex.org/A4356306326</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Kathryn E. Ackerman" target="Trent Stellingwerff">
-  <data key="d0">https://openalex.org/A145549633</data>
-  <data key="d1">https://openalex.org/A4354980832</data>
-  <data key="d2">https://orcid.org/0000-0002-4704-8250</data>
-  <data key="d3"></data>
-  <data key="d4">4</data>
-</edge>
-<edge source="Kathryn E. Ackerman" target="Louise M. Burke">
-  <data key="d0">https://openalex.org/A4354980832</data>
-  <data key="d1">https://openalex.org/A4357752915</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">3</data>
-</edge>
-<edge source="Trent Stellingwerff" target="Peter Peeling">
-  <data key="d0">https://openalex.org/A145549633</data>
-  <data key="d1">https://openalex.org/A4354120346</data>
-  <data key="d2">https://orcid.org/0000-0002-4704-8250</data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Trent Stellingwerff" target="Louise M. Burke">
-  <data key="d0">https://openalex.org/A145549633</data>
-  <data key="d1">https://openalex.org/A4357752915</data>
-  <data key="d2">https://orcid.org/0000-0002-4704-8250</data>
-  <data key="d3"></data>
-  <data key="d4">4</data>
-</edge>
-<edge source="Louise M. Burke" target="Peter Peeling">
-  <data key="d0">https://openalex.org/A4354120346</data>
-  <data key="d1">https://openalex.org/A4357752915</data>
+<edge source="Laurent Mourot" target="Philippe Gimenez">
+  <data key="d0">https://openalex.org/A4342185723</data>
+  <data key="d1">https://openalex.org/A4359877442</data>
   <data key="d2"></data>
   <data key="d3"></data>
   <data key="d4">5</data>
 </edge>
-<edge source="Louise M. Burke" target="Shona L. Halson">
-  <data key="d0">https://openalex.org/A4357752915</data>
-  <data key="d1">https://openalex.org/A4358109076</data>
+<edge source="Laurent Mourot" target="Chrystelle Vidal">
+  <data key="d0">https://openalex.org/A2308915567</data>
+  <data key="d1">https://openalex.org/A4359877442</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">4</data>
+</edge>
+<edge source="Laurent Mourot" target="Emmanuel Haffen">
+  <data key="d0">https://openalex.org/A4352885063</data>
+  <data key="d1">https://openalex.org/A4359877442</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">5</data>
+</edge>
+<edge source="Laurent Mourot" target="Djamila Bennabi">
+  <data key="d0">https://openalex.org/A1942273484</data>
+  <data key="d1">https://openalex.org/A4359877442</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">5</data>
+</edge>
+<edge source="Magali Nicolier" target="Emmanuel Haffen">
+  <data key="d0">https://openalex.org/A4339099299</data>
+  <data key="d1">https://openalex.org/A4352885063</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">5</data>
+</edge>
+<edge source="Magali Nicolier" target="Djamila Bennabi">
+  <data key="d0">https://openalex.org/A1942273484</data>
+  <data key="d1">https://openalex.org/A4339099299</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">5</data>
+</edge>
+<edge source="Magali Nicolier" target="Philippe Gimenez">
+  <data key="d0">https://openalex.org/A4339099299</data>
+  <data key="d1">https://openalex.org/A4342185723</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">5</data>
+</edge>
+<edge source="Magali Nicolier" target="Chrystelle Vidal">
+  <data key="d0">https://openalex.org/A2308915567</data>
+  <data key="d1">https://openalex.org/A4339099299</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">4</data>
+</edge>
+<edge source="Philippe Gimenez" target="Emmanuel Haffen">
+  <data key="d0">https://openalex.org/A4342185723</data>
+  <data key="d1">https://openalex.org/A4352885063</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">5</data>
+</edge>
+<edge source="Philippe Gimenez" target="Djamila Bennabi">
+  <data key="d0">https://openalex.org/A1942273484</data>
+  <data key="d1">https://openalex.org/A4342185723</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">5</data>
+</edge>
+<edge source="Philippe Gimenez" target="Chrystelle Vidal">
+  <data key="d0">https://openalex.org/A2308915567</data>
+  <data key="d1">https://openalex.org/A4342185723</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">4</data>
+</edge>
+<edge source="Chrystelle Vidal" target="Emmanuel Haffen">
+  <data key="d0">https://openalex.org/A2308915567</data>
+  <data key="d1">https://openalex.org/A4352885063</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">4</data>
+</edge>
+<edge source="Chrystelle Vidal" target="Djamila Bennabi">
+  <data key="d0">https://openalex.org/A1942273484</data>
+  <data key="d1">https://openalex.org/A2308915567</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">4</data>
+</edge>
+<edge source="Emmanuel Haffen" target="Djamila Bennabi">
+  <data key="d0">https://openalex.org/A1942273484</data>
+  <data key="d1">https://openalex.org/A4352885063</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">5</data>
+</edge>
+<edge source="Renzo Bianchi" target="Markus Gerber">
+  <data key="d0">https://openalex.org/A1975934212</data>
+  <data key="d1">https://openalex.org/A4359986046</data>
+  <data key="d2">https://orcid.org/0000-0003-2336-0407</data>
+  <data key="d3"></data>
+  <data key="d4">4</data>
+</edge>
+<edge source="Renzo Bianchi" target="Sebastian Ludyga">
+  <data key="d0">https://openalex.org/A1975934212</data>
+  <data key="d1">https://openalex.org/A4357860719</data>
+  <data key="d2">https://orcid.org/0000-0003-2336-0407</data>
+  <data key="d3"></data>
+  <data key="d4">4</data>
+</edge>
+<edge source="Renzo Bianchi" target="Serge Brand">
+  <data key="d0">https://openalex.org/A1975934212</data>
+  <data key="d1">https://openalex.org/A2289577598</data>
+  <data key="d2">https://orcid.org/0000-0003-2336-0407</data>
+  <data key="d3">https://orcid.org/0000-0003-2175-2765</data>
+  <data key="d4">4</data>
+</edge>
+<edge source="Markus Gerber" target="Sebastian Ludyga">
+  <data key="d0">https://openalex.org/A4357860719</data>
+  <data key="d1">https://openalex.org/A4359986046</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">4</data>
+</edge>
+<edge source="Markus Gerber" target="Serge Brand">
+  <data key="d0">https://openalex.org/A2289577598</data>
+  <data key="d1">https://openalex.org/A4359986046</data>
+  <data key="d2">https://orcid.org/0000-0003-2175-2765</data>
+  <data key="d3"></data>
+  <data key="d4">4</data>
+</edge>
+<edge source="Sebastian Ludyga" target="Serge Brand">
+  <data key="d0">https://openalex.org/A2289577598</data>
+  <data key="d1">https://openalex.org/A4357860719</data>
+  <data key="d2">https://orcid.org/0000-0003-2175-2765</data>
+  <data key="d3"></data>
+  <data key="d4">4</data>
+</edge>
+<edge source="Lars Pedersen" target="James H. Hull">
+  <data key="d0">https://openalex.org/A4357622908</data>
+  <data key="d1">https://openalex.org/A4359962665</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Omar Hammouda" target="Imen Moussa-Chamari">
+  <data key="d0">https://openalex.org/A2975272463</data>
+  <data key="d1">https://openalex.org/A4354708703</data>
   <data key="d2"></data>
   <data key="d3"></data>
   <data key="d4">1</data>
 </edge>
-<edge source="Jonathan M. Oliver" target="Andrew R. Jagim">
-  <data key="d0">https://openalex.org/A4356303738</data>
-  <data key="d1">https://openalex.org/A4357323124</data>
+<edge source="Omar Hammouda" target="Nizar Souissi">
+  <data key="d0">https://openalex.org/A2026453917</data>
+  <data key="d1">https://openalex.org/A4354708703</data>
+  <data key="d2">https://orcid.org/0000-0003-1227-8221</data>
+  <data key="d3"></data>
+  <data key="d4">4</data>
+</edge>
+<edge source="Omar Hammouda" target="Mohamed Romdhani">
+  <data key="d0">https://openalex.org/A4354708703</data>
+  <data key="d1">https://openalex.org/A4357668834</data>
   <data key="d2"></data>
   <data key="d3"></data>
-  <data key="d4">6</data>
+  <data key="d4">1</data>
 </edge>
-<edge source="Jonathan M. Oliver" target="Margaret T. Jones">
-  <data key="d0">https://openalex.org/A4342380908</data>
-  <data key="d1">https://openalex.org/A4357323124</data>
+<edge source="Nizar Souissi" target="Imen Moussa-Chamari">
+  <data key="d0">https://openalex.org/A2026453917</data>
+  <data key="d1">https://openalex.org/A2975272463</data>
+  <data key="d2">https://orcid.org/0000-0003-1227-8221</data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Nizar Souissi" target="Mohamed Romdhani">
+  <data key="d0">https://openalex.org/A2026453917</data>
+  <data key="d1">https://openalex.org/A4357668834</data>
+  <data key="d2">https://orcid.org/0000-0003-1227-8221</data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Nizar Souissi" target="Syrine Khemila">
+  <data key="d0">https://openalex.org/A2026453917</data>
+  <data key="d1">https://openalex.org/A3152767141</data>
+  <data key="d2">https://orcid.org/0000-0003-1227-8221</data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Mohamed Romdhani" target="Imen Moussa-Chamari">
+  <data key="d0">https://openalex.org/A2975272463</data>
+  <data key="d1">https://openalex.org/A4357668834</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Mohamed Romdhani" target="Syrine Khemila">
+  <data key="d0">https://openalex.org/A3152767141</data>
+  <data key="d1">https://openalex.org/A4357668834</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Frédéric Schnell" target="François Carré">
+  <data key="d0">https://openalex.org/A4333928735</data>
+  <data key="d1">https://openalex.org/A4354494837</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Frédéric Schnell" target="Anne-Charlotte Dupont">
+  <data key="d0">https://openalex.org/A4284721046</data>
+  <data key="d1">https://openalex.org/A4333928735</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Frédéric Schnell" target="Stéphane Nottin">
+  <data key="d0">https://openalex.org/A4331860411</data>
+  <data key="d1">https://openalex.org/A4333928735</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="François Carré" target="Anne-Charlotte Dupont">
+  <data key="d0">https://openalex.org/A4284721046</data>
+  <data key="d1">https://openalex.org/A4354494837</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Anne-Charlotte Dupont" target="Anthony Birat">
+  <data key="d0">https://openalex.org/A2800611870</data>
+  <data key="d1">https://openalex.org/A4284721046</data>
   <data key="d2"></data>
   <data key="d3"></data>
   <data key="d4">3</data>
 </edge>
-<edge source="Laura Capranica" target="Patrik Drid">
-  <data key="d0">https://openalex.org/A4355553658</data>
-  <data key="d1">https://openalex.org/A4359332064</data>
+<edge source="Anne-Charlotte Dupont" target="Anthony J. Blazevich">
+  <data key="d0">https://openalex.org/A4284721046</data>
+  <data key="d1">https://openalex.org/A4356818919</data>
   <data key="d2"></data>
   <data key="d3"></data>
   <data key="d4">1</data>
 </edge>
-<edge source="Laura Capranica" target="Antonino Bianco">
-  <data key="d0">https://openalex.org/A2145546939</data>
+<edge source="Anne-Charlotte Dupont" target="Stéphane Nottin">
+  <data key="d0">https://openalex.org/A4284721046</data>
+  <data key="d1">https://openalex.org/A4331860411</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">3</data>
+</edge>
+<edge source="Anne-Charlotte Dupont" target="Sébastien Ratel">
+  <data key="d0">https://openalex.org/A4284721046</data>
+  <data key="d1">https://openalex.org/A4346402935</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Anne-Charlotte Dupont" target="Patrick Mucci">
+  <data key="d0">https://openalex.org/A4284721046</data>
+  <data key="d1">https://openalex.org/A4359046033</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Antonio Tessitore" target="Ciaran MacDonncha">
+  <data key="d0">https://openalex.org/A2103240088</data>
+  <data key="d1">https://openalex.org/A4350062526</data>
+  <data key="d2">https://orcid.org/0000-0002-3542-0991</data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Antonio Tessitore" target="Giles D. Warrington">
+  <data key="d0">https://openalex.org/A2103240088</data>
+  <data key="d1">https://openalex.org/A4354723376</data>
+  <data key="d2">https://orcid.org/0000-0002-3542-0991</data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Antonio Tessitore" target="Laura Capranica">
+  <data key="d0">https://openalex.org/A2103240088</data>
   <data key="d1">https://openalex.org/A4355553658</data>
-  <data key="d2">https://orcid.org/0000-0001-8334-6581</data>
+  <data key="d2">https://orcid.org/0000-0002-3542-0991</data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Antonio Tessitore" target="Mojca Doupona">
+  <data key="d0">https://openalex.org/A2103240088</data>
+  <data key="d1">https://openalex.org/A2910630772</data>
+  <data key="d2">https://orcid.org/0000-0002-3542-0991</data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Ciaran MacDonncha" target="Laura Capranica">
+  <data key="d0">https://openalex.org/A4350062526</data>
+  <data key="d1">https://openalex.org/A4355553658</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Ciaran MacDonncha" target="Giles D. Warrington">
+  <data key="d0">https://openalex.org/A4350062526</data>
+  <data key="d1">https://openalex.org/A4354723376</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Ciaran MacDonncha" target="Mojca Doupona">
+  <data key="d0">https://openalex.org/A2910630772</data>
+  <data key="d1">https://openalex.org/A4350062526</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Laura Capranica" target="Giles D. Warrington">
+  <data key="d0">https://openalex.org/A4354723376</data>
+  <data key="d1">https://openalex.org/A4355553658</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Laura Capranica" target="Mojca Doupona">
+  <data key="d0">https://openalex.org/A2910630772</data>
+  <data key="d1">https://openalex.org/A4355553658</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Giles D. Warrington" target="Mojca Doupona">
+  <data key="d0">https://openalex.org/A2910630772</data>
+  <data key="d1">https://openalex.org/A4354723376</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">2</data>
+</edge>
+<edge source="Sergio Garbarino" target="Nicola Luigi Bragazzi">
+  <data key="d0">https://openalex.org/A4353755389</data>
+  <data key="d1">https://openalex.org/A4354305022</data>
+  <data key="d2"></data>
   <data key="d3"></data>
   <data key="d4">1</data>
 </edge>
-<edge source="Patrik Drid" target="Antonino Bianco">
-  <data key="d0">https://openalex.org/A2145546939</data>
-  <data key="d1">https://openalex.org/A4359332064</data>
-  <data key="d2">https://orcid.org/0000-0001-8334-6581</data>
+<edge source="Hassane Zouhal" target="Urs Granacher">
+  <data key="d0">https://openalex.org/A2410732</data>
+  <data key="d1">https://openalex.org/A4355856561</data>
+  <data key="d2">https://orcid.org/0000-0002-7095-813X</data>
   <data key="d3"></data>
-  <data key="d4">13</data>
+  <data key="d4">2</data>
 </edge>
-<edge source="Patrik Drid" target="Paulo Gentil">
-  <data key="d0">https://openalex.org/A4358900556</data>
-  <data key="d1">https://openalex.org/A4359332064</data>
+<edge source="Lars Engebretsen" target="Ali Guermazi">
+  <data key="d0">https://openalex.org/A4354258376</data>
+  <data key="d1">https://openalex.org/A4357008907</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">4</data>
+</edge>
+<edge source="Lars Engebretsen" target="Frank W. Roemer">
+  <data key="d0">https://openalex.org/A4354258376</data>
+  <data key="d1">https://openalex.org/A4356069754</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">4</data>
+</edge>
+<edge source="Lars Engebretsen" target="Mohamed Jarraya">
+  <data key="d0">https://openalex.org/A4354258376</data>
+  <data key="d1">https://openalex.org/A4359214108</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">4</data>
+</edge>
+<edge source="Lars Engebretsen" target="Michel D. Crema">
+  <data key="d0">https://openalex.org/A4335059202</data>
+  <data key="d1">https://openalex.org/A4354258376</data>
   <data key="d2"></data>
   <data key="d3"></data>
   <data key="d4">3</data>
 </edge>
-<edge source="Antonino Bianco" target="Paulo Gentil">
-  <data key="d0">https://openalex.org/A2145546939</data>
-  <data key="d1">https://openalex.org/A4358900556</data>
-  <data key="d2">https://orcid.org/0000-0001-8334-6581</data>
+<edge source="Ali Guermazi" target="Frank W. Roemer">
+  <data key="d0">https://openalex.org/A4356069754</data>
+  <data key="d1">https://openalex.org/A4357008907</data>
+  <data key="d2"></data>
   <data key="d3"></data>
   <data key="d4">4</data>
 </edge>
-<edge source="Douglas J. Casa" target="Tracey Covassin">
-  <data key="d0">https://openalex.org/A4355280185</data>
-  <data key="d1">https://openalex.org/A4357778737</data>
+<edge source="Ali Guermazi" target="Mohamed Jarraya">
+  <data key="d0">https://openalex.org/A4357008907</data>
+  <data key="d1">https://openalex.org/A4359214108</data>
   <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Johna K. Register-Mihalik" target="Jessica Wallace">
-  <data key="d0">https://openalex.org/A4357994835</data>
-  <data key="d1">https://openalex.org/A4358147062</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Johna K. Register-Mihalik" target="Erica Beidler">
-  <data key="d0">https://openalex.org/A4357994835</data>
-  <data key="d1">https://openalex.org/A4359907554</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Johna K. Register-Mihalik" target="Abigail C. Bretzin">
-  <data key="d0">https://openalex.org/A2681885675</data>
-  <data key="d1">https://openalex.org/A4357994835</data>
-  <data key="d2">https://orcid.org/0000-0003-3730-2849</data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Jessica Wallace" target="Tracey Covassin">
-  <data key="d0">https://openalex.org/A4355280185</data>
-  <data key="d1">https://openalex.org/A4358147062</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">10</data>
-</edge>
-<edge source="Jessica Wallace" target="Erica Beidler">
-  <data key="d0">https://openalex.org/A4358147062</data>
-  <data key="d1">https://openalex.org/A4359907554</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">12</data>
-</edge>
-<edge source="Jessica Wallace" target="Abigail C. Bretzin">
-  <data key="d0">https://openalex.org/A2681885675</data>
-  <data key="d1">https://openalex.org/A4358147062</data>
-  <data key="d2">https://orcid.org/0000-0003-3730-2849</data>
   <data key="d3"></data>
   <data key="d4">4</data>
 </edge>
-<edge source="Erica Beidler" target="Tracey Covassin">
-  <data key="d0">https://openalex.org/A4355280185</data>
-  <data key="d1">https://openalex.org/A4359907554</data>
+<edge source="Ali Guermazi" target="Michel D. Crema">
+  <data key="d0">https://openalex.org/A4335059202</data>
+  <data key="d1">https://openalex.org/A4357008907</data>
   <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">6</data>
-</edge>
-<edge source="Erica Beidler" target="Abigail C. Bretzin">
-  <data key="d0">https://openalex.org/A2681885675</data>
-  <data key="d1">https://openalex.org/A4359907554</data>
-  <data key="d2">https://orcid.org/0000-0003-3730-2849</data>
-  <data key="d3"></data>
-  <data key="d4">6</data>
-</edge>
-<edge source="Abigail C. Bretzin" target="R J Elbin">
-  <data key="d0">https://openalex.org/A2681885675</data>
-  <data key="d1">https://openalex.org/A4355809727</data>
-  <data key="d2">https://orcid.org/0000-0003-3730-2849</data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Abigail C. Bretzin" target="Tracey Covassin">
-  <data key="d0">https://openalex.org/A2681885675</data>
-  <data key="d1">https://openalex.org/A4355280185</data>
-  <data key="d2">https://orcid.org/0000-0003-3730-2849</data>
-  <data key="d3"></data>
-  <data key="d4">11</data>
-</edge>
-<edge source="Stefano Caselli" target="Michael Papadakis">
-  <data key="d0">https://openalex.org/A300548163</data>
-  <data key="d1">https://openalex.org/A4342309411</data>
-  <data key="d2">https://orcid.org/0000-0002-9897-5839</data>
   <data key="d3"></data>
   <data key="d4">3</data>
 </edge>
-<edge source="Stefano Caselli" target="Andre La Gerche">
-  <data key="d0">https://openalex.org/A106596856</data>
-  <data key="d1">https://openalex.org/A300548163</data>
-  <data key="d2">https://orcid.org/0000-0002-3906-3784</data>
-  <data key="d3">https://orcid.org/0000-0002-9897-5839</data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Stefano Caselli" target="Domenico Corrado">
-  <data key="d0">https://openalex.org/A300548163</data>
-  <data key="d1">https://openalex.org/A4353413968</data>
-  <data key="d2">https://orcid.org/0000-0002-9897-5839</data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Andre La Gerche" target="Michael Papadakis">
-  <data key="d0">https://openalex.org/A106596856</data>
-  <data key="d1">https://openalex.org/A4342309411</data>
-  <data key="d2">https://orcid.org/0000-0002-3906-3784</data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Michael Papadakis" target="Flavio D'Ascenzi">
-  <data key="d0">https://openalex.org/A4342309411</data>
-  <data key="d1">https://openalex.org/A4353605681</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">1</data>
-</edge>
-<edge source="Domenico Corrado" target="Alessandro Zorzi">
-  <data key="d0">https://openalex.org/A4353145026</data>
-  <data key="d1">https://openalex.org/A4353413968</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">21</data>
-</edge>
-<edge source="Domenico Corrado" target="Flavio D'Ascenzi">
-  <data key="d0">https://openalex.org/A4353413968</data>
-  <data key="d1">https://openalex.org/A4353605681</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">5</data>
-</edge>
-<edge source="Alessandro Zorzi" target="Flavio D'Ascenzi">
-  <data key="d0">https://openalex.org/A4353145026</data>
-  <data key="d1">https://openalex.org/A4353605681</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">8</data>
-</edge>
-<edge source="Andrew R. Jagim" target="Margaret T. Jones">
-  <data key="d0">https://openalex.org/A4342380908</data>
-  <data key="d1">https://openalex.org/A4356303738</data>
-  <data key="d2"></data>
-  <data key="d3"></data>
-  <data key="d4">10</data>
-</edge>
-<edge source="R J Elbin" target="Tracey Covassin">
-  <data key="d0">https://openalex.org/A4355280185</data>
-  <data key="d1">https://openalex.org/A4355809727</data>
+<edge source="Frank W. Roemer" target="Mohamed Jarraya">
+  <data key="d0">https://openalex.org/A4356069754</data>
+  <data key="d1">https://openalex.org/A4359214108</data>
   <data key="d2"></data>
   <data key="d3"></data>
   <data key="d4">4</data>
 </edge>
-<edge source="Ioanna K Bolia" target="Alexander E. Weber">
-  <data key="d0">https://openalex.org/A3184615131</data>
-  <data key="d1">https://openalex.org/A4354311494</data>
-  <data key="d2">https://orcid.org/0000-0002-9410-1421</data>
+<edge source="Frank W. Roemer" target="Michel D. Crema">
+  <data key="d0">https://openalex.org/A4335059202</data>
+  <data key="d1">https://openalex.org/A4356069754</data>
+  <data key="d2"></data>
   <data key="d3"></data>
-  <data key="d4">15</data>
+  <data key="d4">3</data>
 </edge>
-<edge source="Peter Peeling" target="Shona L. Halson">
-  <data key="d0">https://openalex.org/A4354120346</data>
-  <data key="d1">https://openalex.org/A4358109076</data>
+<edge source="Mohamed Jarraya" target="Michel D. Crema">
+  <data key="d0">https://openalex.org/A4335059202</data>
+  <data key="d1">https://openalex.org/A4359214108</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">3</data>
+</edge>
+<edge source="Anthony Birat" target="Anthony J. Blazevich">
+  <data key="d0">https://openalex.org/A2800611870</data>
+  <data key="d1">https://openalex.org/A4356818919</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">3</data>
+</edge>
+<edge source="Anthony Birat" target="Sébastien Ratel">
+  <data key="d0">https://openalex.org/A2800611870</data>
+  <data key="d1">https://openalex.org/A4346402935</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">4</data>
+</edge>
+<edge source="Anthony Birat" target="Stéphane Nottin">
+  <data key="d0">https://openalex.org/A2800611870</data>
+  <data key="d1">https://openalex.org/A4331860411</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">3</data>
+</edge>
+<edge source="Anthony Birat" target="Patrick Mucci">
+  <data key="d0">https://openalex.org/A2800611870</data>
+  <data key="d1">https://openalex.org/A4359046033</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Anthony J. Blazevich" target="Sébastien Ratel">
+  <data key="d0">https://openalex.org/A4346402935</data>
+  <data key="d1">https://openalex.org/A4356818919</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">4</data>
+</edge>
+<edge source="Anthony J. Blazevich" target="Martine Duclos">
+  <data key="d0">https://openalex.org/A4356818919</data>
+  <data key="d1">https://openalex.org/A4358856369</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Anthony J. Blazevich" target="Stéphane Nottin">
+  <data key="d0">https://openalex.org/A4331860411</data>
+  <data key="d1">https://openalex.org/A4356818919</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Stéphane Nottin" target="Patrick Mucci">
+  <data key="d0">https://openalex.org/A4331860411</data>
+  <data key="d1">https://openalex.org/A4359046033</data>
+  <data key="d2"></data>
+  <data key="d3"></data>
+  <data key="d4">1</data>
+</edge>
+<edge source="Stéphane Nottin" target="Sébastien Ratel">
+  <data key="d0">https://openalex.org/A4331860411</data>
+  <data key="d1">https://openalex.org/A4346402935</data>
   <data key="d2"></data>
   <data key="d3"></data>
   <data key="d4">2</data>
 </edge>
-<edge source="Shona L. Halson" target="Matthew W. Driller">
-  <data key="d0">https://openalex.org/A2312004172</data>
-  <data key="d1">https://openalex.org/A4358109076</data>
-  <data key="d2">https://orcid.org/0000-0002-9990-8830</data>
-  <data key="d3"></data>
-  <data key="d4">2</data>
-</edge>
-<edge source="Gretchen Kerr" target="Katherine A. Tamminen">
-  <data key="d0">https://openalex.org/A2274425258</data>
-  <data key="d1">https://openalex.org/A4353440720</data>
+<edge source="Sébastien Ratel" target="Martine Duclos">
+  <data key="d0">https://openalex.org/A4346402935</data>
+  <data key="d1">https://openalex.org/A4358856369</data>
   <data key="d2"></data>
   <data key="d3"></data>
-  <data key="d4">2</data>
+  <data key="d4">1</data>
 </edge>
-<edge source="Analiza M. Silva" target="Luís B. Sardinha">
-  <data key="d0">https://openalex.org/A2128470729</data>
-  <data key="d1">https://openalex.org/A4358656765</data>
-  <data key="d2">https://orcid.org/0000-0002-8984-8600</data>
-  <data key="d3"></data>
-  <data key="d4">18</data>
-</edge>
-<edge source="Susan H. Backhouse" target="Jürgen M. Steinacker">
-  <data key="d0">https://openalex.org/A4353969777</data>
-  <data key="d1">https://openalex.org/A4355413187</data>
+<edge source="Martine Duclos" target="Jean-François Toussaint">
+  <data key="d0">https://openalex.org/A4354685839</data>
+  <data key="d1">https://openalex.org/A4358856369</data>
   <data key="d2"></data>
   <data key="d3"></data>
-  <data key="d4">2</data>
+  <data key="d4">1</data>
 </edge>
 </graph></graphml>

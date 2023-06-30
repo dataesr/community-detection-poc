@@ -145,11 +145,19 @@ for page in range(2, nb_page + 1):
             authors.append(dic)
 data = pd.DataFrame(data=authors)
 
-min_publication = 10
-graph_net, n_nodes = create_edgelist(data, min_publication)
+liste_pub = []
+for pub in set(data["id_pub"]):
+    l_pays = list(data.loc[data["id_pub"]==pub, "country_code_ins"])
+    if "FR" in l_pays:
+        liste_pub.append(pub)
+
+data2 = data.loc[data["id_pub"].isin(liste_pub)]
+
+min_publication = 1
+graph_net, n_nodes = create_edgelist(data2, min_publication)
 
 while n_nodes > 100:
     min_publication += 1
-    graph_net, n_nodes = create_edgelist(data, min_publication)
+    graph_net, n_nodes = create_edgelist(data2, min_publication)
 
 nx.write_graphml_lxml(graph_net, 'athleteOA.graphml')
