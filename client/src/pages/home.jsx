@@ -1,6 +1,8 @@
 import { Button, Container, Select, Title } from '@dataesr/react-dsfr';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { PageSpinner } from '../components/spinner';
+
 
 import Graph from '../layout/Graph';
 import TagInput from '../layout/TagInput';
@@ -85,8 +87,8 @@ export default function Home() {
       <Button onClick={refetch}>
         Generate graph
       </Button>
-      {(isFetching) && (<div>Fetching data...</div>)}
-      {data && <Graph data={data} />}
+      {(isFetching) && (<Container><PageSpinner /></Container>)}
+      {(!isFetching && data) && <Graph data={data} />}
     </Container>
   );
 }

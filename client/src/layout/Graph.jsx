@@ -39,15 +39,16 @@ export default function Graph({ data }) {
   const [selectedNode, setSelectedNode] = useState(null);
   const graph = UndirectedGraph.from(data);
   const communities = graph.reduceNodes((acc, node, attr) => {
-    const { label, size, color, wikis } = attr;
+    const { label, size, color, wikis, weight } = attr;
     if (!acc[color]) {
-      acc[color] = [{ id: node, label, size, degree: graph.degree(node), wikis }];
+      acc[color] = [{ id: node, label, size, degree: graph.degree(node), wikis, weight }];
     } else {
-      acc[color] = [...acc[color], { id: node, label, size, degree: graph.degree(node), wikis }].sort((a, b) => b.size - a.size);
+      acc[color] = [...acc[color], { id: node, label, size, degree: graph.degree(node), wikis, weight }].sort((a, b) => b.size - a.size);
     }
     return acc;
   }, {});
-  const clustersKeys = Object.keys(communities).sort((a, b) => communities[b].length - communities[a].length).slice(0, 6);
+  const clustersKeys = Object.keys(communities)
+    .sort((a, b) => communities[b].length - communities[a].length).slice(0, 6);
   return (
     <>
       <Container fluid className="fr-my-3w">
@@ -57,7 +58,7 @@ export default function Graph({ data }) {
               style={{ height: '500px' }}
               graph={graph}
             >
-              <GraphEvents onNodeClick={(event) => setSelectedNode({ id: event.node, degree: graph.degree(event.node), ...graph.getNodeAttributes(event.node) })} />
+              <GraphEvents onNodeClick={(event) => { console.log(event, graph.getNodeAttributes(event.node)); setSelectedNode({ id: event.node, degree: graph.degree(event.node), ...graph.getNodeAttributes(event.node) }) }} />
               <ControlsContainer position="bottom-right">
                 <ZoomControl />
                 <FullScreenControl />
@@ -68,8 +69,8 @@ export default function Graph({ data }) {
               </ControlsContainer>
             </SigmaContainer>
           </Col>
-          <Col n="12">
-            {selectedNode && (
+          <Col n='12'>
+            {(selectedNode && graph.hasNode(selectedNode.id)) && (
               <div className="fr-card fr-card--shadow">
                 <div className="fr-my-2w fr-card__body">
                   <Title look="h6" as="p" className="fr-mb-1v">
