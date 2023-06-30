@@ -121,18 +121,6 @@ export default function Graph({ data }) {
                   {cluster}
                 </p>
                 <div className="fr-card__body">
-                  <Title as="h6">Main authors</Title>
-                  {communities[cluster].slice(0, 10).map((node) => (
-                    <>
-                      <Text bold className="fr-mb-1v" key={node.id}>
-                        {node.label}
-                      </Text>
-                      <BadgeGroup>
-                        <Badge colorFamily="purple-glycine" className="fr-ml-1w" text={`${node.weight} publications`} />
-                        <Badge className="fr-ml-1w" text={`${node.degree} co-author(s)`} />
-                      </BadgeGroup>
-                    </>
-                  ))}
                   <Title as="h6">Main topics</Title>
                   <ul>
                     {getThematicFromCluster(communities[cluster]).map((wiki) => (
@@ -145,6 +133,18 @@ export default function Graph({ data }) {
                       </li>
                     ))}
                   </ul>
+                  <Title as="h6">Main authors</Title>
+                  {communities[cluster].slice(0, 10).map((node) => (
+                    <>
+                      <Text bold className="fr-mb-1v" key={node.id}>
+                        {node.label}
+                      </Text>
+                      <BadgeGroup>
+                        <Badge colorFamily="purple-glycine" className="fr-ml-1w" text={`${node.degree} publications`} />
+                        <Badge className="fr-ml-1w" text={`${node.degree} co-author(s)`} />
+                      </BadgeGroup>
+                    </>
+                  ))}
                 </div>
               </div>
             </Col>
