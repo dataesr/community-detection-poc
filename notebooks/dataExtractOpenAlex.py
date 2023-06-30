@@ -2,14 +2,16 @@ import requests
 import pandas as pd
 import math
 import networkx as nx
+from collections import Counter
+from notebooks import mail
 
-BASE_URL = "https://api.openalex.org/works?filter=publication_year:2023-"
+BASE_URL = f"https://api.openalex.org/works?filter=publication_year:2018-,"
 
 
 def url_them(thematic):
     url = BASE_URL
     if thematic:
-        url += f"&search={thematic}&cursor="
+        url += f"title.search:{thematic},abstract.search:{thematic}&mailto={mail.EMAIL}&cursor="
 
     return url
 
@@ -18,6 +20,71 @@ def get_nb_page(nb, ppage):
     n_page = math.ceil(nb / ppage)
 
     return n_page
+
+
+def create_edgelist(dt, mx_pb):
+    pub_compte = dt[["id_pub", "id"]].groupby("id_pub").nunique().reset_index().rename(columns={"id": "compte_auth"})
+    aut_compte = dt[["id_pub", "id"]].groupby("id").nunique().reset_index().rename(columns={"id_pub": "compte_pub"})
+    pub_compte2 = pub_compte.loc[pub_compte["compte_auth"] <= 20].reset_index().drop(columns="index")
+    aut_compte2 = aut_compte.loc[aut_compte["compte_pub"] > mx_pb].reset_index().drop(columns="index")
+
+    dt2 = dt.loc[(dt["id_pub"].isin(pub_compte2["id_pub"])) & (dt["id"].isin(aut_compte2["id"]))]
+
+    compte = dt2[["id", "id_pub"]].groupby("id_pub").nunique().reset_index().rename(columns={"id": "compte"})
+    # compte = compte.loc[compte["compte"] > 1]
+
+    dt3 = dt2.loc[dt2["id_pub"].isin(compte["id_pub"])]
+
+    co = {"source": [], "target": []}
+    co_liste = []
+    co_liste2 = []
+
+    for auth in set(dt3["id"]):
+        pub = list(dt3.loc[dt3["id"] == auth, "id_pub"])
+        coa = list(dt3.loc[dt3["id_pub"].isin(pub), "id"])
+        for item in coa:
+            if item != auth:
+                liste = [auth, item]
+                liste.sort()
+                co_liste2.append(", ".join(liste))
+                if not liste in co_liste:
+                    co_liste.append(liste)
+                    co["source"].append(liste[0])
+                    co["target"].append(liste[1])
+
+    co_liste2.sort()
+
+    we = Counter(co_liste2)
+
+    wed = pd.DataFrame(data={"coauthors": list(dict(we).keys()), "weight": list(dict(we).values())})
+    wed["weight"] = wed["weight"] / 2
+    wed["weight"] = wed["weight"].astype(int)
+
+    cauth = pd.DataFrame(data=co)
+    cauth = cauth.drop_duplicates()
+
+    dt_auth = dt2[['id', 'display_name', 'orcid']].drop_duplicates()
+    dt_auth = dt_auth.rename(columns={"id": "source"})
+
+    cauth2 = pd.merge(cauth, dt_auth, on="source", how="left")
+    cauth2 = cauth2.fillna("")
+    cauth2 = cauth2.rename(columns={"source": "id_oa_source", "display_name": "source", "orcid": "orcid_source"})
+    dt_auth2 = dt_auth.rename(columns={"source": "target"})
+    cauth2 = pd.merge(cauth2, dt_auth2, on="target", how="left")
+    cauth2 = cauth2.fillna("")
+    cauth2 = cauth2.rename(columns={"target": "id_oa_target", "display_name": "target", "orcid": "orcid_target"})
+    cauth2["coauthors"] = cauth2["id_oa_source"] + ", " + cauth2["id_oa_target"]
+    cauth2 = pd.merge(cauth2, wed, on="coauthors", how="left")
+    cauth2 = cauth2.drop(columns="coauthors")
+
+    G = nx.Graph()
+
+    G = nx.from_pandas_edgelist(cauth2, 'source', 'target', edge_attr=['id_oa_source', 'id_oa_target', 'orcid_source',
+                                                                       'orcid_target', "weight"])
+
+    nb_nodes = G.number_of_nodes()
+
+    return G, nb_nodes
 
 thematic = "athlete"
 URL_THEME = url_them(thematic)
@@ -78,65 +145,11 @@ for page in range(2, nb_page + 1):
             authors.append(dic)
 data = pd.DataFrame(data=authors)
 
-pub_compte = data[["id_pub", "id"]].groupby("id_pub").nunique().reset_index().rename(columns={"id": "compte_auth"})
-aut_compte = data[["id_pub", "id"]].groupby("id").nunique().reset_index().rename(columns={"id_pub": "compte_pub"})
+min_publication = 10
+graph_net, n_nodes = create_edgelist(data, min_publication)
 
-pub_compte2 = pub_compte.loc[pub_compte["compte_auth"] > 1].reset_index().drop(columns="index")
-aut_compte2 = aut_compte.loc[aut_compte["compte_pub"] > 1].reset_index().drop(columns="index")
+while n_nodes > 100:
+    min_publication += 1
+    graph_net, n_nodes = create_edgelist(data, min_publication)
 
-data2 = data.loc[(data["id_pub"].isin(pub_compte2["id_pub"])) & (data["id"].isin(aut_compte2["id"]))]
-
-compte = data2[["id", "id_pub"]].groupby("id_pub").nunique().reset_index().rename(columns={"id": "compte"})
-compte = compte.loc[compte["compte"] > 1]
-
-data3 = data2.loc[data2["id_pub"].isin(compte["id_pub"])]
-
-co = {"source": [], "target": []}
-co_liste = []
-co_liste2 = []
-
-for auth in set(data3["id"]):
-    pub = list(data3.loc[data3["id"]==auth, "id_pub"])
-    coa = list(data3.loc[data3["id_pub"].isin(pub), "id"])
-    for item in coa:
-        if item != auth:
-            liste = [auth, item]
-            liste.sort()
-            co_liste2.append(", ".join(liste))
-            if not liste in co_liste:
-                co_liste.append(liste)
-                co["source"].append(liste[0])
-                co["target"].append(liste[1])
-
-co_liste2.sort()
-from collections import Counter
-
-we = Counter(co_liste2)
-
-wed = pd.DataFrame(data={"coauthors": list(dict(we).keys()), "weight": list(dict(we).values())})
-wed["weight"] = wed["weight"] / 2
-wed["weight"] = wed["weight"].astype(int)
-
-coauth = pd.DataFrame(data=co)
-coauth = coauth.drop_duplicates()
-
-data_auth = data2[['id', 'display_name', 'orcid']].drop_duplicates()
-data_auth = data_auth.rename(columns={"id": "source"})
-
-coauth2 = pd.merge(coauth, data_auth, on="source", how="left")
-coauth2 = coauth2.fillna("")
-coauth2 = coauth2.rename(columns={"source": "id_oa_source", "display_name": "source", "orcid": "orcid_source"})
-data_auth2 = data_auth.rename(columns={"source": "target"})
-coauth2 = pd.merge(coauth2, data_auth2, on="target", how="left")
-coauth2 = coauth2.fillna("")
-coauth2 = coauth2.rename(columns={"target": "id_oa_target", "display_name": "target", "orcid": "orcid_target"})
-coauth2["coauthors"] = coauth2["id_oa_source"] + ", " + coauth2["id_oa_target"]
-coauth2 = pd.merge(coauth2, wed, on="coauthors", how="left")
-coauth2 = coauth2.drop(columns="coauthors")
-
-G = nx.Graph()
-
-G = nx.from_pandas_edgelist(coauth2, 'source', 'target', edge_attr=['id_oa_source', 'id_oa_target', 'orcid_source',
-                                                                    'orcid_target', "weight"])
-
-nx.write_graphml_lxml(G, 'atheleteOA.graphml')
+nx.write_graphml_lxml(graph_net, 'athleteOA.graphml')
