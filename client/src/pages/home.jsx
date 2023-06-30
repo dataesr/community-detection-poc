@@ -35,6 +35,11 @@ export default function Home() {
       value: 'openalex',
       disabled: true,
     },
+    {
+      label: 'HAL',
+      value: 'hal',
+      disabled: true,
+    },
   ];
 
   const types = [
