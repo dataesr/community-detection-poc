@@ -23,6 +23,18 @@ function GraphEvents({ onNodeClick }) {
   return null;
 }
 
+const getThematicFromCluster = (cluster) => {
+  const dict = {};
+  cluster.forEach((node) => {
+    node.wikis.forEach((wiki) => {
+      const wikiId = wiki.toLowerCase();
+      if (!(wikiId in dict)) dict[wikiId] = { id: wikiId, label: wiki, count: 0 };
+      dict[wikiId].count += 1;
+    });
+  });
+  return Object.values(dict).sort((a, b) => b.count - a.count).slice(0, 5);
+};
+
 export default function Graph({ data }) {
   const [selectedNode, setSelectedNode] = useState(null);
   const graph = UndirectedGraph.from(data);
@@ -99,7 +111,7 @@ export default function Graph({ data }) {
           </Col>
         </Row>
       </Container>
-      <Title as="h3">Principaux clusters</Title>
+      <Title as="h3">Main clusters</Title>
       <Container fluid className="fr-my-3w">
         <Row gutters>
           {clustersKeys.map((cluster) => (
@@ -109,6 +121,7 @@ export default function Graph({ data }) {
                   {cluster}
                 </p>
                 <div className="fr-card__body">
+                  <Title as="h6">Main authors</Title>
                   {communities[cluster].slice(0, 10).map((node) => (
                     <>
                       <Text bold className="fr-mb-1v" key={node.id}>
@@ -120,9 +133,16 @@ export default function Graph({ data }) {
                       </BadgeGroup>
                     </>
                   ))}
+                  <Title as="h6">Main topics</Title>
                   <ul>
-                    {communities[cluster].map((node) => node.wikis).flat().map((wiki) => (
-                      <li> {wiki} </li>
+                    {getThematicFromCluster(communities[cluster]).map((wiki) => (
+                      <li>
+                        {wiki.label}
+                        {' '}
+                        (
+                        {wiki.count}
+                        )
+                      </li>
                     ))}
                   </ul>
                 </div>
