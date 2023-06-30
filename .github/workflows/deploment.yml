@@ -7,10 +7,10 @@ on:
 
 env:
   # Must match k8s deployment name
-  DEPLOYMENT: <doadify>
-  DEPLOYMENT_NAMESPACE: <doadify>
-  DEPLOYMENT_URL: <https://doadify.net>
-  MM_NOTIFICATION_CHANNEL: <doadify>
+  DEPLOYMENT: community-detection-poc
+  DEPLOYMENT_NAMESPACE: community-detection-poc
+  DEPLOYMENT_URL: https://www.community-detection-poc.staging.dataesr.ovh
+  MM_NOTIFICATION_CHANNEL: bots
 
 jobs:
   publish-ghcr:
