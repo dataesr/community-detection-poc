@@ -1,6 +1,8 @@
 import { Alert, Button, Container, Select, Title } from '@dataesr/react-dsfr';
-import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+
 import { PageSpinner } from '../components/spinner';
 
 import Graph from '../layout/Graph';
@@ -14,14 +16,18 @@ async function getScanr({ query, type }) {
 }
 
 export default function Home() {
-  const [datasource, setDatasource] = useState('scanr');
-  const [query, setQuery] = useState([]);
-  const [type, setType] = useState('keyword');
-  const [isError, setIsError] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { datasource = 'scanr', query = 'athlete', type = 'keyword' } = Object.fromEntries(searchParams.entries());
+  const [formDatasource, setFormDatasource] = useState(datasource);
+  const [formQuery, setFormQuery] = useState(query.split(','));
+  const [formType, setFormType] = useState(type);
+  const [isError, setFormIsError] = useState(false);
+
+  useEffect(() => setSearchParams({ datasource: formDatasource, query: formQuery, type: formType }), [formDatasource, formQuery, setSearchParams, formType]);
 
   const { data, isFetching, refetch } = useQuery({
     queryKey: ['graph'],
-    queryFn: () => getScanr({ query, type }),
+    queryFn: () => getScanr({ query: formQuery, type: formType }),
     enabled: false,
     staleTime: Infinity,
     cacheTime: Infinity,
@@ -67,27 +73,27 @@ export default function Home() {
       <Select
         label="Choose your datasource"
         options={datasources}
-        selected={datasource}
-        onChange={(e) => setDatasource(e.target.value)}
+        selected={formDatasource}
+        onChange={(e) => setFormDatasource(e.target.value)}
       />
       <Select
         label="Choose your graph type"
         options={types}
-        selected={type}
+        selected={formType}
         onChange={(e) => {
-          setType(e.target.value);
+          setFormType(e.target.value);
         }}
       />
       <TagInput
         label="Query"
         hint='Validate you add by pressing "Return" key'
-        tags={query}
-        onTagsChange={(tags) => setQuery(tags)}
+        tags={formQuery}
+        onTagsChange={(tags) => setFormQuery(tags)}
       />
-      <Button onClick={() => (query.length === 0 ? setIsError(true) : (setIsError(false), refetch()))}>
+      <Button onClick={() => (formQuery.length === 0 ? setFormIsError(true) : (setFormIsError(false), refetch()))}>
         Generate graph
       </Button>
-      <Alert title="Error" description="Your query is empty" type="error" show={isError} closable onClose={() => setIsError(false)} />
+      <Alert title="Error" description="Your query is empty" type="error" show={isError} closable onClose={() => setFormIsError(false)} />
       {(isFetching) && (<Container><PageSpinner /></Container>)}
       {(!isFetching && data) && <Graph data={data} />}
     </Container>

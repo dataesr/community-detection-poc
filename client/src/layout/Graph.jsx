@@ -20,7 +20,7 @@ function GraphEvents({ onNodeClick }) {
       // node events
       clickNode: (event) => onNodeClick(event),
     });
-  }, [registerEvents]);
+  }, [onNodeClick, registerEvents]);
   return null;
 }
 
@@ -59,7 +59,7 @@ export default function Graph({ data }) {
               style={{ height: '500px' }}
               graph={graph}
             >
-              <GraphEvents onNodeClick={(event) => { console.log(event, graph.getNodeAttributes(event.node)); setSelectedNode({ id: event.node, degree: graph.degree(event.node), ...graph.getNodeAttributes(event.node) }) }} />
+              <GraphEvents onNodeClick={(event) => { setSelectedNode({ id: event.node, degree: graph.degree(event.node), ...graph.getNodeAttributes(event.node) }); }} />
               <ControlsContainer position="bottom-right">
                 <ZoomControl />
                 <FullScreenControl />
@@ -70,7 +70,7 @@ export default function Graph({ data }) {
               </ControlsContainer>
             </SigmaContainer>
           </Col>
-          <Col n='12'>
+          <Col n="12">
             {(selectedNode && graph.hasNode(selectedNode.id)) && (
               <div className="fr-card fr-card--shadow">
                 <div className="fr-my-2w fr-card__body">
@@ -86,8 +86,7 @@ export default function Graph({ data }) {
                     Cluster wordcloud:
                     <BadgeGroup>
                       {getThematicFromCluster(communities[selectedNode.color]).map((wiki) => (
-                        <Badge type='info' text={`${wiki.label} (${wiki.count})`} />))
-                      }
+                        <Badge type="info" text={`${wiki.label} (${wiki.count})`} />))}
                     </BadgeGroup>
                   </Text>
                   <Row gutters>
@@ -97,7 +96,7 @@ export default function Graph({ data }) {
                       </Text>
                       <BadgeGroup>
                         {getThematicFromCluster([graph.getNodeAttributes(selectedNode.id)])?.map((wiki) => (
-                          <Badge type='info' text={`${wiki.label} (${wiki.count})`} />))}
+                          <Badge type="info" text={`${wiki.label} (${wiki.count})`} />))}
                       </BadgeGroup>
                     </Col>
                     <Col n="12">
