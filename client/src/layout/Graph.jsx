@@ -27,11 +27,11 @@ export default function Graph({ data }) {
   const [selectedNode, setSelectedNode] = useState(null);
   const graph = UndirectedGraph.from(data);
   const communities = graph.reduceNodes((acc, node, attr) => {
-    const { label, size, color } = attr;
+    const { label, size, color, wikis } = attr;
     if (!acc[color]) {
-      acc[color] = [{ id: node, label, size, degree: graph.degree(node) }];
+      acc[color] = [{ id: node, label, size, degree: graph.degree(node), wikis }];
     } else {
-      acc[color] = [...acc[color], { id: node, label, size, degree: graph.degree(node) }].sort((a, b) => b.size - a.size);
+      acc[color] = [...acc[color], { id: node, label, size, degree: graph.degree(node), wikis }].sort((a, b) => b.size - a.size);
     }
     return acc;
   }, {});
@@ -118,6 +118,11 @@ export default function Graph({ data }) {
                       </BadgeGroup>
                     </>
                   ))}
+                  <ul>
+                    {communities[cluster].map((node) => node.wikis).flat().map((wiki) => (
+                      <li> {wiki} </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </Col>
