@@ -1,9 +1,11 @@
 const DEFAULT_YEARS = [2018, 2019, 2020, 2021, 2022, 2023];
 const DEFAULT_SIZE = 5000;
+const ELASTIC_SOURCE_FIELDS = ['id', 'authors', 'domains', 'title'];
+
 
 export const makeQueryByAuthor = (query, size = DEFAULT_SIZE, years = DEFAULT_YEARS) => ({
   size,
-  _source: ['id', 'authors', 'domains'],
+  _source: ELASTIC_SOURCE_FIELDS,
   query: {
     function_score: {
       query: {
@@ -23,7 +25,7 @@ export const makeQueryByAuthor = (query, size = DEFAULT_SIZE, years = DEFAULT_YE
 
 export const makeQueryByKeyword = (query, size = DEFAULT_SIZE, years = DEFAULT_YEARS) => ({
   size,
-  _source: ['id', 'authors', 'domains'],
+  _source: ELASTIC_SOURCE_FIELDS,
   query: {
     function_score: {
       query: {
@@ -64,7 +66,7 @@ export const makeQueryByKeyword = (query, size = DEFAULT_SIZE, years = DEFAULT_Y
 
 export const makeQueryByStructure = (query, size = DEFAULT_SIZE, years = DEFAULT_YEARS) => ({
   size,
-  _source: ['id', 'authors', 'domains'],
+  _source: ELASTIC_SOURCE_FIELDS,
   query: {
     function_score: {
       query: {

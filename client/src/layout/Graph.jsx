@@ -40,7 +40,7 @@ export default function Graph({ data }) {
     <>
       <Container fluid className="fr-my-3w">
         <Row gutters>
-          <Col n={selectedNode ? '8' : '12'}>
+          <Col n='12'>
             <SigmaContainer
               style={{ height: '500px' }}
               graph={graph}
@@ -56,25 +56,41 @@ export default function Graph({ data }) {
               </ControlsContainer>
             </SigmaContainer>
           </Col>
-          <Col n={selectedNode ? '4' : '0'}>
+          <Col n='12'>
             {selectedNode && (
               <div className="fr-card fr-card--shadow">
-                <div className="fr-card__body">
-                  <Text bold className="fr-mb-1v">
+                <div className="fr-my-2w fr-card__body">
+                  <Title look='h6' as="p" className="fr-mb-1v">
                     {selectedNode.label}
-                  </Text>
+                  </Title>
                   <Text bold className="fr-mb-1v">
                     Cluster:
                     {' '}
                     {selectedNode.color}
                   </Text>
-                  <BadgeGroup>
-                    <Badge colorFamily="purple-glycine" className="fr-ml-1w" text={`${selectedNode.weight} publications`} />
-                    <Badge className="fr-ml-1w" text={`${selectedNode.degree} co-autheurs`} />
-                  </BadgeGroup>
-                  {graph.getNodeAttribute(selectedNode.id, 'publications')?.map((publication) => (<p>{publication}</p>))}
-                  {graph.mapNeighbors(selectedNode.id, (node, attr) => (<p>{attr.label}</p>))}
-                  {graph.getNodeAttribute(selectedNode.id, 'wikis')?.map((keyword) => (<p>{keyword}</p>))}
+                  <Text bold className="fr-mb-1v">
+                    idRef: {selectedNode.id.split('idref')[1]}
+                  </Text>
+                  <Row gutters>
+                    <Col n='4'>
+                      <BadgeGroup>
+                        <Badge colorFamily="purple-glycine" className="fr-ml-1w" text={`${selectedNode.weight} publications`} />
+                      </BadgeGroup>
+                      {graph.getNodeAttribute(selectedNode.id, 'publications')?.map((publication) => (<p>{publication}</p>))}
+                    </Col>
+                    <Col n='4'>
+                      <BadgeGroup>
+                        <Badge className="fr-ml-1w" text={`${selectedNode.degree} co-authors`} />
+                      </BadgeGroup>
+                      {graph.mapNeighbors(selectedNode.id, (node, attr) => (<p>{attr.label}</p>))}
+                    </Col>
+                    <Col n='4'>
+                      <BadgeGroup>
+                        <Badge colorFamily="blue-cumulus" className="fr-ml-1w" text='Mot clés' />
+                      </BadgeGroup>
+                      {graph.getNodeAttribute(selectedNode.id, 'wikis')?.map((keyword) => (<p>{keyword}</p>))}
+                    </Col>
+                  </Row>
                 </div>
               </div>
             )}

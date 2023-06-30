@@ -19,7 +19,11 @@ const COLORS = [
 
 function getNodesFromPublicationList(publicationList) {
   return publicationList.flatMap(({ authors, domains = [], title }) => {
+    console.log(title);
     if (!authors) return [];
+    if (authors?.find(({ person }) => person?.id === 'idref242241344')) {
+      console.log(domains)
+    }
     const wikis = domains.filter((domain) => domain.type === 'wikidata').map((wiki) => wiki.label.default)
     return authors.reduce((acc, { person }) => {
       if (!person?.id) return [...acc];
