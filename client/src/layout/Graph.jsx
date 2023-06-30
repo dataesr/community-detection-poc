@@ -111,7 +111,7 @@ export default function Graph({ data }) {
           </Col>
         </Row>
       </Container>
-      <Title as="h3">Main clusters</Title>
+      <Title as="h3">6 main clusters</Title>
       <Container fluid className="fr-my-3w">
         <Row gutters>
           {clustersKeys.map((cluster) => (
@@ -121,7 +121,7 @@ export default function Graph({ data }) {
                   {cluster}
                 </p>
                 <div className="fr-card__body">
-                  <Title as="h6">Main topics</Title>
+                  <Title as="h6">5 main topics</Title>
                   <ul>
                     {getThematicFromCluster(communities[cluster]).map((wiki) => (
                       <li>
@@ -133,7 +133,7 @@ export default function Graph({ data }) {
                       </li>
                     ))}
                   </ul>
-                  <Title as="h6">Main authors</Title>
+                  <Title as="h6">10 main authors</Title>
                   {communities[cluster].slice(0, 10).map((node) => (
                     <>
                       <Text bold className="fr-mb-1v" key={node.id}>
