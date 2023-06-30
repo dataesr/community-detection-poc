@@ -28,7 +28,7 @@ jobs:
           node-version: 18
       - run: npm i && npm run build --mode=production
 
-      - name: Build server
+      - name: Build docker image
         run: docker build -t ${{ github.repository }} .
 
       - name: Get Tag
