@@ -6,7 +6,6 @@ import pandas as pd
 import math
 import networkx as nx
 from collections import Counter
-from notebooks import mail
 
 BASE_URL = f"https://api.openalex.org/works?filter=publication_year:2018-,"
 
@@ -20,7 +19,7 @@ def url_them(thematic: str) -> str:
     """
     url = BASE_URL
     if thematic:
-        url += f"title.search:{thematic},abstract.search:{thematic}&mailto={mail.EMAIL}&cursor="
+        url += f"title.search:{thematic},abstract.search:{thematic}&mailto=bso@recherche.gouv.fr&cursor="
 
     return url
 
