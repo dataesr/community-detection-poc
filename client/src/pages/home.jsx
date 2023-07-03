@@ -17,10 +17,9 @@ async function getScanr({ query, type }) {
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { datasource = 'scanr', query, type = 'keyword' } = Object.fromEntries(searchParams.entries());
-  const [formDatasource, setFormDatasource] = useState(datasource);
-  const [formQuery, setFormQuery] = useState(query?.split(',') || []);
-  const [formType, setFormType] = useState(type);
+  const [formDatasource, setFormDatasource] = useState(searchParams.getAll('datasource')?.[0] || 'scanr');
+  const [formQuery, setFormQuery] = useState(searchParams.getAll('query') || []);
+  const [formType, setFormType] = useState(searchParams.getAll('type')?.[0] || 'keyword');
   const [isError, setFormIsError] = useState(false);
 
   useEffect(() => setSearchParams({ datasource: formDatasource, query: formQuery, type: formType }), [formDatasource, formQuery, setSearchParams, formType]);
