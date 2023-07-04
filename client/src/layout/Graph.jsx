@@ -27,24 +27,22 @@ function GraphEvents({ onNodeClick }) {
 const getThematicFromCluster = (cluster) => {
   const dict = {};
   cluster.forEach((node) => {
-    node.wikis.forEach((wiki) => {
-      const wikiId = wiki.toLowerCase();
-      if (!(wikiId in dict)) dict[wikiId] = { id: wikiId, label: wiki, count: 0 };
-      dict[wikiId].count += 1;
+    Object.keys(node?.topics || []).forEach((topic) => {
+      dict[topic] = { id: topic, label: node.topics[topic] };
     });
   });
-  return Object.values(dict).sort((a, b) => b.count - a.count).slice(0, 5);
+  return Object.values(dict).slice(0, 5);
 };
 
 export default function Graph({ data }) {
   const [selectedNode, setSelectedNode] = useState(null);
   const graph = UndirectedGraph.from(data);
   const communities = graph.reduceNodes((acc, node, attr) => {
-    const { label, size, color, wikis, weight } = attr;
+    const { label, size, color, topics, weight } = attr;
     if (!acc[color]) {
-      acc[color] = [{ id: node, label, size, degree: graph.degree(node), wikis, weight }];
+      acc[color] = [{ id: node, label, size, degree: graph.degree(node), topics, weight }];
     } else {
-      acc[color] = [...acc[color], { id: node, label, size, degree: graph.degree(node), wikis, weight }].sort((a, b) => b.size - a.size);
+      acc[color] = [...acc[color], { id: node, label, size, degree: graph.degree(node), topics, weight }].sort((a, b) => b.size - a.size);
     }
     return acc;
   }, {});
@@ -85,8 +83,8 @@ export default function Graph({ data }) {
                   <Text bold className="fr-mb-1v">
                     Cluster wordcloud:
                     <BadgeGroup>
-                      {getThematicFromCluster(communities[selectedNode.color]).map((wiki) => (
-                        <Badge type="info" text={`${wiki.label} (${wiki.count})`} />))}
+                      {getThematicFromCluster(communities[selectedNode.color]).map((topic) => (
+                        <Badge type="info" text={`${topic.label}`} />))}
                     </BadgeGroup>
                   </Text>
                   <Row gutters>
@@ -95,8 +93,8 @@ export default function Graph({ data }) {
                         Author wordcloud:
                       </Text>
                       <BadgeGroup>
-                        {getThematicFromCluster([graph.getNodeAttributes(selectedNode.id)])?.map((wiki) => (
-                          <Badge type="info" text={`${wiki.label} (${wiki.count})`} />))}
+                        {getThematicFromCluster([graph.getNodeAttributes(selectedNode.id)])?.map((topic) => (
+                          <Badge type="info" text={`${topic.label}`} />))}
                       </BadgeGroup>
                     </Col>
                     <Col n="12">
@@ -132,13 +130,9 @@ export default function Graph({ data }) {
                 <div className="fr-card__body">
                   <Title as="h6">5 main topics</Title>
                   <ul>
-                    {getThematicFromCluster(communities[cluster]).map((wiki) => (
+                    {getThematicFromCluster(communities[cluster]).map((topic) => (
                       <li>
-                        {wiki.label}
-                        {' '}
-                        (
-                        {wiki.count}
-                        )
+                        {topic.label}
                       </li>
                     ))}
                   </ul>

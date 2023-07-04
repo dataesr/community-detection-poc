@@ -21,14 +21,11 @@ function getNodesFromPublicationList(publicationList) {
   return publicationList.flatMap(({ authors, domains = [], title }) => {
     console.log(title);
     if (!authors) return [];
-    if (authors?.find(({ person }) => person?.id === 'idref242241344')) {
-      console.log(domains)
-    }
-    const wikis = domains.filter((domain) => domain.type === 'wikidata').map((wiki) => wiki.label.default)
     return authors.reduce((acc, { person }) => {
       if (!person?.id) return [...acc];
       const { id, fullName: label } = person;
-      return [...acc, { id, attributes: { id, label, wikis, publication: title?.default } }];
+      const topics = domains.filter((domain) => domain.type === "wikidata").reduce((a, { code, label }) => ({ ...a, [code]: label.default.toLowerCase() }), {});
+      return [...acc, { id, attributes: { id, label, topics, publication: title?.default } }];
     }, []);
   });
 }
@@ -58,7 +55,6 @@ export function scanrToGraphology(publicationList) {
     ...attributes,
     size: 8 * Math.log(1 + ((attr?.weight + 1) || 1)),
     weight: (attr?.weight + 1) || 1,
-    wikis: (attr?.wikis) ? [...attr?.wikis, ...attributes?.wikis] : [...attributes?.wikis],
     publications: (attr?.publications) ? [...attr?.publications, attributes?.publication] : [attributes?.publication]
   })));
   edges.forEach(({ source, target }) => graph.updateUndirectedEdgeWithKey(
