@@ -25,13 +25,21 @@ function GraphEvents({ onNodeClick }) {
 }
 
 const getThematicFromCluster = (cluster) => {
-  const dict = {};
+  const clusterTopics = {};
   cluster.forEach((node) => {
     Object.keys(node?.topics || []).forEach((topic) => {
-      dict[topic] = { id: topic, label: node.topics[topic] };
+      if (!(topic in Object.keys(clusterTopics))){
+        clusterTopics[topic] = {code: topic, label: node.topics[topic].label, publicationIds: []};
+      };
+      clusterTopics[topic].publicationIds.push([node.topics[topic].publicationId]);
     });
   });
-  return Object.values(dict).slice(0, 5);
+  return Object.values(clusterTopics).map((clusterTopic) => {
+    //console.log(clusterTopics[Object.keys(clusterTopics)[0]]);
+    clusterTopic.publicationIds = [new Set(clusterTopic.publicationIds)]; 
+    //console.log(clusterTopics[Object.keys(clusterTopics)[0]]);
+    return clusterTopic;
+  }).sort((a, b) => b.publicationIds.length - a.publicationIds.length).slice(0, 5);
 };
 
 export default function Graph({ data }) {
@@ -84,7 +92,7 @@ export default function Graph({ data }) {
                     Cluster wordcloud:
                     <BadgeGroup>
                       {getThematicFromCluster(communities[selectedNode.color]).map((topic) => (
-                        <Badge type="info" text={`${topic.label}`} />))}
+                        <Badge type="info" text={`${topic.label} (${topic.publicationIds.length})`} />))}
                     </BadgeGroup>
                   </Text>
                   <Row gutters>
@@ -94,7 +102,7 @@ export default function Graph({ data }) {
                       </Text>
                       <BadgeGroup>
                         {getThematicFromCluster([graph.getNodeAttributes(selectedNode.id)])?.map((topic) => (
-                          <Badge type="info" text={`${topic.label}`} />))}
+                          <Badge type="info" text={`${topic.label} (${topic.publicationIds.length})`} />))}
                       </BadgeGroup>
                     </Col>
                     <Col n="12">
@@ -132,7 +140,7 @@ export default function Graph({ data }) {
                   <ul>
                     {getThematicFromCluster(communities[cluster]).map((topic) => (
                       <li>
-                        {topic.label}
+                        {topic.label} ({topic.publicationIds.length})
                       </li>
                     ))}
                   </ul>

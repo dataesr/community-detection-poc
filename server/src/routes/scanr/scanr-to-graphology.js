@@ -18,14 +18,14 @@ const COLORS = [
 ];
 
 function getNodesFromPublicationList(publicationList) {
-  return publicationList.flatMap(({ authors, domains = [], title }) => {
+  return publicationList.flatMap(({ authors, id: publicationId, domains = [], title }) => {
     console.log(title);
     if (!authors) return [];
     return authors.reduce((acc, { person }) => {
-      if (!person?.id) return [...acc];
-      const { id, fullName: label } = person;
-      const topics = domains.filter((domain) => domain.type === "wikidata").reduce((a, { code, label }) => ({ ...a, [code]: label.default.toLowerCase() }), {});
-      return [...acc, { id, attributes: { id, label, topics, publication: title?.default } }];
+      if (!person?.id) return acc;
+      const { id: authorId, fullName: label } = person;
+      const topics = domains.filter((domain) => domain.type === "wikidata").reduce((a, { code, label }) => ({ ...a, [code]: { label: label.default.toLowerCase(), publicationId: publicationId }}), {});
+      return [...acc, { id: authorId, attributes: { id: authorId, label, topics, publication: title?.default } }];
     }, []);
   });
 }
@@ -49,7 +49,6 @@ export function scanrToGraphology(publicationList) {
   const graph = new graphology.UndirectedGraph();
   const publicationListWithoutTooManyAuthors = publicationList.filter(({ authors = [] }) => authors.length <= MAX_NUMBER_OF_AUTHORS);
   const nodes = getNodesFromPublicationList(publicationListWithoutTooManyAuthors);
-  console.log(nodes[0])
   const edges = getEdgesFromPublicationList(publicationListWithoutTooManyAuthors);
   nodes.forEach(({ id, attributes }) => graph.updateNode(id, attr => ({
     ...attributes,
