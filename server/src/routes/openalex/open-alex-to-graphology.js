@@ -18,21 +18,21 @@ const COLORS = [
 ];
 
 function getNodesFromPublicationList(publicationList) {
-  return publicationList.flatMap(({ authors, id: publicationId, domains = [], title }) => {
-    if (!authors) return [];
-    return authors.reduce((acc, { person }) => {
-      if (!person?.id) return acc;
-      const { id: authorId, fullName: label } = person;
-      const topics = domains.filter((domain) => domain.type === 'wikidata').reduce((a, { code, label }) => ({ ...a, [code]: { label: label.default.toLowerCase(), publicationId: publicationId }}), {});
-      return [...acc, { id: authorId, attributes: { id: authorId, label, topics, publication: title?.default } }];
+  return publicationList.flatMap(({ authorships, id: publicationId, concepts = [], title }) => {
+    if (!authorships) return [];
+    return authorships.reduce((acc, { author }) => {
+      if (!author?.id) return acc;
+      const { id: authorId, display_name: label } = author;
+      const topics = concepts.filter((concept) => concept?.wikidata).reduce((a, { id, display_name }) => ({ ...a, [id]: { label: display_name.toLowerCase(), publicationId: publicationId }}), {});
+      return [...acc, { id: authorId, attributes: { id: authorId, label, topics, publication: title } }];
     }, []);
   });
 }
 
 function getEdgesFromPublicationList(publicationList) {
-  return publicationList.flatMap(({ authors }) => {
-    if (!authors) return [];
-    const knownAuthors = authors.filter(({ person }) => person?.id).map(({ person }) => person.id);
+  return publicationList.flatMap(({ authorships }) => {
+    if (!authorships) return [];
+    const knownAuthors = authorships.filter(({ author }) => author?.id).map(({ author }) => author.id);
     const coAuthorships = knownAuthors.flatMap(
       // Graphology undirected edges must be sorted, to avoid duplicated edges.
       (v, i) => knownAuthors.slice(i + 1).map((w) => (w < v ? { source: w, target: v } : { source: v, target: w })),
@@ -41,10 +41,10 @@ function getEdgesFromPublicationList(publicationList) {
   });
 }
 
-export function scanrToGraphology(publicationList) {
+export function openAlexToGraphology(publicationList) {
   console.log('nbPublis = ', publicationList.length);
   const graph = new graphology.UndirectedGraph();
-  const publicationListWithoutTooManyAuthors = publicationList.filter(({ authors = [] }) => authors.length <= MAX_NUMBER_OF_AUTHORS);
+  const publicationListWithoutTooManyAuthors = publicationList.filter(({ authorships = [] }) => authorships.length <= MAX_NUMBER_OF_AUTHORS);
   const nodes = getNodesFromPublicationList(publicationListWithoutTooManyAuthors);
   const edges = getEdgesFromPublicationList(publicationListWithoutTooManyAuthors);
   nodes.forEach(({ id, attributes }) => graph.updateNode(id, (attr) => ({
@@ -68,7 +68,7 @@ export function scanrToGraphology(publicationList) {
   let filteredGraph = graph;
   while (filteredGraph.order > 100) {
     MIN_NUMBER_OF_PUBLICATIONS += 1;
-    filteredGraph = subgraph(graph, (_, attr) => attr?.weight >= MIN_NUMBER_OF_PUBLICATIONS);
+    filteredGraph = subgraph(graph, (key, attr) => attr?.weight >= MIN_NUMBER_OF_PUBLICATIONS);
   }
   console.log('MIN_NUMBER_OF_PUBLICATIONS', MIN_NUMBER_OF_PUBLICATIONS);
   console.log('current order', filteredGraph.order);

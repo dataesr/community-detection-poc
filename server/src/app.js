@@ -6,7 +6,8 @@ import cors from 'cors';
 import * as OAV from 'express-openapi-validator';
 
 import { handleErrors } from './commons/middlewares/handle-errors';
-import router from './routes/scanr';
+import openAlexRouter from './routes/openalex';
+import scanrRouter from './routes/scanr';
 
 const apiSpec = 'src/openapi/api.yml';
 const apiDocument = YAML.load(apiSpec);
@@ -30,7 +31,8 @@ app.use(OAV.middleware({
   ignoreUndocumented: true,
 }));
 
-app.use('/api', router);
+app.use('/api', scanrRouter);
+app.use('/api', openAlexRouter);
 
 app.use(handleErrors);
 

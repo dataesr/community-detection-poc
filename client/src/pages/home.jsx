@@ -8,11 +8,9 @@ import { PageSpinner } from '../components/spinner';
 import Graph from '../layout/Graph';
 import TagInput from '../layout/TagInput';
 
-async function getScanr({ query, type }) {
-  return fetch(`/api/scanr?query=${query.join(',')}&type=${type}`).then((response) => {
-    if (response.ok) return response.json();
-    return "Oops... La requête à l'API n'a pas fonctionné";
-  });
+async function getData({ datasource, query, type }) {
+  return fetch(`/api/${datasource}?query=${query.join(',')}&type=${type}`)
+    .then((response) => (response.ok ? response.json() : 'Oops... The request to the API failed'));
 }
 
 export default function Home() {
@@ -26,7 +24,7 @@ export default function Home() {
 
   const { data, isFetching, refetch } = useQuery({
     queryKey: ['graph'],
-    queryFn: () => getScanr({ query: formQuery, type: formType }),
+    queryFn: () => getData({ datasource: formDatasource, query: formQuery, type: formType }),
     enabled: false,
     staleTime: Infinity,
     cacheTime: Infinity,
@@ -40,7 +38,6 @@ export default function Home() {
     {
       label: 'OpenAlex',
       value: 'openalex',
-      disabled: true,
     },
     {
       label: 'HAL',
@@ -57,10 +54,12 @@ export default function Home() {
     {
       label: 'Coauthoring by author id (idref)',
       value: 'author',
+      disabled: formDatasource !== 'scanr',
     },
     {
       label: 'Coauthoring by structure id',
       value: 'structure',
+      disabled: formDatasource !== 'scanr',
     },
   ];
 
@@ -81,7 +80,11 @@ export default function Home() {
         label="Choose your datasource"
         options={datasources}
         selected={formDatasource}
-        onChange={(e) => setFormDatasource(e.target.value)}
+        onChange={(e) => {
+          setFormDatasource(e.target.value);
+          setFormType('keyword');
+          setFormQuery([]);
+        }}
       />
       <Select
         label="Choose your graph type"
@@ -89,6 +92,7 @@ export default function Home() {
         selected={formType}
         onChange={(e) => {
           setFormType(e.target.value);
+          setFormQuery([]);
         }}
       />
       <TagInput
