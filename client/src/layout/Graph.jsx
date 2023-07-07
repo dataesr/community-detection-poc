@@ -35,9 +35,7 @@ const getThematicFromCluster = (cluster) => {
     });
   });
   return Object.values(clusterTopics).map((clusterTopic) => {
-    //console.log(clusterTopics[Object.keys(clusterTopics)[0]]);
     clusterTopic.publicationIds = [new Set(clusterTopic.publicationIds)]; 
-    //console.log(clusterTopics[Object.keys(clusterTopics)[0]]);
     return clusterTopic;
   }).sort((a, b) => b.publicationIds.length - a.publicationIds.length).slice(0, 5);
 };
