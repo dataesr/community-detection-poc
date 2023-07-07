@@ -1,4 +1,4 @@
-import { Alert, Button, Container, Select, Title } from '@dataesr/react-dsfr';
+import { Alert, Button, Callout, CalloutText, CalloutTitle, Container, Select, Title } from '@dataesr/react-dsfr';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -69,6 +69,14 @@ export default function Home() {
       <Title as="h1">
         Community Detection POC
       </Title>
+      <Callout>
+        <CalloutTitle as="h3">
+          This app is ongoing development and is a proof of concept.
+        </CalloutTitle>
+        <CalloutText>
+          This project use only open and reusable data. There might be errors in it. Please take those results carefully.
+        </CalloutText>
+      </Callout>
       <Select
         label="Choose your datasource"
         options={datasources}
