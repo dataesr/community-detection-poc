@@ -145,7 +145,6 @@ export default function Home() {
                 hint="An OR will be perform"
                 onChange={(selectedCountry) => addCountry(selectedCountry)}
                 options={countries.group_by.filter((country) => country.key !== 'unknown').map((item) => ({ value: item.key, label: item.key_display_name }))}
-                selected={formCountries}
               />
               <TagGroup>
                 {formCountries.map((country) => (
