@@ -10,7 +10,7 @@ Doadify is fully functional in development.
 
 ### Start
 
-`> npm run dev`
+`> npm start`
 
 ## Build for production
 

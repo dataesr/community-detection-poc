@@ -13,14 +13,20 @@ async function getData({ datasource, query, type }) {
     .then((response) => (response.ok ? response.json() : 'Oops... The request to the API failed'));
 }
 
+async function loadCountries() {
+  return fetch('https://api.openalex.org/works?group_by=institutions.country_code&mailto=bso@recherche.gouv.fr')
+    .then((response) => (response.ok ? response.json() : 'Oops... The request to the OpenAlex API failed'));
+}
+
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [formCountry, setFormCountry] = useState(searchParams.getAll('country')?.[0] || 'FR');
   const [formDatasource, setFormDatasource] = useState(searchParams.getAll('datasource')?.[0] || 'scanr');
   const [formQuery, setFormQuery] = useState(searchParams.getAll('query') || []);
   const [formType, setFormType] = useState(searchParams.getAll('type')?.[0] || 'keyword');
   const [isError, setFormIsError] = useState(false);
 
-  useEffect(() => setSearchParams({ datasource: formDatasource, query: formQuery, type: formType }), [formDatasource, formQuery, setSearchParams, formType]);
+  useEffect(() => setSearchParams({ country: formCountry, datasource: formDatasource, query: formQuery, type: formType }), [formCountry, formDatasource, formQuery, setSearchParams, formType]);
 
   const { data, isFetching, refetch } = useQuery({
     queryKey: ['graph'],
@@ -29,6 +35,8 @@ export default function Home() {
     staleTime: Infinity,
     cacheTime: Infinity,
   });
+
+  const { data: countries, isFetching: isCountriesFetching } = useQuery(['countries'], loadCountries);
 
   const datasources = [
     {
@@ -95,6 +103,20 @@ export default function Home() {
           setFormQuery([]);
         }}
       />
+      {(formDatasource === 'openalex')
+        && (isCountriesFetching
+          ? <Container><PageSpinner /></Container>
+          : (
+            <Select
+              label="Choose your country"
+              options={countries.group_by.filter((country) => country.key !== 'unknown').map((item) => ({ value: item.key, label: item.key_display_name }))}
+              selected={formCountry}
+              onChange={(e) => {
+                setFormCountry(e.target.value);
+              }}
+            />
+          )
+        )}
       <TagInput
         label="Query"
         hint='Validate you add by pressing "Return" key'
