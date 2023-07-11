@@ -3,14 +3,14 @@ import { openAlexToGraphology } from './open-alex-to-graphology';
 
 const router = new express.Router();
 
-const getData = ({ country, query, cursor = '*', previousResponse = [] }) => {
-  const url = `https://api.openalex.org/works?filter=authorships.institutions.country_code:${country},publication_year:2018-2023,is_paratext:false,title.search:${query},abstract.search:${query}&mailto=bso@recherche.gouv.fr&per_page=200`;
+const getData = ({ countries, queries, cursor = '*', previousResponse = [] }) => {
+  const url = `https://api.openalex.org/works?filter=institutions.country_code:${countries.split(',').join('|')},publication_year:2018-2023,is_paratext:false,title.search:${queries.split(',').join('|')},abstract.search:${queries.split(',').join('|')}&mailto=bso@recherche.gouv.fr&per_page=200`;
   return fetch(`${url}&cursor=${cursor}`)
     .then((response) => response.json())
     .then(({ meta, results }) => {
       const response = [...previousResponse, ...results];
       if (results.length !== 0) {
-        return getData({ country, query, cursor: meta.next_cursor, previousResponse: response });
+        return getData({ countries, queries, cursor: meta.next_cursor, previousResponse: response });
       }
       return response;
     });
@@ -18,8 +18,8 @@ const getData = ({ country, query, cursor = '*', previousResponse = [] }) => {
 
 router.route('/openalex')
   .get(async (req, res) => {
-    const { country, query } = req.query;
-    const data = await getData({ country, query });
+    const { countries, queries } = req.query;
+    const data = await getData({ countries, queries });
     const graph = openAlexToGraphology(data);
     res.json(graph);
   });
