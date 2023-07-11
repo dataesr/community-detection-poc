@@ -8,12 +8,12 @@ import { PageSpinner } from '../components/spinner';
 import Graph from '../layout/Graph';
 import TagInput from '../layout/TagInput';
 
-async function getData({ datasource, query, type }) {
-  return fetch(`/api/${datasource}?query=${query.join(',')}&type=${type}`)
+async function getData({ country, datasource, query, type }) {
+  return fetch(`/api/${datasource}?country=${country}&query=${query.join(',')}&type=${type}`)
     .then((response) => (response.ok ? response.json() : 'Oops... The request to the API failed'));
 }
 
-async function loadCountries() {
+async function getCountries() {
   return fetch('https://api.openalex.org/works?group_by=institutions.country_code&mailto=bso@recherche.gouv.fr')
     .then((response) => (response.ok ? response.json() : 'Oops... The request to the OpenAlex API failed'));
 }
@@ -30,13 +30,18 @@ export default function Home() {
 
   const { data, isFetching, refetch } = useQuery({
     queryKey: ['graph'],
-    queryFn: () => getData({ datasource: formDatasource, query: formQuery, type: formType }),
+    queryFn: () => getData({ country: formCountry, datasource: formDatasource, query: formQuery, type: formType }),
     enabled: false,
     staleTime: Infinity,
     cacheTime: Infinity,
   });
 
-  const { data: countries, isFetching: isCountriesFetching } = useQuery(['countries'], loadCountries);
+  const { data: countries, isFetching: isCountriesFetching } = useQuery({
+    queryKey: ['countries'],
+    queryFn: getCountries,
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
 
   const datasources = [
     {
