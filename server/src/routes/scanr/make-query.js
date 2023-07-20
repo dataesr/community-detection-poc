@@ -2,7 +2,7 @@ const DEFAULT_SIZE = 5000;
 const DEFAULT_YEARS = [2018, 2019, 2020, 2021, 2022, 2023];
 const ELASTIC_SOURCE_FIELDS = ['id', 'authors', 'domains', 'title'];
 
-export const makeQueryByAuthor = (query, size = DEFAULT_SIZE) => ({
+export const makeQueryByAuthor = (queries, size = DEFAULT_SIZE) => ({
   size,
   _source: ELASTIC_SOURCE_FIELDS,
   query: {
@@ -11,7 +11,7 @@ export const makeQueryByAuthor = (query, size = DEFAULT_SIZE) => ({
         bool: {
           filter: [
             { terms: { 'authors.role.keyword': ['author', 'directeurthese'] } },
-            { terms: { 'authors.person.id.keyword': query.split(',').map((id) => `idref${id}`) } },
+            { terms: { 'authors.person.id.keyword': queries.split(',').map((id) => `idref${id}`) } },
           ],
         },
       },
@@ -21,7 +21,7 @@ export const makeQueryByAuthor = (query, size = DEFAULT_SIZE) => ({
   },
 });
 
-export const makeQueryByKeyword = (query, size = DEFAULT_SIZE, years = DEFAULT_YEARS) => ({
+export const makeQueryByKeyword = (queries, size = DEFAULT_SIZE, years = DEFAULT_YEARS) => ({
   size,
   _source: ELASTIC_SOURCE_FIELDS,
   query: {
@@ -51,7 +51,7 @@ export const makeQueryByKeyword = (query, size = DEFAULT_SIZE, years = DEFAULT_Y
                 'alternativeSummary.fr',
                 'alternativeSummary.en',
               ],
-              query: query.split(',').map((q) => `"${q}"`).join(' '),
+              query: queries.split(',').map((q) => `"${q}"`).join(' '),
             },
           },
         },
@@ -62,7 +62,7 @@ export const makeQueryByKeyword = (query, size = DEFAULT_SIZE, years = DEFAULT_Y
   },
 });
 
-export const makeQueryByStructure = (query, size = DEFAULT_SIZE, years = DEFAULT_YEARS) => ({
+export const makeQueryByStructure = (queries, size = DEFAULT_SIZE, years = DEFAULT_YEARS) => ({
   size,
   _source: ELASTIC_SOURCE_FIELDS,
   query: {
@@ -72,7 +72,7 @@ export const makeQueryByStructure = (query, size = DEFAULT_SIZE, years = DEFAULT
           filter: [
             { terms: { 'authors.role.keyword': ['author', 'directeurthese'] } },
             { terms: { year: years } },
-            { terms: { 'affiliations.id.keyword': query.split(',') } },
+            { terms: { 'affiliations.id.keyword': queries.split(',') } },
           ],
         },
       },

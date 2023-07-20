@@ -1,5 +1,4 @@
 import '@react-sigma/core/lib/react-sigma.min.css';
-import { useState, useEffect } from 'react';
 import { Badge, BadgeGroup, Col, Container, Row, Text, Title } from '@dataesr/react-dsfr';
 import {
   ControlsContainer,
@@ -11,6 +10,7 @@ import {
 } from '@react-sigma/core';
 import { LayoutForceAtlas2Control } from '@react-sigma/layout-forceatlas2';
 import { UndirectedGraph } from 'graphology';
+import { useState, useEffect } from 'react';
 
 function GraphEvents({ onNodeClick }) {
   const registerEvents = useRegisterEvents();
@@ -28,14 +28,15 @@ const getThematicFromCluster = (cluster) => {
   const clusterTopics = {};
   cluster.forEach((node) => {
     Object.keys(node?.topics || []).forEach((topic) => {
-      if (!(Object.keys(clusterTopics).includes(topic))){
-        clusterTopics[topic] = {code: topic, label: node.topics[topic].label, publicationIds: []};
-      };
+      if (!(Object.keys(clusterTopics).includes(topic))) {
+        clusterTopics[topic] = { code: topic, label: node.topics[topic].label, publicationIds: [] };
+      }
       clusterTopics[topic].publicationIds.push([node.topics[topic].publicationId]);
     });
   });
   return Object.values(clusterTopics).map((clusterTopic) => {
-    clusterTopic.publicationIds = [... new Set(clusterTopic.publicationIds)]; 
+    // eslint-disable-next-line no-param-reassign
+    clusterTopic.publicationIds = [...new Set(clusterTopic.publicationIds)];
     return clusterTopic;
   }).sort((a, b) => b.publicationIds.length - a.publicationIds.length).slice(0, 5);
 };
@@ -138,7 +139,11 @@ export default function Graph({ data }) {
                   <ul>
                     {getThematicFromCluster(communities[cluster]).map((topic) => (
                       <li>
-                        {topic.label} ({topic.publicationIds.length})
+                        {topic.label}
+                        {' '}
+                        (
+                        {topic.publicationIds.length}
+                        )
                       </li>
                     ))}
                   </ul>
