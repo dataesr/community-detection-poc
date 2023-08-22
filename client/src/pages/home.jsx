@@ -4,11 +4,14 @@ import {
   Callout,
   CalloutText,
   CalloutTitle,
+  Col,
   Container,
+  Row,
   SearchableSelect,
   Select,
   Tag,
   TagGroup,
+  TextInput,
   Title,
 } from '@dataesr/react-dsfr';
 import { useQuery } from '@tanstack/react-query';
@@ -20,8 +23,8 @@ import { PageSpinner } from '../components/spinner';
 import Graph from '../layout/Graph';
 import TagInput from '../layout/TagInput';
 
-async function getData({ countries, datasource, queries, type }) {
-  return fetch(`/api/${datasource}?countries=${countries}&queries=${queries.join(',')}&type=${type}`)
+async function getData({ countries, datasource, endyear, queries, startyear, type }) {
+  return fetch(`/api/${datasource}?countries=${countries}&endyear=${endyear}&queries=${queries.join(',')}&startyear=${startyear}&type=${type}`)
     .then((response) => (response.ok ? response.json() : 'Oops... The request to the API failed'));
 }
 
@@ -34,20 +37,31 @@ export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [formCountries, setFormCountries] = useState(searchParams.getAll('countries') || ['FR']);
   const [formDatasource, setFormDatasource] = useState(searchParams.getAll('datasource')?.[0] || 'scanr');
+  const [formEndYear, setFormEndYear] = useState(searchParams.getAll('endyear')[0] || 2023);
   const [formQueries, setFormQueries] = useState(searchParams.getAll('queries') || []);
+  const [formStartYear, setFormStartYear] = useState(searchParams.getAll('startyear')[0] || 2018);
   const [formType, setFormType] = useState(searchParams.getAll('type')?.[0] || 'keyword');
   const [isError, setFormIsError] = useState(false);
 
   useEffect(() => setSearchParams({
     countries: formCountries,
     datasource: formDatasource,
+    endyear: formEndYear,
     queries: formQueries,
+    startyear: formStartYear,
     type: formType,
-  }), [formCountries, formDatasource, formQueries, formType, setSearchParams]);
+  }), [formCountries, formDatasource, formEndYear, formQueries, formStartYear, formType, setSearchParams]);
 
   const { data, isFetching, refetch } = useQuery({
-    queryKey: ['graph'],
-    queryFn: () => getData({ countries: formCountries, datasource: formDatasource, queries: formQueries, type: formType }),
+    queryKey: ['data'],
+    queryFn: () => getData({
+      countries: formCountries,
+      datasource: formDatasource,
+      endyear: formEndYear,
+      queries: formQueries,
+      startyear: formStartYear,
+      type: formType,
+    }),
     enabled: false,
     staleTime: Infinity,
     cacheTime: Infinity,
@@ -169,12 +183,34 @@ export default function Home() {
         tags={formQueries}
         onTagsChange={(tags) => setFormQueries(tags)}
       />
-      <Button onClick={() => (formQueries.length === 0 ? setFormIsError(true) : (setFormIsError(false), refetch()))}>
-        Generate graph
-      </Button>
+      <Row gutters>
+        <Col>
+          <TextInput
+            label="Start year"
+            onChange={(e) => setFormStartYear(e.target.value)}
+            type="number"
+            value={formStartYear}
+          />
+        </Col>
+        <Col>
+          <TextInput
+            label="End year"
+            onChange={(e) => setFormEndYear(e.target.value)}
+            type="number"
+            value={formEndYear}
+          />
+        </Col>
+      </Row>
+      <Row gutters>
+        <Col>
+          <Button onClick={() => (formQueries.length === 0 ? setFormIsError(true) : (setFormIsError(false), refetch()))}>
+            Generate graph
+          </Button>
+        </Col>
+      </Row>
       <Alert title="Error" description="Your query is empty" type="error" show={isError} closable onClose={() => setFormIsError(false)} />
-      {(isFetching) && (<Container><PageSpinner /></Container>)}
-      {(!isFetching && data) && <Graph data={data} />}
+      {isFetching && (<Container><PageSpinner /></Container>)}
+      {!isFetching && data && <Graph data={data} />}
     </Container>
   );
 }

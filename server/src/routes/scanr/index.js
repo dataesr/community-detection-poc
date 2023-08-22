@@ -13,8 +13,8 @@ const router = new express.Router();
 
 router.route('/scanr')
   .get(async (req, res) => {
-    const { queries, type } = req.query;
-    const body = getQueryFunction[type](queries);
+    const { endyear, queries, startyear, type } = req.query;
+    const body = getQueryFunction[type](queries, endyear, startyear);
     const data = await fetch(
       `${config.scanr.apiUrl}`,
       {

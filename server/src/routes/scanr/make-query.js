@@ -2,7 +2,11 @@ const DEFAULT_SIZE = 5000;
 const DEFAULT_YEARS = [2018, 2019, 2020, 2021, 2022, 2023];
 const ELASTIC_SOURCE_FIELDS = ['id', 'authors', 'domains', 'title'];
 
+<<<<<<< Updated upstream
 export const makeQueryByAuthor = (queries, size = DEFAULT_SIZE) => ({
+=======
+export const makeQueryByAuthor = (query, endyear, startyear, size = DEFAULT_SIZE) => ({
+>>>>>>> Stashed changes
   size,
   _source: ELASTIC_SOURCE_FIELDS,
   query: {
@@ -21,7 +25,11 @@ export const makeQueryByAuthor = (queries, size = DEFAULT_SIZE) => ({
   },
 });
 
+<<<<<<< Updated upstream
 export const makeQueryByKeyword = (queries, size = DEFAULT_SIZE, years = DEFAULT_YEARS) => ({
+=======
+export const makeQueryByKeyword = (query, endyear, startyear, size = DEFAULT_SIZE) => ({
+>>>>>>> Stashed changes
   size,
   _source: ELASTIC_SOURCE_FIELDS,
   query: {
@@ -30,7 +38,7 @@ export const makeQueryByKeyword = (queries, size = DEFAULT_SIZE, years = DEFAULT
         bool: {
           filter: [
             { terms: { 'authors.role.keyword': ['author', 'directeurthese'] } },
-            { terms: { year: years } },
+            { range: { year: { gte: startyear, lte: endyear } } },
           ],
           must: {
             query_string: {
@@ -62,7 +70,7 @@ export const makeQueryByKeyword = (queries, size = DEFAULT_SIZE, years = DEFAULT
   },
 });
 
-export const makeQueryByStructure = (queries, size = DEFAULT_SIZE, years = DEFAULT_YEARS) => ({
+export const makeQueryByStructure = (query, endyear, startyear, size = DEFAULT_SIZE, years = DEFAULT_YEARS) => ({
   size,
   _source: ELASTIC_SOURCE_FIELDS,
   query: {
