@@ -9,7 +9,7 @@ env:
   # Must match k8s deployment name
   DEPLOYMENT: community-detection-poc
   DEPLOYMENT_NAMESPACE: community-detection-poc
-  DEPLOYMENT_URL: https://www.community-detection-poc.staging.dataesr.ovh
+  DEPLOYMENT_URL: https://community-detection-poc.staging.dataesr.ovh/
   MM_NOTIFICATION_CHANNEL: bots
 
 jobs:
@@ -17,21 +17,22 @@ jobs:
     name: Publish docker image
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: 🏁 Checkout
+        uses: actions/checkout@v3
 
-      - name: Log into registry
+      - name: 🔑 Login Docker
         run: docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build client
         uses: actions/setup-node@v3
         with:
           node-version: 18
-      - run: npm i && npm run build --mode=production
+      - run: npm ci --silent && npm run build --mode=production
 
-      - name: Build docker image
+      - name: 🐋 Build Docker image
         run: docker build -t ${{ github.repository }} .
 
-      - name: Push image
+      - name: 📦 Push Docker image
         run: |
           IMAGE_ID=ghcr.io/${{ github.repository }}
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
@@ -62,7 +63,7 @@ jobs:
     steps:
       - uses: dataesr/mm-notifier-action@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          mattermost_webhook_url: ${{ secrets.MATTERMOST_WEBHOOK_URL }}
-          mattermost_channel: ${{ env.MM_NOTIFICATION_CHANNEL}}
           deployment_url: ${{ env.DEPLOYMENT_URL }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          mattermost_channel: ${{ env.MM_NOTIFICATION_CHANNEL}}
+          mattermost_webhook_url: ${{ secrets.MATTERMOST_WEBHOOK_URL }}
