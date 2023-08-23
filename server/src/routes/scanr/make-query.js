@@ -2,11 +2,7 @@ const DEFAULT_SIZE = 5000;
 const DEFAULT_YEARS = [2018, 2019, 2020, 2021, 2022, 2023];
 const ELASTIC_SOURCE_FIELDS = ['id', 'authors', 'domains', 'title'];
 
-<<<<<<< Updated upstream
-export const makeQueryByAuthor = (queries, size = DEFAULT_SIZE) => ({
-=======
-export const makeQueryByAuthor = (query, endyear, startyear, size = DEFAULT_SIZE) => ({
->>>>>>> Stashed changes
+export const makeQueryByAuthor = (queries, endyear, startyear, size = DEFAULT_SIZE) => ({
   size,
   _source: ELASTIC_SOURCE_FIELDS,
   query: {
@@ -25,7 +21,7 @@ export const makeQueryByAuthor = (query, endyear, startyear, size = DEFAULT_SIZE
   },
 });
 
-export const makeQueryByKeyword = (query, endyear, startyear, size = DEFAULT_SIZE) => ({
+export const makeQueryByKeyword = (queries, endyear, startyear, size = DEFAULT_SIZE) => ({
   size,
   _source: ELASTIC_SOURCE_FIELDS,
   query: {
@@ -66,7 +62,7 @@ export const makeQueryByKeyword = (query, endyear, startyear, size = DEFAULT_SIZ
   },
 });
 
-export const makeQueryByStructure = (query, endyear, startyear, size = DEFAULT_SIZE, years = DEFAULT_YEARS) => ({
+export const makeQueryByStructure = (queries, endyear, startyear, size = DEFAULT_SIZE, years = DEFAULT_YEARS) => ({
   size,
   _source: ELASTIC_SOURCE_FIELDS,
   query: {

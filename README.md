@@ -1,16 +1,10 @@
-# DOADIFY
+# community-detection-poc
 
-## Development
+Detect communities of co-authoring in scientific publications
 
-Doadify is fully functional in development.
+## Dev
 
-### Installation
-
-`> npm i`
-
-### Start
-
-`> npm start`
+`> npm i && npm start`
 
 ## Build for production
 
