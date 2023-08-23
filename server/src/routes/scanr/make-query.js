@@ -25,11 +25,7 @@ export const makeQueryByAuthor = (query, endyear, startyear, size = DEFAULT_SIZE
   },
 });
 
-<<<<<<< Updated upstream
-export const makeQueryByKeyword = (queries, size = DEFAULT_SIZE, years = DEFAULT_YEARS) => ({
-=======
 export const makeQueryByKeyword = (query, endyear, startyear, size = DEFAULT_SIZE) => ({
->>>>>>> Stashed changes
   size,
   _source: ELASTIC_SOURCE_FIELDS,
   query: {
