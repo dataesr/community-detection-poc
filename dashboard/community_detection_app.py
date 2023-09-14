@@ -3,10 +3,8 @@ from streamlit.components.v1 import html
 import os
 import sys
 import networkx as nx
-from pyvis.network import Network
-from ipysigma import Sigma
 from dotenv import load_dotenv
-from community_detection_func import generate_graph
+from community_detection_func import graph_generate
 
 st.title("Community detection application")
 
@@ -22,9 +20,26 @@ search_by = st.selectbox("Search by", search_types, 0)
 query_label = "Keywords" if (search_types.index(search_by) == 0) else "Idrefs"
 queries = st.text_input(query_label)
 
+# Settings
+with st.sidebar:
+    setting_max_coauthors = st.slider("Max coauthors", 0, 100, 20)
+    setting_min_publications = st.slider("Min publications", 0, 10, 5)
+    setting_enable_communities = st.toggle("Enable communities", True)
+    setting_detection_algo = st.selectbox("Detection algorithm", ("Louvain", "Girvan-Newman", "CPM"))
+    setting_visualizer = st.selectbox("Graph visualizer", ("Matplotlib", "Pyvis"))
+
 # Generate graph
 if st.button(label="Generate graph", type="primary") is True:
-    graph, request, answer = generate_graph(data_source, search_types.index(search_by), queries)
+    graph_html, request, answer = graph_generate(
+        data_source,
+        search_types.index(search_by),
+        queries,
+        setting_max_coauthors,
+        setting_min_publications,
+        setting_enable_communities,
+        setting_detection_algo,
+        setting_visualizer,
+    )
 
     with st.expander("See request infos"):
         st.markdown("Request :")
@@ -35,10 +50,7 @@ if st.button(label="Generate graph", type="primary") is True:
 
     # Display graph
     st.markdown("Graph : ")
-    net = Network()
-    net.from_nx(graph)
-    net.write_html("pyvis_graph.html")
-    HtmlFile = open("pyvis_graph.html", "r", encoding="utf-8")
+    HtmlFile = open(graph_html, "r", encoding="utf-8")
     html(HtmlFile.read(), height=600, scrolling=True)
 
     st.balloons()
