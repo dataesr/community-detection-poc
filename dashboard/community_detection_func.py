@@ -20,14 +20,23 @@ def data_source_credentials(source):
     # Load server environment
     load_dotenv(os.path.dirname(os.path.dirname(__file__)) + "/server/.env")
 
-    # Elastic search info
-    url = os.environ.get("SCANR_API_URL")
-    token = os.environ.get("SCANR_API_TOKEN")
+    match source:
+        case "SCANR":
+            # SCANR api
+            url = os.environ.get("SCANR_API_URL")
+            token = os.environ.get("SCANR_API_TOKEN")
+        case "OpenAlex":
+            url = os.environ.get("OPENALEX_API_URL")
+            token = None
+        case _:
+            url = None
+            token = None
+            raise ValueError("Incorrect data source")
 
     return url, token
 
 
-def query_by_keywords(keywords):
+def scanr_query_by_keywords(keywords):
     """create json query for search by keywords"""
 
     # Make sure keywords is a list
@@ -80,7 +89,7 @@ def query_by_keywords(keywords):
     return json_query
 
 
-def query_by_authors(idrefs):
+def scanr_query_by_authors(idrefs):
     """create json query for search by authors"""
 
     # Make sure idrefs is a list
@@ -105,12 +114,24 @@ def query_by_authors(idrefs):
     return json_query
 
 
+def scanr_filter_results(json, max_coauthors=20):
+    """Filter results from json request
+
+    Args:
+        json: request answer from api
+        max_coauthors: works max of coauthors to considere
+
+    Returns:
+        dict with authors data
+    """
+
+
 def create_graph(json, max_coauthors=20, min_publications=5):
     """create graph element from json request"""
 
     # Init arrays
-    fullNameIdref = {}
-    topicWikidata = {}
+    idref_fullname = {}
+    wikidata_topics = {}
     all_edges = {}
     nb_pub_removed = 0
     nb_aut_removed = 0
@@ -120,74 +141,187 @@ def create_graph(json, max_coauthors=20, min_publications=5):
 
     # Filter data
     # 1. Loop over answers
-    for hit in json["hits"]["hits"]:
-        elt = hit["_source"]
+    for hit in json.get("hits").get("hits"):
+        elt = hit.get("_source")
         authors = elt.get("authors")
 
         # 2. Loop over authors and remove publication if too many coauthors
         if len(authors) > max_coauthors:
-            print("{}: removing publication ({} authors)".format(hit["_source"]["id"], len(authors)))
+            print(f"{elt.get('id')}: removing publication ({len(authors)} authors)")
             nb_pub_removed += 1
             continue
 
         # 3. Define a node for each author if fullname exists
-        currentNodes = []
+        current_nodes = []
         for aut in elt.get("authors"):
             if "person" in aut:
-                idref = aut["person"]["id"]
-                if idref not in fullNameIdref:
-                    fullNameIdref[idref] = aut["fullName"]
-                currentNode = fullNameIdref[idref]
+                idref = aut.get("person").get("id")
+                if idref not in idref_fullname:
+                    idref_fullname[idref] = aut.get("fullName")
+                current_author = idref_fullname.get(idref)
             elif "fullName" in aut:
-                currentNode = aut["fullName"]
+                current_author = aut.get("fullName")
             else:
                 continue
-            currentNodes.append(currentNode)
+            current_nodes.append(current_author)
 
         # 4. Update nodes informations
-        for node in currentNodes:
+        for node in current_nodes:
             # Add node or increment publication number
             if node not in all_edges:
                 all_edges[node] = {"nb_publis": 0, "coauthors": {}, "topics": {}}
-            all_edges[node]["nb_publis"] += 1
+            all_edges.get(node)["nb_publis"] += 1
             # Compute number of coauthors
-            for node_ in currentNodes:
+            for node_ in current_nodes:
                 if node != node_:
-                    if node_ not in all_edges[node]["coauthors"]:
-                        all_edges[node]["coauthors"][node_] = 0
-                    all_edges[node]["coauthors"][node_] += 1
+                    if node_ not in all_edges.get(node).get("coauthors"):
+                        all_edges.get(node)["coauthors"][node_] = 0
+                    all_edges.get(node)["coauthors"][node_] += 1
             # Get wikidata
             if elt.get("domains") is None:
                 continue
             for topic in elt.get("domains"):
                 if "code" in topic:
                     code = topic.get("code")
-                    if code not in topicWikidata:
-                        topicWikidata[code] = topic.get("label").get("default").lower()
-                    label = topicWikidata[code]
-                    if label not in all_edges[node]["topics"]:
-                        all_edges[node]["topics"][label] = 0
-                    all_edges[node]["topics"][label] += 1
+                    if code not in wikidata_topics:
+                        wikidata_topics[code] = topic.get("label").get("default").lower()
+                    label = wikidata_topics.get(code)
+                    if label not in all_edges.get(node).get("topics"):
+                        all_edges.get(node)["topics"][label] = 0
+                    all_edges.get(node)["topics"][label] += 1
 
         # 5. Add nodes to graph object
-        for n in all_edges:
+        for n, edge in all_edges.items():
             # Filter by number of publications
-            if all_edges[n]["nb_publis"] < min_publications:
+            if edge.get("nb_publis") < min_publications:
                 nb_aut_removed += 1
                 continue
             # Add nodes
-            graph.add_node(n, size=all_edges[n]["nb_publis"])
+            graph.add_node(n, size=edge.get("nb_publis"))
             # Add weights (number of co publications)
-            for m in all_edges[n]["coauthors"]:
-                graph.add_edge(n, m, weight=all_edges[n]["coauthors"][m])
+            for m in edge.get("coauthors"):
+                graph.add_edge(n, m, weight=edge.get("coauthors")[m])
 
-    print("\nNumber of publications :", len(json["hits"]["hits"]))
+    print("\nNumber of publications :", len(json.get("hits").get("hits")))
     print("Number of publications removed (too many coauthors) :", nb_pub_removed)
     print("Number of authors removed (too few publications) :", nb_aut_removed)
     print("\nGraph - number of nodes (authors) :", graph.number_of_nodes())
     print("Graph - number of edges (copublications) :", graph.number_of_edges())
 
     return graph
+
+
+def url_last_segment(url: str) -> str:
+    """Remove last segment of an url
+    example : http://ww.test.com/TEST1
+    --> returns TEST1
+    """
+
+    if not url:
+        return None
+
+    for split in reversed(url.rsplit("/")):
+        if split:
+            return split
+
+    return None
+
+
+def alex_url_thematic(url: str, thematic: list[str], cursor: str = "", per_page: int = 100) -> str:
+    """This function create the URL string with the theme of the query and the cursor
+    to get all the available pages on OpenAlex
+
+    Args:
+        thematic: theme(s) you are interested in
+        cursor: next page cursor
+        per_page: number of results per page
+
+    Returns:
+        url string
+    """
+
+    if thematic:
+        thematic = " AND ".join(thematic)
+        url = url + "," if url[-1] != "," else url
+        url += f"title.search:{thematic},abstract.search:{thematic}&mailto=bso@recherche.gouv.fr&cursor={cursor}*&per_page={per_page}"
+
+    return url
+
+
+# def alex_request():
+#     # Search url
+#     request_url = url_thematic(OPENALEX_API_URL, keywords, cursor=cursor, per_page=per_page)
+#     print(request_url)
+
+#     # Request answer
+#     json_answer = requests.get(request_url).json()
+
+
+def alex_filter_results(json: dict, max_coauthors: int = 20) -> dict:
+    """Filter results from json request
+
+    Args:
+        json: request answer from api
+        max_coauthors: works max of coauthors to considere
+
+    Returns:
+        dict with authors data
+    """
+
+    # Init arrays
+    nb_pub_removed = 0
+    authors_data = {}
+    authors_names = {}
+    wikidata_names = {}
+    # print("Number of works : " + str(len(json.get("results"))))
+
+    # Filter data
+    # 1. Loop over works
+    for work in json.get("results"):
+        work_id = url_last_segment(work.get("id"))
+        authorships = work.get("authorships")
+
+        # 2. Loop over authors and remove publication if too many coauthors
+        if len(authorships) > max_coauthors:
+            print(f"{work.get('id')}: removing publication ({len(authorships)} authors)")
+            nb_pub_removed += 1
+            continue
+
+        # 3. Get author information
+        for authorship in authorships:
+            author = authorship.get("author")
+            author_id = url_last_segment(author.get("id"))
+            author_orcid = url_last_segment(author.get("orcid"))
+            author_name = author.get("display_name")
+            authors_names.setdefault(author_id, author_name)
+
+            # Add author
+            author_data = {"name": author_name, "orcid": author_orcid}
+            authors_data.setdefault(
+                author_id, {"work_count": 0, "work_id": [], "coauthors": {}, "wikidata": {}}
+            ).update(author_data)
+            authors_data.get(author_id)["work_count"] += 1
+            authors_data.get(author_id)["work_id"].append(work_id)
+
+            # print(f"{author_name}: number of coauthors = {len(authorships) - 1}")
+
+            # 4. Add coauthors information
+            for coauthorship in authorships:
+                coauthor = coauthorship.get("author")
+                coauthor_id = url_last_segment(coauthor.get("id"))
+                coauthor_name = coauthor.get("display_name")
+                if coauthor_id != author_id:
+                    authors_data.get(author_id).get("coauthors").setdefault(coauthor_id, 0)
+                    authors_data.get(author_id).get("coauthors")[coauthor_id] += 1
+
+            # 5. Get wikidata topics information
+            for concept in work.get("concepts"):
+                wikidata = url_last_segment(concept.get("wikidata"))
+                wikidata_names.setdefault(wikidata, concept.get("display_name"))
+                authors_data.get(author_id).get("wikidata").setdefault(wikidata, 0)
+                authors_data.get(author_id).get("wikidata")[wikidata] += 1
+
+    return authors_data
 
 
 def graph_find_communities(graph, detection_algo):
