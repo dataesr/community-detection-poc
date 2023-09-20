@@ -44,7 +44,7 @@ def alex_get_url() -> str:
     return url
 
 
-def alex_get_thematic_url(url: str, thematic: list[str], cursor: str = None, per_page: int = 100) -> str:
+def alex_get_thematic_url(url: str, thematic: list[str], cursor: str = None, per_page: int = 200) -> str:
     """Get thematic search url
 
     Args:
@@ -59,8 +59,7 @@ def alex_get_thematic_url(url: str, thematic: list[str], cursor: str = None, per
     if thematic:
         thematic = " AND ".join(thematic)
         url = url + "," if url[-1] != "," else url
-        url += f"title.search:{thematic},abstract.search:{thematic}&mailto=bso@recherche.gouv.fr&cursor={cursor}*&per_page={per_page}"
-
+        url += f"title.search:{thematic},abstract.search:{thematic}&mailto=bso@recherche.gouv.fr&cursor={cursor or ''}*&per_page={per_page}"
     return url
 
 
@@ -74,7 +73,8 @@ def alex_request_keywords(keywords: list[str], cursor: str = None) -> dict:
         dict: request answer from api
     """
     # Search url
-    request_url = alex_get_thematic_url(alex_get_url, keywords, cursor)
+    request_url = alex_get_thematic_url(alex_get_url(), keywords, cursor)
+    print(request_url)
 
     # Request answer
     return requests.get(request_url).json()
@@ -95,16 +95,20 @@ def alex_get_results(search_type: str, args: list[str]) -> list[dict]:
     answer = alex_request_keywords(args)
     results = [answer]
 
+    print("first :", answer.get("meta"))
+
     while answer.get("meta").get("next_cursor"):
         answer = alex_request_keywords(args, cursor=answer.get("meta").get("next_cursor"))
 
         if answer.get("results"):
             results.append(answer)
 
+        print("second: ", answer.get("meta"))
+
     return results
 
 
-def alex_filter_results(results: list[dict], max_coauthors: int = 20) -> tuple[dict, dict]:
+def alex_filter_results(results: list[dict], max_coauthors: int = 20) -> dict:
     """Get authors data from results
 
     Args:
@@ -112,13 +116,12 @@ def alex_filter_results(results: list[dict], max_coauthors: int = 20) -> tuple[d
         max_coauthors (int, optional): max number of coauthors
 
     Returns:
-        tuple[dict, dict]: authors data and authors names
+        dict: authors data
     """
 
     # Init arrays
     nb_pub_removed = 0
     authors_data = {}
-    authors_names = {}
     wikidata_names = {}
 
     # Filter data
@@ -140,7 +143,6 @@ def alex_filter_results(results: list[dict], max_coauthors: int = 20) -> tuple[d
                 author_id = url_get_last(author.get("id"))
                 author_orcid = url_get_last(author.get("orcid"))
                 author_name = author.get("display_name")
-                authors_names.setdefault(author_id, author_name)
 
                 # Add author
                 author_data = {"name": author_name, "orcid": author_orcid}

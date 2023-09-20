@@ -30,7 +30,7 @@ with st.sidebar:
 
 # Generate graph
 if st.button(label="Generate graph", type="primary") is True:
-    graph_html, request, answer = graph_generate(
+    graph_html, authors_data = graph_generate(
         data_source,
         search_types.index(search_by),
         queries,
@@ -41,12 +41,8 @@ if st.button(label="Generate graph", type="primary") is True:
         setting_visualizer,
     )
 
-    with st.expander("See request infos"):
-        st.markdown("Request :")
-        st.json(request, expanded=False)
-
-        st.markdown("Answer :")
-        st.json(answer, expanded=False)
+    with st.expander("See authors data"):
+        st.json(authors_data, expanded=True)
 
     # Display graph
     st.markdown("Graph : ")

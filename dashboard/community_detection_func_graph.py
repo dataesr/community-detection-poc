@@ -15,9 +15,9 @@ from community_detection_func_scanr import scanr_get_results, scanr_filter_resul
 from community_detection_func_alex import alex_get_results, alex_filter_results
 
 
-def graph_create(authors_data: dict, authors_names: dict, min_works: int = 5) -> dict:
+def graph_create(authors_data: dict, min_works: int = 5) -> dict:
     # Init array
-    nb_aut_removed = []
+    nb_aut_removed = 0
 
     # Create graph
     graph = nx.Graph()
@@ -32,9 +32,11 @@ def graph_create(authors_data: dict, authors_names: dict, min_works: int = 5) ->
         # 3. Add node
         graph.add_node(author.get("name"), size=author.get("work_count"))
 
-        # 4. Add edges
+        # 4. Add edges between author and coauthors
         for coauthor, cowork_count in author.get("coauthors").items():
-            graph.add_edge(author.get("name"), authors_names.get(coauthor), weight=cowork_count)
+            author_name = author.get("name")
+            coauthor_name = authors_data.get(coauthor).get("name") if coauthor in authors_data else coauthor
+            graph.add_edge(author_name, coauthor_name, weight=cowork_count)
 
     return graph
 
@@ -147,7 +149,7 @@ def graph_generate(
     Returns:
         str: name of html graph
     """
-    authors_data, authors_names = api_get_data(source, search_type, args, max_coauthors)
+    authors_data = api_get_data(source, search_type, args, max_coauthors)
 
     # Create graph
     graph = graph_create(authors_data, min_works)
@@ -160,7 +162,7 @@ def graph_generate(
     # Generate html
     graph_html = graph_generate_html(graph, node_groups, visualizer)
 
-    return graph_html
+    return graph_html, authors_data
 
 
 def api_get_data(source: str, search_type: str, args: list[str], max_coauthors: int) -> tuple[dict, dict]:
@@ -176,14 +178,14 @@ def api_get_data(source: str, search_type: str, args: list[str], max_coauthors: 
         case "scanR":
             # scanr api search
             results = scanr_get_results(search_type, args)
-            authors_data, authors_names = scanr_filter_results(results, max_coauthors)
+            authors_data = scanr_filter_results(results, max_coauthors)
 
         case "OpenAlex":
             # openalex api search
-            results = alex_get_results(search_type, args)
-            authors_data, authors_names = alex_filter_results(results, max_coauthors)
+            results = alex_get_results(search_type, [args])
+            authors_data = alex_filter_results(results, max_coauthors)
 
         case _:
             raise ValueError("Incorrect api name")
 
-    return authors_data, authors_names
+    return authors_data

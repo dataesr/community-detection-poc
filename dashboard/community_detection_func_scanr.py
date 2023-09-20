@@ -140,7 +140,7 @@ def scanr_get_results(search_type: str, args: list[str]) -> dict:
     return requests.post(url, json=query, headers={"Authorization": token}).json()
 
 
-def scanr_filter_results(answer: dict, max_coauthors: int = 20) -> tuple[dict, dict]:
+def scanr_filter_results(answer: dict, max_coauthors: int = 20) -> dict:
     """Get authors data from results
 
     Args:
@@ -148,14 +148,13 @@ def scanr_filter_results(answer: dict, max_coauthors: int = 20) -> tuple[dict, d
         max_coauthors (int, optional): max number of coauthors
 
     Returns:
-        tuple[dict, dict]: authors data and authors names
+        dict: authors data
     """
     max_coauthors = 20
 
     # Init arrays
     nb_pub_removed = 0
     authors_data = {}
-    authors_names = {}
     wikidata_names = {}
 
     # Filter data
@@ -174,13 +173,16 @@ def scanr_filter_results(answer: dict, max_coauthors: int = 20) -> tuple[dict, d
         for author in authorships:
             if "person" in author:
                 author_id = author.get("person").get("id")
-                author_name = author.get("person").get("fullName")
+                author_name = (
+                    author.get("person").get("fullName")
+                    if "fullName" in author.get("person")
+                    else author.get("fullName")
+                )
             elif "fullName" in author:
                 author_id = author.get("fullName")
                 author_name = author.get("fullName")
             else:
                 continue
-            authors_names.setdefault(author_id, author_name)
 
             # Add author
             author_data = {"name": author_name}
@@ -213,4 +215,4 @@ def scanr_filter_results(answer: dict, max_coauthors: int = 20) -> tuple[dict, d
                 authors_data.get(author_id).get("wikidata").setdefault(wikidata, 0)
                 authors_data.get(author_id).get("wikidata")[wikidata] += 1
 
-    return authors_data, authors_names
+    return authors_data
