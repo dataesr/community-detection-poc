@@ -4,12 +4,12 @@ import os
 import sys
 import networkx as nx
 from dotenv import load_dotenv
-from community_detection_func import graph_generate
+from community_detection_func_graph import graph_generate
 
 st.title("Community detection application")
 
 # Choose data source
-data_sources = ["scanR"]
+data_sources = ["scanR", "OpenAlex"]
 data_source = st.selectbox("Data source", data_sources, 0)
 
 # Choose search by
