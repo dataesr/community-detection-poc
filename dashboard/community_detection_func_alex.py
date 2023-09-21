@@ -67,7 +67,54 @@ def alex_get_thematic_url(
         url += "&mailto=bso@recherche.gouv.fr"
 
     else:
-        raise ValueError("Search keywords is empty!")
+        raise ValueError("Search keywords are empty!")
+
+    return url
+
+
+def alex_get_authors_url(
+    authors: list[str],
+    start_year: int = 2018,
+    end_year: int = None,
+    countries: list[str] = None,
+    cursor: str = None,
+    per_page: int = 200,
+    and_condition: bool = True,
+) -> str:
+    """Get authors search url
+
+    Args:
+        authors (list[str]): authors ids
+        start_year (int): search start year
+        end_year (int): search end year
+        countries: list of country codes
+        cursor (str, optional): search api cursor
+        per_page (int, optional): number of results per page
+        and_condition (bool, optional): filter condition and (true = AND, false = OR)
+
+    Returns:
+        str: openalex search url
+    """
+    if authors:
+        # Base url
+        url = alex_url() + "works?"
+
+        # Filter search
+        authors = f"{'+' if and_condition else '|'}".join(authors)  # Logical expression
+        url += f"&filter=author.orcid:{authors}"
+        url += f",publication_year:{start_year}-{end_year or ''},is_paratext:false"
+        if countries:
+            countries = " AND ".join(countries)
+            url += f",institutions.country_code:{countries}"
+
+        # Add cursor and number of results per page
+        url += f"&cursor={cursor or ''}*&per_page={per_page}"
+
+        # Add email for performance
+        url += "&mailto=bso@recherche.gouv.fr"
+
+    else:
+        raise ValueError("Authors ids are empty!")
 
     return url
 
@@ -81,8 +128,27 @@ def alex_request_keywords(keywords: list[str], cursor: str = None) -> dict:
     Returns:
         dict: request answer from api
     """
+
     # Search url
     request_url = alex_get_thematic_url(keywords, cursor=cursor)
+    print(request_url)
+
+    # Request answer
+    return requests.get(request_url).json()
+
+
+def alex_request_authors(ids: list[str], cursor: str = None) -> dict:
+    """Get authors id search answer from api
+
+    Args:
+        ids (list[str]): list of authors ids (orcid or idref)
+
+    Returns:
+        dict: request answer from api
+    """
+
+    # Search url
+    request_url = alex_get_authors_url(ids, cursor=cursor)
     print(request_url)
 
     # Request answer
@@ -101,11 +167,14 @@ def alex_get_results(search_type: str, args: list[str]) -> list[dict]:
     """
 
     # Request answer
-    answer = alex_request_keywords(args)
+    answer = alex_request_keywords(args) if search_type == 0 else alex_request_authors(args)
     results = [answer]
 
     while answer.get("meta").get("next_cursor"):
-        answer = alex_request_keywords(args, cursor=answer.get("meta").get("next_cursor"))
+        if search_type == 0:
+            answer = alex_request_keywords(args, cursor=answer.get("meta").get("next_cursor"))
+        else:
+            answer = alex_request_authors(args, cursor=answer.get("meta").get("next_cursor"))
 
         if answer.get("results"):
             results.append(answer)

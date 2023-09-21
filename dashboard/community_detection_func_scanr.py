@@ -94,10 +94,6 @@ def scanr_query_by_authors(idrefs) -> dict:
         dict: json query
     """
 
-    # Make sure idrefs is a list
-    if not isinstance(idrefs, list):
-        idrefs = [idrefs]
-
     idrefs = ["idref" + str(id) for id in idrefs]
 
     # Query json
@@ -116,12 +112,12 @@ def scanr_query_by_authors(idrefs) -> dict:
     return json_query
 
 
-def scanr_get_results(search_type: str, args: list[str]) -> dict:
+def scanr_get_results(search_type: int, args: list[str]) -> dict:
     """Get search results from api
 
     Args:
-        search_type (str): type of search
-        args (list[str]): list of arguments
+        search_type (int): type of search 0: by keywords - 1: by authors (idrefs)
+        args (list[str]): list of search arguments
 
     Returns:
         dict: answer from api
@@ -130,7 +126,15 @@ def scanr_get_results(search_type: str, args: list[str]) -> dict:
     url, token = scanr_get_credentials()
 
     # Query
-    query = scanr_query_by_keywords(args)
+    match search_type:
+        case 0:
+            # Keywords
+            query = scanr_query_by_keywords(args)
+        case 1:
+            # Idrefs
+            query = scanr_query_by_authors(args)
+        case _:
+            raise ValueError("Incorrect search type")
 
     # Request answer
     return requests.post(url, json=query, headers={"Authorization": token}).json()
@@ -146,7 +150,6 @@ def scanr_filter_results(answer: dict, max_coauthors: int = 20) -> dict:
     Returns:
         dict: authors data
     """
-    max_coauthors = 20
 
     # Init arrays
     nb_pub_removed = 0
