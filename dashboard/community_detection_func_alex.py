@@ -1,15 +1,4 @@
-import os
 import requests
-
-from dotenv import load_dotenv
-
-import networkx as nx
-from netgraph import Graph, InteractiveGraph
-from pyvis.network import Network
-
-import matplotlib
-import matplotlib.pyplot as plt
-import mpld3
 
 
 def url_get_last(url: str) -> str:
@@ -28,28 +17,29 @@ def url_get_last(url: str) -> str:
     return None
 
 
-def alex_get_url() -> str:
+def alex_url() -> str:
     """
     Returns:
-        str: openalex api url
+        str: openalex base url
     """
-
-    # Load server environment
-    load_dotenv(os.path.dirname(os.path.dirname(__file__)) + "/server/.env")
-
-    url = os.environ.get("OPENALEX_API_URL")
-    print(os.path.dirname(os.path.dirname(__file__)))
-    print(url)
-
-    return url
+    return "https://api.openalex.org/"
 
 
-def alex_get_thematic_url(url: str, thematic: list[str], cursor: str = None, per_page: int = 200) -> str:
+def alex_get_thematic_url(
+    thematic: list[str],
+    start_year: int = 2018,
+    end_year: int = None,
+    countries: list[str] = None,
+    cursor: str = None,
+    per_page: int = 200,
+) -> str:
     """Get thematic search url
 
     Args:
-        url (str): api url
         thematic (list[str]): search thematic
+        start_year (int): search start year
+        end_year (int): search end year
+        countries: list of country codes
         cursor (str, optional): search api cursor
         per_page (int, optional): number of results per page
 
@@ -57,9 +47,28 @@ def alex_get_thematic_url(url: str, thematic: list[str], cursor: str = None, per
         str: search url
     """
     if thematic:
-        thematic = " AND ".join(thematic)
-        url = url + "," if url[-1] != "," else url
-        url += f"title.search:{thematic},abstract.search:{thematic}&mailto=bso@recherche.gouv.fr&cursor={cursor or ''}*&per_page={per_page}"
+        # Base url
+        url = alex_url()
+
+        # Search works
+        thematic = " AND ".join(thematic) if isinstance(thematic, list) else thematic
+        url += f"works?search={thematic}"
+
+        # Filter search
+        url += f"&filter=publication_year:{start_year}-{end_year or ''},is_paratext:false"
+        if countries:
+            countries = " AND ".join(countries)
+            url += f",institutions.country_code:{countries}"
+
+        # Add cursor and number of results per page
+        url += f"&cursor={cursor or ''}*&per_page={per_page}"
+
+        # Add email for performance
+        url += "&mailto=bso@recherche.gouv.fr"
+
+    else:
+        raise ValueError("Search keywords is empty!")
+
     return url
 
 
@@ -73,7 +82,7 @@ def alex_request_keywords(keywords: list[str], cursor: str = None) -> dict:
         dict: request answer from api
     """
     # Search url
-    request_url = alex_get_thematic_url(alex_get_url(), keywords, cursor)
+    request_url = alex_get_thematic_url(keywords, cursor=cursor)
     print(request_url)
 
     # Request answer
@@ -95,15 +104,11 @@ def alex_get_results(search_type: str, args: list[str]) -> list[dict]:
     answer = alex_request_keywords(args)
     results = [answer]
 
-    print("first :", answer.get("meta"))
-
     while answer.get("meta").get("next_cursor"):
         answer = alex_request_keywords(args, cursor=answer.get("meta").get("next_cursor"))
 
         if answer.get("results"):
             results.append(answer)
-
-        print("second: ", answer.get("meta"))
 
     return results
 

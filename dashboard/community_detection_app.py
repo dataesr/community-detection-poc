@@ -1,5 +1,6 @@
 import streamlit as st
 from streamlit.components.v1 import html
+from annotated_text import annotated_text
 import os
 import sys
 import networkx as nx
@@ -19,11 +20,14 @@ search_by = st.selectbox("Search by", search_types, 0)
 # Choose query
 query_label = "Keywords" if (search_types.index(search_by) == 0) else "Idrefs"
 queries = st.text_input(query_label)
+if queries:
+    queries = [query.strip() for query in queries.split(",")]
+    annotated_text([(query, "") for query in queries])
 
 # Settings
 with st.sidebar:
     setting_max_coauthors = st.slider("Max coauthors", 0, 100, 20)
-    setting_min_publications = st.slider("Min publications", 0, 10, 5)
+    setting_min_publications = st.slider("Min publications", 0, 10, 0) or None
     setting_enable_communities = st.toggle("Enable communities", True)
     setting_detection_algo = st.selectbox("Detection algorithm", ("Louvain", "Girvan-Newman", "CPM"))
     setting_visualizer = st.selectbox("Graph visualizer", ("Matplotlib", "Pyvis"))

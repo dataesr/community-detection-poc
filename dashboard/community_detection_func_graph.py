@@ -15,34 +15,90 @@ from community_detection_func_scanr import scanr_get_results, scanr_filter_resul
 from community_detection_func_alex import alex_get_results, alex_filter_results
 
 
-def graph_create(authors_data: dict, min_works: int = 5) -> dict:
-    # Init array
-    nb_aut_removed = 0
+def api_get_data(source: str, search_type: str, args: list[str], max_coauthors: int) -> tuple[dict, dict]:
+    """Get search results data from api
 
+    Returns:
+        tuple[dict, dict]: authors data and authors names
+    """
+    match source:
+        case "scanR":
+            # scanr api search
+            results = scanr_get_results(search_type, args)
+            authors_data = scanr_filter_results(results, max_coauthors)
+
+        case "OpenAlex":
+            # openalex api search
+            results = alex_get_results(search_type, args)
+            authors_data = alex_filter_results(results, max_coauthors)
+
+        case _:
+            raise ValueError("Api name has to be 'scanR' or 'OpenAlex'")
+
+    return authors_data
+
+
+def graph_create(authors_data: dict, min_works: int = None, max_order: int = 100) -> Graph:
+    """Create a graph object from the authors data
+
+    Args:
+        authors_data (dict): authors informations
+        min_works (int, optional): minimal number of works - forced filtering
+        max_order (int, optional): maximal graph order for - auto filtering
+
+    Returns:
+        Graph: graph object
+    """
     # Create graph
     graph = nx.Graph()
 
     # 1. Loop over all authors
     for author in authors_data.values():
-        # 2. Filter number of works
-        if author.get("work_count") < min_works:
-            nb_aut_removed += 1
-            continue
-
-        # 3. Add node
+        # 2. Add node
         graph.add_node(author.get("name"), size=author.get("work_count"))
 
-        # 4. Add edges between author and coauthors
+        # 3. Add edges between author and coauthors
         for coauthor, cowork_count in author.get("coauthors").items():
             author_name = author.get("name")
             coauthor_name = authors_data.get(coauthor).get("name") if coauthor in authors_data else coauthor
             graph.add_edge(author_name, coauthor_name, weight=cowork_count)
 
+    # 4. Filter authors by minimun works
+    if min_works:
+        # User input
+        graph = graph.subgraph([node for node, attrdict in graph.nodes.items() if attrdict.get("size") >= min_works])
+        print(f"Miniumun number of works forced : {min_works} (order={graph.order()})")
+
+    else:
+        # Auto computed
+        auto_min_works = 1
+
+        while graph.order() > max_order:
+            auto_min_works += 1
+
+            graph = graph.subgraph(
+                [node for node, attrdict in graph.nodes.items() if attrdict.get("size") >= auto_min_works]
+            )
+            print(f"Minimum number of works auto computed : {auto_min_works} (order={graph.order()})")
+
+    print(f"Graph filtered : {len(graph.nodes) or 0}/{len(authors_data)}")
+
+    if not graph.nodes:
+        raise ValueError("Graph is empty, please select a proper minimal number of works!")
+
     return graph
 
 
-def graph_find_communities(graph, detection_algo):
-    """find graph communities"""
+def graph_find_communities(graph: Graph, detection_algo: str) -> dict:
+    """Find communities of a network
+
+    Args:
+        graph (Graph): network graph
+        detection_algo (str): community detection algorithm
+
+    Returns:
+        dict: nodes groups
+    """
 
     match detection_algo:
         case "Louvain":
@@ -60,8 +116,16 @@ def graph_find_communities(graph, detection_algo):
     return node_groups
 
 
-def graph_find_louvain_communities(graph):
-    """find graph communitites with the louvain algorithm"""
+def graph_find_louvain_communities(graph: Graph) -> dict:
+    """Find graph communitites with the louvain algorithm
+
+    Args:
+        graph (Graph): network graph
+
+    Returns:
+        dict: nodes groups
+    """
+    print(graph)
 
     # Networkx louvain algo
     communities = nx.community.louvain_communities(graph, seed=42)
@@ -70,8 +134,15 @@ def graph_find_louvain_communities(graph):
     return node_groups
 
 
-def graph_find_girvan_newman(graph):
-    """find graph communitites with the girvan-newman algorithm"""
+def graph_find_girvan_newman(graph: Graph) -> dict:
+    """Find graph communitites with the girvan-newman algorithm
+
+    Args:
+        graph (Graph): network graph
+
+    Returns:
+        dict: nodes groups
+    """
 
     # Find best modularity with girvan newman
     communities = list(nx.community.girvan_newman(graph))
@@ -85,8 +156,15 @@ def graph_find_girvan_newman(graph):
     return node_groups
 
 
-def graph_find_cpm_communities(graph):
-    """find graph communities with the clique percolation method"""
+def graph_find_cpm_communities(graph: Graph) -> dict:
+    """Find graph communities with the clique percolation method
+
+    Args:
+        graph (Graph): network graph
+
+    Returns:
+        dict: nodes groups
+    """
 
     # Networkx k clique algo
     cliques = list(nx.community.k_clique_communities(graph, 3))
@@ -95,14 +173,23 @@ def graph_find_cpm_communities(graph):
     return node_groups
 
 
-def graph_generate_html(graph, node_groups, visualizer):
-    """generate graph html file"""
+def graph_generate_html(graph: Graph, node_groups: dict, visualizer: str) -> str:
+    """Generate html graph and save it
+
+    Args:
+        graph (Graph): network graph
+        node_groups (dict): nodes groups
+        visualizer (str): graph visualizer
+
+    Returns:
+        str: filename of the saved graph
+    """
 
     match visualizer:
         case "Matplotlib":
             # Matplotlib
             graph_html = "pyplot_graph.html"
-            cmap = matplotlib.colormaps["turbo"].resampled(max(node_groups.values()) + 1)
+            cmap = matplotlib.colormaps["turbo"].resampled(max(node_groups.values() or 0) + 1)
             fig = plt.figure(figsize=(10, 10), layout="tight")
             pos = nx.spring_layout(graph)
             nx.draw_networkx(graph, pos, cmap=cmap, nodelist=node_groups.keys(), node_color=list(node_groups.values()))
@@ -163,29 +250,3 @@ def graph_generate(
     graph_html = graph_generate_html(graph, node_groups, visualizer)
 
     return graph_html, authors_data
-
-
-def api_get_data(source: str, search_type: str, args: list[str], max_coauthors: int) -> tuple[dict, dict]:
-    """Get results data from api
-
-    Raises:
-        ValueError: api name has to be 'scanR' or 'OpenAlex'
-
-    Returns:
-        tuple[dict, dict]: authors data and authors names
-    """
-    match source:
-        case "scanR":
-            # scanr api search
-            results = scanr_get_results(search_type, args)
-            authors_data = scanr_filter_results(results, max_coauthors)
-
-        case "OpenAlex":
-            # openalex api search
-            results = alex_get_results(search_type, [args])
-            authors_data = alex_filter_results(results, max_coauthors)
-
-        case _:
-            raise ValueError("Incorrect api name")
-
-    return authors_data

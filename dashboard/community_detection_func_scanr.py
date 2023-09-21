@@ -38,10 +38,6 @@ def scanr_query_by_keywords(keywords: list[str]) -> dict:
         dict: json query
     """
 
-    # Make sure keywords is a list
-    if not isinstance(keywords, list):
-        keywords = [keywords]
-
     # Create query block
     must_block = []
     for q in keywords:
