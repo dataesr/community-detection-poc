@@ -1,3 +1,5 @@
+import requests
+import xmltodict
 import re
 
 
@@ -27,7 +29,7 @@ def id_get_type(id: str) -> str:
         str: id type (idref, orcid or None)
     """
     idref_regex = "^(idref)?[0-9]{9}$"
-    orcid_regex = "^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$"
+    orcid_regex = "^[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}$"
 
     # Check idref
     if re.search(idref_regex, id):
@@ -41,6 +43,67 @@ def id_get_type(id: str) -> str:
     return id_type
 
     # id = id[len("idref")] if id.startswith("idref") else id
+
+
+def idref_get(idref: str) -> dict:
+    """Use idref api to get author json info
+
+    Args:
+        idref: author idref
+
+    Returns:
+        author json data
+    """
+    if idref is None:
+        return None
+
+    idref_url = f"https://www.idref.fr/{idref}.xml"
+    idref_xml = requests.get(idref_url).text
+    idref_answer = xmltodict.parse(idref_xml, attr_prefix="")
+    print("answer :", idref_answer)
+
+    return idref_answer
+
+
+def idref_find_orcid(idref_answer: dict) -> str:
+    """This function check author idref data and try to find an ORCID.
+    Returns None if no ORCID found.
+
+    Args:
+        idref_answer: author json data
+
+    Returns:
+        ORCID
+    """
+    orcid = None
+    found = False
+    idref_data = idref_answer.get("record").get("datafield")
+
+    for subid in range(len(idref_data)):
+        subfield = idref_data[subid].get("subfield")
+
+        if not isinstance(subfield, list):
+            continue
+
+        for elem in subfield:
+            if isinstance(elem, dict):
+                elem = elem.get("#text")  # if xml parser
+            if elem == "ORCID":
+                found = True
+                break
+
+        if found:
+            for elem in subfield:
+                if isinstance(elem, dict):
+                    elem = elem.get("#text")  # if xml parser
+                if type(elem) is str and id_get_type(elem) == "orcid":
+                    orcid = elem
+                    break
+
+        if orcid:
+            break
+
+    return orcid
 
 
 def tag_get_color(tag: str) -> str:

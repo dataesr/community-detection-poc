@@ -2,7 +2,7 @@ import streamlit as st
 from streamlit.components.v1 import html
 from annotated_text import annotated_text
 from community_detection_func_graph import graph_generate
-from community_detection_func_tools import id_get_type, tag_get_color
+from community_detection_func_tools import *
 
 st.title("Community detection application")
 
@@ -19,14 +19,18 @@ match search_types.index(search_by):
     case 0:
         # Keywords
         queries = st.text_input("Keywords")
-        queries = [query.strip() for query in queries.split(",")]
+        queries = [query.strip() for query in queries.split(",") if query]
         print(queries)
-        annotated_text([(query, "", tag_get_color("keyword")) for query in queries if query])
+        annotated_text([(query, "", tag_get_color("keyword")) for query in queries])
     case 1:
         # Authors ids
         queries = st.text_input("Authors ids")
         queries = [query.strip() for query in queries.split(",")]
         print(queries)
+
+        if data_source == "OpenAlex":
+            queries = [idref_find_orcid(idref_get(query)) or query for query in queries if query]
+            print(queries)
 
         annotated_text(
             [
