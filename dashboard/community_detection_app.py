@@ -1,11 +1,8 @@
 import streamlit as st
 from streamlit.components.v1 import html
 from annotated_text import annotated_text
-import os
-import sys
-import networkx as nx
-from dotenv import load_dotenv
 from community_detection_func_graph import graph_generate
+from community_detection_func_tools import id_get_type, tag_get_color
 
 st.title("Community detection application")
 
@@ -14,15 +11,33 @@ data_sources = ["scanR", "OpenAlex"]
 data_source = st.selectbox("Data source", data_sources, 0)
 
 # Choose search by
-search_types = ["Co-authoring by keyword", "Co-authoring by author id (idref)"]
+search_types = ["Co-authoring by keywords", "Co-authoring by authors ids"]
 search_by = st.selectbox("Search by", search_types, 0)
 
 # Choose query
-query_label = "Keywords" if (search_types.index(search_by) == 0) else "Idrefs"
-queries = st.text_input(query_label)
-if queries:
-    queries = [query.strip() for query in queries.split(",")]
-    annotated_text([(query, "") for query in queries])
+match search_types.index(search_by):
+    case 0:
+        # Keywords
+        queries = st.text_input("Keywords")
+        queries = [query.strip() for query in queries.split(",")]
+        print(queries)
+        annotated_text([(query, "", tag_get_color("keyword")) for query in queries if query])
+    case 1:
+        # Authors ids
+        queries = st.text_input("Authors ids")
+        queries = [query.strip() for query in queries.split(",")]
+        print(queries)
+
+        annotated_text(
+            [
+                (query, id_get_type(query) or "", tag_get_color(id_get_type(query)) or "#eb4034")
+                for query in queries
+                if query
+            ]
+        )
+
+    case _:
+        raise ValueError("Incorrect search type")
 
 # Settings
 with st.sidebar:

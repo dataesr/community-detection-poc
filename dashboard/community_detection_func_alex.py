@@ -1,20 +1,5 @@
 import requests
-
-
-def url_get_last(url: str) -> str:
-    """Remove last segment of an url
-    example : http://ww.test.com/TEST1
-    --> returns TEST1
-    """
-
-    if not url:
-        return None
-
-    for split in reversed(url.rsplit("/")):
-        if split:
-            return split
-
-    return None
+from community_detection_func_tools import url_get_last
 
 
 def alex_url() -> str:

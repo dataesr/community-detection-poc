@@ -94,7 +94,7 @@ def scanr_query_by_authors(idrefs) -> dict:
         dict: json query
     """
 
-    idrefs = ["idref" + str(id) for id in idrefs]
+    idrefs = ["idref" + id if not id.startswith("idref") else id for id in idrefs]
 
     # Query json
     json_query = {
