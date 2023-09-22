@@ -2,26 +2,7 @@ const DEFAULT_SIZE = 5000;
 const DEFAULT_YEARS = [2018, 2019, 2020, 2021, 2022, 2023];
 const ELASTIC_SOURCE_FIELDS = ['id', 'authors', 'domains', 'title'];
 
-export const makeQueryByAuthor = (queries, endyear, startyear, size = DEFAULT_SIZE) => ({
-  size,
-  _source: ELASTIC_SOURCE_FIELDS,
-  query: {
-    function_score: {
-      query: {
-        bool: {
-          filter: [
-            { terms: { 'authors.role.keyword': ['author', 'directeurthese'] } },
-            { terms: { 'authors.person.id.keyword': queries.split(',').map((id) => `idref${id}`) } },
-          ],
-        },
-      },
-      random_score: { seed: 2001 },
-      boost_mode: 'replace',
-    },
-  },
-});
-
-export const makeQueryByKeyword = (queries, endyear, startyear, size = DEFAULT_SIZE) => ({
+export const makeQueryByKeywords = (queries, startyear, endyear, size = DEFAULT_SIZE) => ({
   size,
   _source: ELASTIC_SOURCE_FIELDS,
   query: {
@@ -62,7 +43,26 @@ export const makeQueryByKeyword = (queries, endyear, startyear, size = DEFAULT_S
   },
 });
 
-export const makeQueryByStructure = (queries, endyear, startyear, size = DEFAULT_SIZE, years = DEFAULT_YEARS) => ({
+export const makeQueryByAuthors = (queries, startyear, endyear, size = DEFAULT_SIZE) => ({
+  size,
+  _source: ELASTIC_SOURCE_FIELDS,
+  query: {
+    function_score: {
+      query: {
+        bool: {
+          filter: [
+            { terms: { 'authors.role.keyword': ['author', 'directeurthese'] } },
+            { terms: { 'authors.person.id.keyword': queries.split(',').map((id) => `idref${id}`) } },
+          ],
+        },
+      },
+      random_score: { seed: 2001 },
+      boost_mode: 'replace',
+    },
+  },
+});
+
+export const makeQueryByStructures = (queries, startyear, endyear, size = DEFAULT_SIZE, years = DEFAULT_YEARS) => ({
   size,
   _source: ELASTIC_SOURCE_FIELDS,
   query: {
