@@ -1,20 +1,20 @@
 import express from 'express';
 import { scanrToGraphology } from './scanr-to-graphology';
-import { makeQueryByAuthor, makeQueryByKeyword, makeQueryByStructure } from './make-query';
+import { makeQueryByKeywords, makeQueryByAuthors, makeQueryByStructures } from './make-query';
 import config from '../../config';
 
 const getQueryFunction = {
-  author: makeQueryByAuthor,
-  keyword: makeQueryByKeyword,
-  structure: makeQueryByStructure,
+  keyword: makeQueryByKeywords,
+  author: makeQueryByAuthors,
+  structure: makeQueryByStructures,
 };
 
 const router = new express.Router();
 
 router.route('/scanr')
   .get(async (req, res) => {
-    const { endyear, queries, startyear, type } = req.query;
-    const body = getQueryFunction[type](queries, endyear, startyear);
+    const { queries, type, startyear, endyear } = req.query;
+    const body = getQueryFunction[type](queries, startyear, endyear);
     const data = await fetch(
       `${config.scanr.apiUrl}`,
       {
