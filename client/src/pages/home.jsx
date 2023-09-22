@@ -102,18 +102,16 @@ export default function Home() {
 
   const types = [
     {
-      label: 'Coauthoring by keyword',
+      label: 'Coauthoring by keywords',
       value: 'keyword',
     },
     {
-      label: 'Coauthoring by author id (idref)',
+      label: 'Coauthoring by authors ids',
       value: 'author',
-      disabled: formDatasource !== 'scanr',
     },
     {
-      label: 'Coauthoring by structure id',
+      label: 'Coauthoring by structures ids',
       value: 'structure',
-      disabled: formDatasource !== 'scanr',
     },
   ];
 
@@ -149,7 +147,13 @@ export default function Home() {
           setFormQueries([]);
         }}
       />
-      {(formDatasource === 'openalex')
+      <TagInput
+        label={formType.charAt(0).toUpperCase() + formType.slice(1) + 's'}
+        hint='Validate you add by pressing "Return" key, an "OR" will be perform'
+        tags={formQueries}
+        onTagsChange={(tags) => setFormQueries(tags)}
+      />
+      {(formDatasource === 'openalex' && formType != 'structure')
         && (isCountriesFetching
           ? <Container><PageSpinner /></Container>
           : (
@@ -177,12 +181,6 @@ export default function Home() {
             </>
           )
         )}
-      <TagInput
-        label="Queries"
-        hint='Validate you add by pressing "Return" key, an "OR" will be perform'
-        tags={formQueries}
-        onTagsChange={(tags) => setFormQueries(tags)}
-      />
       <Row gutters>
         <Col>
           <TextInput
