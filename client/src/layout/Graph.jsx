@@ -1,5 +1,5 @@
 import '@react-sigma/core/lib/react-sigma.min.css';
-import { Badge, BadgeGroup, Col, Container, Row, Text, Title } from '@dataesr/react-dsfr';
+import { Badge, BadgeGroup, Col, Container, Row, Text, Title, Alert } from '@dataesr/react-dsfr';
 import {
   ControlsContainer,
   FullScreenControl,
@@ -44,6 +44,13 @@ const getThematicFromCluster = (cluster) => {
 export default function Graph({ data }) {
   const [selectedNode, setSelectedNode] = useState(null);
   const graph = UndirectedGraph.from(data);
+
+  if (graph.order == 0) {
+    return (
+      <Alert title="No results found" description="Your query returned no results" type="warning" closable />
+    )
+  }
+
   const communities = graph.reduceNodes((acc, node, attr) => {
     const { label, size, color, topics, weight } = attr;
     if (!acc[color]) {
@@ -55,6 +62,7 @@ export default function Graph({ data }) {
   }, {});
   const clustersKeys = Object.keys(communities)
     .sort((a, b) => communities[b].length - communities[a].length).slice(0, 6);
+
   return (
     <>
       <Container fluid className="fr-my-3w">
