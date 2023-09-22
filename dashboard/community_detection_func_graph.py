@@ -83,9 +83,6 @@ def graph_create(authors_data: dict, min_works: int = None, max_order: int = 100
 
     print(f"Graph filtered : {len(graph.nodes) or 0}/{len(authors_data)}")
 
-    if not graph.nodes:
-        raise ValueError("Graph is empty, please select a proper minimal number of works!")
-
     return graph
 
 
@@ -240,6 +237,10 @@ def graph_generate(
 
     # Create graph
     graph = graph_create(authors_data, min_works)
+
+    # Check graph
+    if not graph:
+        return None, None
 
     # Add communities
     node_groups = None

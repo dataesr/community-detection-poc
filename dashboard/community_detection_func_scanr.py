@@ -104,6 +104,37 @@ def scanr_query_by_authors(idrefs) -> dict:
                 "filter": [
                     {"terms": {"authors.role.keyword": ["author", "directeurthese"]}},
                     {"terms": {"authors.person.id.keyword": idrefs}},
+                    {"terms": {"year": [2018, 2019, 2020, 2021, 2022, 2023]}},
+                ]
+            }
+        },
+    }
+
+    return json_query
+
+
+"affiliations.id.keyword"
+
+
+def scanr_query_by_structures(struc_ids) -> dict:
+    """Get api query with structures
+
+    Args:
+        struc_ids (list[str]): structures ids
+
+    Returns:
+        dict: json query
+    """
+
+    # Query json
+    json_query = {
+        "size": 10000,
+        "query": {
+            "bool": {
+                "filter": [
+                    {"terms": {"authors.role.keyword": ["author", "directeurthese"]}},
+                    {"terms": {"affiliations.id.keyword": struc_ids}},
+                    {"terms": {"year": [2018, 2019, 2020, 2021, 2022, 2023]}},
                 ]
             }
         },
@@ -133,6 +164,9 @@ def scanr_get_results(search_type: int, args: list[str]) -> dict:
         case 1:
             # Idrefs
             query = scanr_query_by_authors(args)
+        case 2:
+            # Structures
+            query = scanr_query_by_structures(args)
         case _:
             raise ValueError("Incorrect search type")
 

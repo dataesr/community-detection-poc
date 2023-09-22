@@ -11,7 +11,7 @@ data_sources = ["scanR", "OpenAlex"]
 data_source = st.selectbox("Data source", data_sources, 0)
 
 # Choose search by
-search_types = ["Co-authoring by keywords", "Co-authoring by authors ids"]
+search_types = ["Co-authoring by keywords", "Co-authoring by authors ids", "Co-authoring by structures ids"]
 search_by = st.selectbox("Search by", search_types, 0)
 
 # Choose query
@@ -19,26 +19,39 @@ match search_types.index(search_by):
     case 0:
         # Keywords
         queries = st.text_input("Keywords")
-        queries = [query.strip() for query in queries.split(",") if query]
-        print(queries)
-        annotated_text([(query, "", tag_get_color("keyword")) for query in queries])
+        valid_queries = [query.strip() for query in queries.split(",") if query]
+        print(valid_queries)
+        annotated_text([(keyword, "", tag_get_color("keyword")) for keyword in valid_queries])
+
     case 1:
         # Authors ids
         queries = st.text_input("Authors ids")
-        queries = [query.strip() for query in queries.split(",")]
+        queries = [query.strip() for query in queries.split(",") if query]
         print(queries)
 
+        if data_source == "scanR":
+            valid_queries = [id for id in queries if id_get_type(id) == "idref"]
+
         if data_source == "OpenAlex":
-            queries = [idref_find_orcid(idref_get(query)) or query for query in queries if query]
-            print(queries)
+            queries = [idref_find_orcid(idref_get(id)) or id for id in queries if id]
+            valid_queries = [id for id in queries if id_get_type(id) == "orcid"]
 
         annotated_text(
             [
-                (query, id_get_type(query) or "", tag_get_color(id_get_type(query)) or "#eb4034")
-                for query in queries
-                if query
+                (
+                    id,
+                    id_get_type(id),
+                    tag_get_color(id_get_type(id)) if id in valid_queries else tag_get_color("bad_id"),
+                )
+                for id in queries
             ]
         )
+
+    case 2:
+        # Structures ids
+        queries = st.text_input("Structures ids")
+        valid_queries = [query.strip() for query in queries.split(",") if query]
+        annotated_text([(structure, "", tag_get_color("keyword")) for structure in valid_queries])
 
     case _:
         raise ValueError("Incorrect search type")
@@ -52,11 +65,11 @@ with st.sidebar:
     setting_visualizer = st.selectbox("Graph visualizer", ("Matplotlib", "Pyvis"))
 
 # Generate graph
-if st.button(label="Generate graph", type="primary") is True:
+if st.button("Generate graph", disabled=not bool(valid_queries), type="primary"):
     graph_html, authors_data = graph_generate(
         data_source,
         search_types.index(search_by),
-        queries,
+        valid_queries,
         setting_max_coauthors,
         setting_min_publications,
         setting_enable_communities,
@@ -64,12 +77,15 @@ if st.button(label="Generate graph", type="primary") is True:
         setting_visualizer,
     )
 
-    with st.expander("See authors data"):
-        st.json(authors_data, expanded=True)
+    if graph_html and authors_data:
+        with st.expander("See authors data"):
+            st.json(authors_data, expanded=True)
 
-    # Display graph
-    st.markdown("Graph : ")
-    HtmlFile = open(graph_html, "r", encoding="utf-8")
-    html(HtmlFile.read(), height=600, scrolling=True)
+        # Display graph
+        st.markdown("Graph : ")
+        HtmlFile = open(graph_html, "r", encoding="utf-8")
+        html(HtmlFile.read(), height=600, scrolling=True)
 
-    st.balloons()
+        st.balloons()
+    else:
+        st.toast("No results found for this query", icon="😥")

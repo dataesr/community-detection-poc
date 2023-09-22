@@ -59,6 +59,11 @@ def idref_get(idref: str) -> dict:
 
     idref_url = f"https://www.idref.fr/{idref}.xml"
     idref_xml = requests.get(idref_url).text
+
+    if "HTTP Status 404" in idref_xml:
+        print(f"{idref}: bad idref")
+        return None
+
     idref_answer = xmltodict.parse(idref_xml, attr_prefix="")
     print("answer :", idref_answer)
 
@@ -77,6 +82,10 @@ def idref_find_orcid(idref_answer: dict) -> str:
     """
     orcid = None
     found = False
+
+    if idref_answer is None:
+        return orcid
+
     idref_data = idref_answer.get("record").get("datafield")
 
     for subid in range(len(idref_data)):
@@ -122,6 +131,8 @@ def tag_get_color(tag: str) -> str:
             color = "#4FD868"
         case "orcid":
             color = "#F1C232"
+        case "bad_id":
+            color = "#eb4034"
         case _:
             color = None
 

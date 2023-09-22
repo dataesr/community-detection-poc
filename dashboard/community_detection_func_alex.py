@@ -104,11 +104,54 @@ def alex_get_authors_url(
     return url
 
 
+def alex_get_structures_url(
+    structures: list[str],
+    start_year: int = 2018,
+    end_year: int = None,
+    cursor: str = None,
+    per_page: int = 200,
+    and_condition: bool = True,
+) -> str:
+    """Get authors search url
+
+    Args:
+        structures (list[str]): structures ids
+        start_year (int): search start year
+        end_year (int): search end year
+        cursor (str, optional): search api cursor
+        per_page (int, optional): number of results per page
+        and_condition (bool, optional): filter condition and (true = AND, false = OR)
+
+    Returns:
+        str: openalex search url
+    """
+    if structures:
+        # Base url
+        url = alex_url() + "works?"
+
+        # Filter search
+        structures = f"{'+' if and_condition else '|'}".join(structures)  # Logical expression
+        url += f"&filter=institutions.ror:{structures}"
+        url += f",publication_year:{start_year}-{end_year or ''},is_paratext:false"
+
+        # Add cursor and number of results per page
+        url += f"&cursor={cursor or ''}*&per_page={per_page}"
+
+        # Add email for performance
+        url += "&mailto=bso@recherche.gouv.fr"
+
+    else:
+        raise ValueError("Authors ids are empty!")
+
+    return url
+
+
 def alex_request_keywords(keywords: list[str], cursor: str = None) -> dict:
     """Get keywords search answer from api
 
     Args:
         keywords (list[str]): list of keywords / thematics
+        cursor (str, optional): search results cursor
 
     Returns:
         dict: request answer from api
@@ -126,7 +169,8 @@ def alex_request_authors(ids: list[str], cursor: str = None) -> dict:
     """Get authors id search answer from api
 
     Args:
-        ids (list[str]): list of authors ids (orcid or idref)
+        ids (list[str]): list of authors ids (orcid)
+        cursor (str, optional): search results cursor
 
     Returns:
         dict: request answer from api
@@ -138,6 +182,54 @@ def alex_request_authors(ids: list[str], cursor: str = None) -> dict:
 
     # Request answer
     return requests.get(request_url).json()
+
+
+def alex_request_structures(ids: list[str], cursor: str = None) -> dict:
+    """Get structures id search answer from api
+
+    Args:
+        ids (list[str]): list of structures ids (ror)
+        cursor (str, optional): search results cursor
+
+    Returns:
+        dict: request answer from api
+    """
+
+    # Search url
+    request_url = alex_get_structures_url(ids, cursor=cursor)
+    print(request_url)
+
+    # Request answer
+    return requests.get(request_url).json()
+
+
+def alex_request(search_type: str, args: list[str], cursor=None) -> dict:
+    """Get request according to search type
+
+    Args:
+        search_type (str): type of search
+        args (list[str]): list of arguments
+        cursor (str, optional): search results cursor
+
+    Returns:
+        dict: request answer from api
+    """
+
+    match search_type:
+        case 0:
+            # Keywords
+            answer = alex_request_keywords(args, cursor=cursor)
+        case 1:
+            # Authors
+            answer = alex_request_authors(args, cursor=cursor)
+        case 2:
+            # Structures
+            answer = alex_request_structures(args, cursor=cursor)
+        case _:
+            answer = None
+            raise ValueError("Incorrect search type")
+
+    return answer
 
 
 def alex_get_results(search_type: str, args: list[str]) -> list[dict]:
@@ -152,14 +244,11 @@ def alex_get_results(search_type: str, args: list[str]) -> list[dict]:
     """
 
     # Request answer
-    answer = alex_request_keywords(args) if search_type == 0 else alex_request_authors(args)
+    answer = alex_request(search_type, args)
     results = [answer]
 
-    while answer.get("meta").get("next_cursor"):
-        if search_type == 0:
-            answer = alex_request_keywords(args, cursor=answer.get("meta").get("next_cursor"))
-        else:
-            answer = alex_request_authors(args, cursor=answer.get("meta").get("next_cursor"))
+    while answer.get("meta").get("next_cursor") and len(results) < 5:  # @TODO Find better solution for large results
+        answer = alex_request(search_type, args, cursor=answer.get("meta").get("next_cursor"))
 
         if answer.get("results"):
             results.append(answer)
