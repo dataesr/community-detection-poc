@@ -23,7 +23,7 @@ function getNodesFromPublicationList(publicationList) {
     return authorships.reduce((acc, { author }) => {
       if (!author?.id) return acc;
       const { id: authorId, display_name: label } = author;
-      const topics = concepts.filter((concept) => concept?.wikidata).reduce((a, { id, display_name }) => ({ ...a, [id]: { label: display_name.toLowerCase(), publicationId: publicationId }}), {});
+      const topics = concepts.filter((concept) => concept?.wikidata).reduce((a, { id, display_name }) => ({ ...a, [id]: { label: display_name.toLowerCase(), publicationId: publicationId } }), {});
       return [...acc, { id: authorId, attributes: { id: authorId, label, topics, publication: title } }];
     }, []);
   });
