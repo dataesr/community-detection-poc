@@ -14,6 +14,7 @@ def alex_get_thematic_url(
     thematic: list[str],
     start_year: int = 2018,
     end_year: int = None,
+    and_condition: bool = True,
     countries: list[str] = None,
     cursor: str = None,
     per_page: int = 200,
@@ -24,7 +25,8 @@ def alex_get_thematic_url(
         thematic (list[str]): search thematic
         start_year (int): search start year
         end_year (int): search end year
-        countries: list of country codes
+        and_condition (bool, optional): filter condition and (true = AND, false = OR)
+        countries (list[str], optional): list of country codes
         cursor (str, optional): search api cursor
         per_page (int, optional): number of results per page
 
@@ -36,7 +38,8 @@ def alex_get_thematic_url(
         url = alex_url()
 
         # Search works
-        thematic = " AND ".join(thematic) if isinstance(thematic, list) else thematic
+        condition = "AND" if and_condition else "OR"
+        thematic = f" {condition} ".join(thematic) if isinstance(thematic, list) else thematic
         url += f"works?search={thematic}"
 
         # Filter search
@@ -146,11 +149,12 @@ def alex_get_structures_url(
     return url
 
 
-def alex_request_keywords(keywords: list[str], cursor: str = None) -> dict:
+def alex_request_keywords(keywords: list[str], filters: dict, cursor: str = None) -> dict:
     """Get keywords search answer from api
 
     Args:
         keywords (list[str]): list of keywords / thematics
+        filters (dict): search filters
         cursor (str, optional): search results cursor
 
     Returns:
@@ -158,18 +162,25 @@ def alex_request_keywords(keywords: list[str], cursor: str = None) -> dict:
     """
 
     # Search url
-    request_url = alex_get_thematic_url(keywords, cursor=cursor)
+    request_url = alex_get_thematic_url(
+        keywords,
+        start_year=filters.get("start_year"),
+        end_year=filters.get("end_year"),
+        and_condition=filters.get("and_condition"),
+        cursor=cursor,
+    )
     print(request_url)
 
     # Request answer
     return requests.get(request_url).json()
 
 
-def alex_request_authors(ids: list[str], cursor: str = None) -> dict:
+def alex_request_authors(ids: list[str], filters: dict, cursor: str = None) -> dict:
     """Get authors id search answer from api
 
     Args:
         ids (list[str]): list of authors ids (orcid)
+        filters (dict): search filters
         cursor (str, optional): search results cursor
 
     Returns:
@@ -177,18 +188,25 @@ def alex_request_authors(ids: list[str], cursor: str = None) -> dict:
     """
 
     # Search url
-    request_url = alex_get_authors_url(ids, cursor=cursor)
+    request_url = alex_get_authors_url(
+        ids,
+        start_year=filters.get("start_year"),
+        end_year=filters.get("end_year"),
+        and_condition=filters.get("and_condition"),
+        cursor=cursor,
+    )
     print(request_url)
 
     # Request answer
     return requests.get(request_url).json()
 
 
-def alex_request_structures(ids: list[str], cursor: str = None) -> dict:
+def alex_request_structures(ids: list[str], filters: dict, cursor: str = None) -> dict:
     """Get structures id search answer from api
 
     Args:
         ids (list[str]): list of structures ids (ror)
+        filters (dict): search filters
         cursor (str, optional): search results cursor
 
     Returns:
@@ -196,19 +214,26 @@ def alex_request_structures(ids: list[str], cursor: str = None) -> dict:
     """
 
     # Search url
-    request_url = alex_get_structures_url(ids, cursor=cursor)
+    request_url = alex_get_structures_url(
+        ids,
+        start_year=filters.get("start_year"),
+        end_year=filters.get("end_year"),
+        and_condition=filters.get("and_condition"),
+        cursor=cursor,
+    )
     print(request_url)
 
     # Request answer
     return requests.get(request_url).json()
 
 
-def alex_request(search_type: str, args: list[str], cursor=None) -> dict:
+def alex_request(search_type: str, args: list[str], filters: dict, cursor=None) -> dict:
     """Get request according to search type
 
     Args:
         search_type (str): type of search
         args (list[str]): list of arguments
+        filters (dict): search filters
         cursor (str, optional): search results cursor
 
     Returns:
@@ -218,13 +243,13 @@ def alex_request(search_type: str, args: list[str], cursor=None) -> dict:
     match search_type:
         case 0:
             # Keywords
-            answer = alex_request_keywords(args, cursor=cursor)
+            answer = alex_request_keywords(args, filters, cursor=cursor)
         case 1:
             # Authors
-            answer = alex_request_authors(args, cursor=cursor)
+            answer = alex_request_authors(args, filters, cursor=cursor)
         case 2:
             # Structures
-            answer = alex_request_structures(args, cursor=cursor)
+            answer = alex_request_structures(args, filters, cursor=cursor)
         case _:
             answer = None
             raise ValueError("Incorrect search type")
@@ -232,23 +257,24 @@ def alex_request(search_type: str, args: list[str], cursor=None) -> dict:
     return answer
 
 
-def alex_get_results(search_type: str, args: list[str]) -> list[dict]:
+def alex_get_results(search_type: str, args: list[str], filters: dict) -> list[dict]:
     """Get search results from api
 
     Args:
         search_type: type of search
         args (list[str]): list of arguments
+        filters (dict): search filters
 
     Returns:
         list[dict]: list of answer from api
     """
 
     # Request answer
-    answer = alex_request(search_type, args)
+    answer = alex_request(search_type, args, filters)
     results = [answer]
 
     while answer.get("meta").get("next_cursor") and len(results) < 5:  # @TODO Find better solution for large results
-        answer = alex_request(search_type, args, cursor=answer.get("meta").get("next_cursor"))
+        answer = alex_request(search_type, args, filters, cursor=answer.get("meta").get("next_cursor"))
 
         if answer.get("results"):
             results.append(answer)

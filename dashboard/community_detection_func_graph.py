@@ -1,11 +1,10 @@
-import os
-import requests
-
 from dotenv import load_dotenv
 
 import networkx as nx
-from netgraph import Graph, InteractiveGraph
+from networkx import Graph
+
 from pyvis.network import Network
+from ipysigma import Sigma
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -15,7 +14,7 @@ from community_detection_func_scanr import scanr_get_results, scanr_filter_resul
 from community_detection_func_alex import alex_get_results, alex_filter_results
 
 
-def api_get_data(source: str, search_type: str, args: list[str], max_coauthors: int) -> tuple[dict, dict]:
+def api_get_data(source: str, search_type: str, args: list[str], filters: dict) -> tuple[dict, dict]:
     """Get search results data from api
 
     Returns:
@@ -24,13 +23,13 @@ def api_get_data(source: str, search_type: str, args: list[str], max_coauthors: 
     match source:
         case "scanR":
             # scanr api search
-            results = scanr_get_results(search_type, args)
-            authors_data = scanr_filter_results(results, max_coauthors)
+            results = scanr_get_results(search_type, args, filters)
+            authors_data = scanr_filter_results(results, filters.get("max_coauthors"))
 
         case "OpenAlex":
             # openalex api search
-            results = alex_get_results(search_type, args)
-            authors_data = alex_filter_results(results, max_coauthors)
+            results = alex_get_results(search_type, args, filters)
+            authors_data = alex_filter_results(results, filters.get("max_coauthors"))
 
         case _:
             raise ValueError("Api name has to be 'scanR' or 'OpenAlex'")
@@ -185,7 +184,7 @@ def graph_generate_html(graph: Graph, node_groups: dict, visualizer: str) -> str
     match visualizer:
         case "Matplotlib":
             # Matplotlib
-            graph_html = "pyplot_graph.html"
+            graph_html = "dashboard/html/pyplot_graph.html"
             cmap = matplotlib.colormaps["turbo"].resampled(max(node_groups.values() or 0) + 1)
             fig = plt.figure(figsize=(10, 10), layout="tight")
             pos = nx.spring_layout(graph)
@@ -194,13 +193,18 @@ def graph_generate_html(graph: Graph, node_groups: dict, visualizer: str) -> str
 
         case "Pyvis":
             # Pyvis library
-            graph_html = "pyvis_graph.html"
-            net = Network()
+            graph_html = "dashboard/html/pyvis_graph.html"
+            net = Network(height="600px", width="100%")
             nx.set_node_attributes(graph, node_groups, "group")
             net.from_nx(graph)
-            net.toggle_physics(False)
-            net.show_buttons(filter_=["physics"])
+            net.toggle_physics(True)
             net.write_html(graph_html)
+
+        case "Sigma":
+            # Sigma library
+
+            graph_html = "dashboard/html/sigma_graph.html"
+            Sigma.write_html(graph, path=graph_html, fullscreen=True, node_size=graph.degree, node_color=node_groups)
 
         case _:
             raise ValueError("Incorrect visualizer")
@@ -212,8 +216,7 @@ def graph_generate(
     source: str,
     search_type: str,
     args: list[str],
-    max_coauthors: int,
-    min_works: int,
+    filters: dict,
     enable_communities: bool,
     detection_algo: str,
     visualizer: str,
@@ -224,8 +227,7 @@ def graph_generate(
         source (str): api source
         search_type (str): type of search
         args (list[str]): list of arguments
-        max_coauthors (int): max number of coauthors
-        min_works (int): min number of publications
+        filters (dict): search filters
         enable_communities (bool): communities detection toggle
         detection_algo (str): communities detection algorithm
         visualizer (str): visualizer
@@ -233,10 +235,10 @@ def graph_generate(
     Returns:
         str: name of html graph
     """
-    authors_data = api_get_data(source, search_type, args, max_coauthors)
+    authors_data = api_get_data(source, search_type, args, filters)
 
     # Create graph
-    graph = graph_create(authors_data, min_works)
+    graph = graph_create(authors_data, filters.get("min_works"))
 
     # Check graph
     if not graph:

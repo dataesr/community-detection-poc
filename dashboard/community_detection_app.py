@@ -56,13 +56,34 @@ match search_types.index(search_by):
     case _:
         raise ValueError("Incorrect search type")
 
+# Query condition
+filter_condition = st.selectbox("Query condition", ["AND", "OR"], 0) if len(valid_queries) > 1 else "AND"
+
 # Settings
 with st.sidebar:
-    setting_max_coauthors = st.slider("Max coauthors", 0, 100, 20)
-    setting_min_publications = st.slider("Min publications", 0, 10, 0) or None
+    filter_start_year, filter_end_year = st.select_slider(
+        "Years range", options=[2018, 2019, 2020, 2021, 2022, 2023], value=(2018, 2023)
+    )
+    filter_max_coauthors = st.slider("Max coauthors", 0, 100, 20)
+    filter_min_publications = st.slider("Min publications", 0, 10, 0) or None
     setting_enable_communities = st.toggle("Enable communities", True)
-    setting_detection_algo = st.selectbox("Detection algorithm", ("Louvain", "Girvan-Newman", "CPM"))
-    setting_visualizer = st.selectbox("Graph visualizer", ("Matplotlib", "Pyvis"))
+    setting_detection_algo = (
+        st.selectbox("Detection algorithm", ("Louvain", "Girvan-Newman", "CPM"))
+        if setting_enable_communities
+        else None
+    )
+    setting_visualizer = st.selectbox("Graph visualizer", ("Matplotlib", "Pyvis", "Sigma"))
+
+# Filter dictionnary
+filters = dict(
+    {
+        "and_condition": (filter_condition == "AND"),
+        "start_year": filter_start_year,
+        "end_year": filter_end_year,
+        "max_coauthors": filter_max_coauthors,
+        "min_works": filter_min_publications,
+    }
+)
 
 # Generate graph
 if st.button("Generate graph", disabled=not bool(valid_queries), type="primary"):
@@ -70,8 +91,7 @@ if st.button("Generate graph", disabled=not bool(valid_queries), type="primary")
         data_source,
         search_types.index(search_by),
         valid_queries,
-        setting_max_coauthors,
-        setting_min_publications,
+        filters,
         setting_enable_communities,
         setting_detection_algo,
         setting_visualizer,
@@ -83,8 +103,12 @@ if st.button("Generate graph", disabled=not bool(valid_queries), type="primary")
 
         # Display graph
         st.markdown("Graph : ")
-        HtmlFile = open(graph_html, "r", encoding="utf-8")
-        html(HtmlFile.read(), height=600, scrolling=True)
+
+        if "sigma" in graph_html:
+            st.markdown(f"Graph html downloaded at :{graph_html}")
+        else:
+            HtmlFile = open(graph_html, "r", encoding="utf-8")
+            html(HtmlFile.read(), height=650, scrolling=True)
 
         st.balloons()
     else:
