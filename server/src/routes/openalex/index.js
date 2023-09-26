@@ -12,8 +12,8 @@ const router = new express.Router();
 
 router.route('/openalex')
   .get(async (req, res) => {
-    const { queries, type, startyear, endyear, countries } = req.query;
-    const data = await getQueryFunction[type]({ queries, startyear, endyear, countries, });
+    const { queries, type, condition, startyear, endyear, countries } = req.query;
+    const data = await getQueryFunction[type]({ queries, condition, startyear, endyear, countries });
     const graph = openAlexToGraphology(data);
     res.json(graph);
   });

@@ -23,8 +23,8 @@ import { PageSpinner } from '../components/spinner';
 import Graph from '../layout/Graph';
 import TagInput from '../layout/TagInput';
 
-async function getData({ countries, datasource, endyear, queries, startyear, type }) {
-  return fetch(`/api/${datasource}?countries=${countries}&endyear=${endyear}&queries=${queries.join(',')}&startyear=${startyear}&type=${type}`)
+async function getData({ datasource, type, queries, condition, startyear, endyear, countries }) {
+  return fetch(`/api/${datasource}?type=${type}&queries=${queries.join(',')}&condition=${condition}&startyear=${startyear}&endyear=${endyear}&countries=${countries}`)
     .then((response) => (response.ok ? response.json() : 'Oops... The request to the API failed'));
 }
 
@@ -35,32 +35,35 @@ async function getCountries() {
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [formCountries, setFormCountries] = useState(searchParams.getAll('countries') || ['FR']);
   const [formDatasource, setFormDatasource] = useState(searchParams.getAll('datasource')?.[0] || 'scanr');
-  const [formEndYear, setFormEndYear] = useState(searchParams.getAll('endyear')[0] || 2023);
-  const [formQueries, setFormQueries] = useState(searchParams.getAll('queries') || []);
-  const [formStartYear, setFormStartYear] = useState(searchParams.getAll('startyear')[0] || 2018);
   const [formType, setFormType] = useState(searchParams.getAll('type')?.[0] || 'keyword');
+  const [formQueries, setFormQueries] = useState(searchParams.getAll('queries') || []);
+  const [formCondition, setFormCondition] = useState(searchParams.getAll('condition')[0] || 'OR');
+  const [formStartYear, setFormStartYear] = useState(searchParams.getAll('startyear')[0] || 2018);
+  const [formEndYear, setFormEndYear] = useState(searchParams.getAll('endyear')[0] || 2023);
+  const [formCountries, setFormCountries] = useState(searchParams.getAll('countries') || ['FR']);
   const [isError, setFormIsError] = useState(false);
 
   useEffect(() => setSearchParams({
-    countries: formCountries,
     datasource: formDatasource,
-    endyear: formEndYear,
-    queries: formQueries,
-    startyear: formStartYear,
     type: formType,
-  }), [formCountries, formDatasource, formEndYear, formQueries, formStartYear, formType, setSearchParams]);
+    queries: formQueries,
+    condition: formCondition,
+    startyear: formStartYear,
+    endyear: formEndYear,
+    countries: formCountries,
+  }), [, formDatasource, formType, formQueries, formCondition, formStartYear, formEndYear, formCountries, setSearchParams]);
 
   const { data, isFetching, refetch } = useQuery({
     queryKey: ['data'],
     queryFn: () => getData({
-      countries: formCountries,
       datasource: formDatasource,
-      endyear: formEndYear,
-      queries: formQueries,
-      startyear: formStartYear,
       type: formType,
+      queries: formQueries,
+      condition: formCondition,
+      startyear: formStartYear,
+      endyear: formEndYear,
+      countries: formCountries,
     }),
     enabled: false,
     staleTime: Infinity,
@@ -115,6 +118,17 @@ export default function Home() {
     },
   ];
 
+  const conditions = [
+    {
+      label: 'OR',
+      value: 'OR',
+    },
+    {
+      label: 'AND',
+      value: 'AND',
+    }
+  ];
+
   return (
     <Container className="fr-my-15w">
       <Title as="h1">
@@ -134,8 +148,9 @@ export default function Home() {
         selected={formDatasource}
         onChange={(e) => {
           setFormDatasource(e.target.value);
-          setFormType('keyword');
-          setFormQueries([]);
+          // setFormType('keyword');
+          // setFormQueries([]);
+          // setFormCondition('OR')
         }}
       />
       <Select
@@ -145,14 +160,32 @@ export default function Home() {
         onChange={(e) => {
           setFormType(e.target.value);
           setFormQueries([]);
+          setFormCondition('OR')
         }}
       />
-      <TagInput
-        label={formType.charAt(0).toUpperCase() + formType.slice(1) + 's'}
-        hint='Validate you add by pressing "Return" key, an "OR" will be perform'
-        tags={formQueries}
-        onTagsChange={(tags) => setFormQueries(tags)}
-      />
+      <Row gutters>
+        <Col>
+          <TagInput
+            label={formType.charAt(0).toUpperCase() + formType.slice(1) + 's'}
+            hint='Validate by pressing "Return" key'
+            tags={formQueries}
+            onTagsChange={(tags) => setFormQueries(tags)}
+          />
+        </Col>
+        {(formQueries.length > 1) &&
+          (<Col>
+            <Select
+              label='Condition'
+              hint='Operation for multiple queries'
+              options={conditions}
+              selected={formCondition}
+              onChange={(e) => {
+                setFormCondition(e.target.value);
+              }}
+            />
+          </Col>
+          )}
+      </Row>
       {(formDatasource === 'openalex' && formType != 'structure')
         && (isCountriesFetching
           ? <Container><PageSpinner /></Container>
