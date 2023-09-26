@@ -14,11 +14,17 @@ from community_detection_func_scanr import scanr_get_results, scanr_filter_resul
 from community_detection_func_alex import alex_get_results, alex_filter_results
 
 
-def api_get_data(source: str, search_type: str, args: list[str], filters: dict) -> tuple[dict, dict]:
-    """Get search results data from api
+def api_get_data(source: str, search_type: str, args: list[str], filters: dict) -> dict:
+    """Get search results data from api request
+
+    Args:
+        source (str): api
+        search_type (str): type of search
+        args (list[str]): list of arguments
+        filters (dict): search filters
 
     Returns:
-        tuple[dict, dict]: authors data and authors names
+        dict: authors data
     """
     match source:
         case "scanR":
@@ -248,8 +254,13 @@ def graph_generate(
     node_groups = None
     if enable_communities:
         node_groups = graph_find_communities(graph, detection_algo)
+        authors_data = data_add_communities(authors_data, node_groups)
 
     # Generate html
     graph_html = graph_generate_html(graph, node_groups, visualizer)
 
     return graph_html, authors_data
+
+
+def data_add_communities(authors_data: dict, node_groups: dict) -> dict:
+    return authors_data
