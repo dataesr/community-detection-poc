@@ -31,7 +31,7 @@ export const makeQueryByKeywords = (queries, condition, startyear, endyear, size
                 'alternativeSummary.fr',
                 'alternativeSummary.en',
               ],
-              query: queries.split(',').map((q) => `(${q.split(' ').join(' AND ')})`).join(` ${condition} `),
+              query: queries.split(',').map((q) => `(${q.replace(' ', ' AND ')})`).join(` ${condition} `),
             },
           },
         },
