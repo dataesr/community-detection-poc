@@ -3,11 +3,12 @@ const DEFAULT_SIZE = 5000;
 export const makeQueryByKeywords = ({
     queries, condition, startyear, endyear, countries = [], cursor = '*', previousResponse = []
 }) => {
-    let url = 'https://api.openalex.org/works?mailto=bso@recherche.gouv.fr&per_page=200';
-    url += `&filter=publication_year:${startyear}-${endyear},is_paratext:false`;
+    let url = 'https://api.openalex.org/works?search=';
     const cond = (condition === 'OR') ? '|' : '+'
-    url += `,title.search:${queries.split(',').join(cond)},abstract.search:${queries.split(',').join(cond)}`;
+    url += `${queries.split(',').join(cond)}`;
+    url += `&filter=publication_year:${startyear}-${endyear},is_paratext:false`;
     url += countries.length > 0 ? `,institutions.country_code:${countries.split(',').join('|')}` : '';
+    url += '&mailto=bso@recherche.gouv.fr&per_page=200'
     console.log('openalex url', url)
     return fetch(`${url}&cursor=${cursor}`)
         .then((response) => response.json())
