@@ -6,6 +6,8 @@ import {
   SearchControl,
   SigmaContainer,
   useRegisterEvents,
+  useSetSettings,
+  useSigma,
   ZoomControl,
 } from '@react-sigma/core';
 import { LayoutForceAtlas2Control } from '@react-sigma/layout-forceatlas2';
@@ -13,14 +15,50 @@ import { UndirectedGraph } from 'graphology';
 import { useState, useEffect } from 'react';
 
 function GraphEvents({ onNodeClick }) {
+  const sigma = useSigma();
   const registerEvents = useRegisterEvents();
+  const setSettings = useSetSettings();
+  const [clickedNode, setClickedNode] = useState(null);
+
   useEffect(() => {
     // Register the events
     registerEvents({
       // node events
-      clickNode: (event) => onNodeClick(event),
+      clickNode: (event) => { onNodeClick(event); setClickedNode(event.node); }
     });
   }, [onNodeClick, registerEvents]);
+
+  // Effect on node click 
+  useEffect(() => {
+    setSettings({
+      nodeReducer: (node, data) => {
+        const graph = sigma.getGraph();
+        const newData = { ...data, highlighted: data.highlighted || false };
+
+        if (clickedNode) {
+          if (node === clickedNode) {
+            newData.highlighted = true;
+          } else if (graph.neighbors(clickedNode).includes(node)) {
+            //
+          } else {
+            newData.color = "#E2E2E2";
+            newData.highlighted = false;
+          }
+        }
+        return newData;
+      },
+      edgeReducer: (edge, data) => {
+        const graph = sigma.getGraph();
+        const newData = { ...data, hidden: false };
+
+        if (clickedNode && !graph.extremities(edge).includes(clickedNode)) {
+          newData.hidden = true;
+        }
+        return newData;
+      },
+    });
+  }, [clickedNode, setSettings, sigma]);
+
   return null;
 }
 
