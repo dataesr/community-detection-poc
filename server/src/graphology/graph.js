@@ -7,7 +7,7 @@ import noverlap from 'graphology-layout-noverlap';
 import metrics from 'graphology-metrics';
 import { weightedDegree } from 'graphology-metrics/node/weighted-degree';
 
-const DEFAULT_NODE_RANGE = [3, 15];
+const DEFAULT_NODE_RANGE = [5, 20];
 const DEFAULT_EDGE_RANGE = [0.5, 10];
 
 const DEFAULT_NODE_COLOR = '#7b7b7b';
@@ -21,14 +21,22 @@ const COLORS = [
     '#fd8d3c', '#fdae6b', '#fdd0a2', '#31a354',
 ];
 
+const GRAPH_MAX_ORDER = 150
+
 const nodeComputeDefaultDegree = (degree, min_degree, max_degree) => {
-    const ratio = degree / (max_degree - min_degree);
-    return ((ratio * (DEFAULT_NODE_RANGE[1] - DEFAULT_NODE_RANGE[0])) + DEFAULT_NODE_RANGE[0]);
+    const default_node_range = DEFAULT_NODE_RANGE[1] - DEFAULT_NODE_RANGE[0];
+    if ((max_degree - min_degree) <= default_node_range)
+        return DEFAULT_NODE_RANGE[1] - (max_degree - degree);
+    else
+        return (((degree / (max_degree - min_degree)) * default_node_range) + DEFAULT_NODE_RANGE[0]);
 }
 
 const edgeComputeDefaultWeight = (weight, min_weight, max_weight) => {
-    const ratio = weight / (max_weight - min_weight);
-    return ((ratio * (DEFAULT_EDGE_RANGE[1] - DEFAULT_EDGE_RANGE[0])) + DEFAULT_EDGE_RANGE[0]);
+    const default_edge_range = DEFAULT_EDGE_RANGE[1] - DEFAULT_EDGE_RANGE[0];
+    if ((max_weight - min_weight) <= default_edge_range)
+        return DEFAULT_EDGE_RANGE[0] + (weight - min_weight)
+    else
+        return (((weight / (max_weight - min_weight)) * default_edge_range) + DEFAULT_EDGE_RANGE[0]);
 }
 
 export function dataToGraphology(nodes, edges) {
@@ -56,7 +64,7 @@ export function dataToGraphology(nodes, edges) {
 
     // Filter with minimal number of publications
     let publiMinThresh = 1;
-    while (graph.order > 100) {
+    while (graph.order > GRAPH_MAX_ORDER) {
         publiMinThresh += 1;
         graph = subgraph(graph, (_, attr) => attr?.weight >= publiMinThresh);
     }
