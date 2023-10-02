@@ -43,7 +43,7 @@ def api_get_data(source: str, search_type: str, args: list[str], filters: dict) 
     return authors_data
 
 
-def graph_create(authors_data: dict, min_works: int = None, max_order: int = 100) -> Graph:
+def graph_create(authors_data: dict, min_works: int = None, max_order: int = 150) -> Graph:
     """Create a graph object from the authors data
 
     Args:
@@ -210,7 +210,25 @@ def graph_generate_html(graph: Graph, node_groups: dict, visualizer: str) -> str
             # Sigma library
 
             graph_html = "dashboard/html/sigma_graph.html"
-            Sigma.write_html(graph, path=graph_html, fullscreen=True, node_size=graph.degree, node_color=node_groups)
+            Sigma.write_html(
+                graph,
+                path=graph_html,
+                fullscreen=True,
+                start_layout=5,
+                # layout_settings={
+                #     "adjustSizes": True,
+                #     "gravity": 0.05,
+                #     "linLogMode": True,
+                #     "scalingRatio": 10,
+                #     "slowDown": 5.442651256490317,
+                #     "strongGravityMode": True,
+                # },
+                node_label_size=graph.degree,
+                node_size=graph.degree,
+                node_color=node_groups,
+                node_border_color_from="node",
+                default_edge_type="curve",
+            )
 
         case _:
             raise ValueError("Incorrect visualizer")
