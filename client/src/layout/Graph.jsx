@@ -6,60 +6,53 @@ import {
   SearchControl,
   SigmaContainer,
   useRegisterEvents,
-  useSetSettings,
-  useSigma,
   ZoomControl,
 } from '@react-sigma/core';
 import { LayoutForceAtlas2Control } from '@react-sigma/layout-forceatlas2';
 import { UndirectedGraph } from 'graphology';
 import { useState, useEffect } from 'react';
 
-function GraphEvents({ onNodeClick }) {
-  const sigma = useSigma();
+const DEFAULT_NODE_COLOR = '#7b7b7b';
+const COMMUNTIY_COLORS = [
+  '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f',
+  '#bcbd22', '#17becf', '#aec7e8', '#ffbb78', '#98df8a', '#ff9896', '#c5b0d5', '#c49c94',
+  '#f7b6d2', '#c7c7c7', '#dbdb8d', '#9edae5', '#b3e2cd', '#fddaec', '#c7e9c0', '#fdae6b',
+  '#b5cf6b', '#ce6dbd', '#dadaeb', '#393b79', '#637939', '#8c6d31', '#843c39', '#ad494a',
+  '#d6616b', '#e7ba52', '#e7cb94', '#843c39', '#ad494a', '#d6616b', '#e7969c', '#7b4173',
+  '#a55194', '#ce6dbd', '#de9ed6', '#3182bd', '#6baed6', '#9ecae1', '#c6dbef', '#e6550d',
+  '#fd8d3c', '#fdae6b', '#fdd0a2', '#31a354',
+];
+
+function GraphEvents({ onNodeClick, onStageClick }) {
   const registerEvents = useRegisterEvents();
-  const setSettings = useSetSettings();
-  const [clickedNode, setClickedNode] = useState(null);
 
   useEffect(() => {
     // Register the events
     registerEvents({
       // node events
-      clickNode: (event) => { onNodeClick(event); setClickedNode(event.node); }
+      clickNode: (event) => { onNodeClick(event); },
+      clickStage: (event) => { onStageClick(event); }
     });
-  }, [onNodeClick, registerEvents]);
-
-  // Effect on node click 
-  useEffect(() => {
-    setSettings({
-      nodeReducer: (node, data) => {
-        const graph = sigma.getGraph();
-        const newData = { ...data, highlighted: data.highlighted || false };
-
-        if (clickedNode) {
-          if (node === clickedNode) {
-            newData.highlighted = true;
-          } else if (graph.neighbors(clickedNode).includes(node)) {
-            //
-          } else {
-            newData.color = "#E2E2E2";
-            newData.highlighted = false;
-          }
-        }
-        return newData;
-      },
-      edgeReducer: (edge, data) => {
-        const graph = sigma.getGraph();
-        const newData = { ...data, hidden: false };
-
-        if (clickedNode && !graph.extremities(edge).includes(clickedNode)) {
-          newData.hidden = true;
-        }
-        return newData;
-      },
-    });
-  }, [clickedNode, setSettings, sigma]);
+  }, [onNodeClick, onStageClick, registerEvents]);
 
   return null;
+}
+
+const highlightGraph = (graph, selectedNode) => {
+  graph.updateEachNodeAttributes((node, attr) => {
+    return {
+      ...attr,
+      highlighted: (node === selectedNode.id) ? true : false,
+      color: (node === selectedNode.id || graph.neighbors(selectedNode.id).includes(node)) ? attr.color : "#E2E2E2"
+    };
+  }, { attributes: ['highlighted', 'color'] });
+  graph.updateEachEdgeAttributes((edge, attr) => {
+    return {
+      ...attr,
+      hidden: (graph.extremities(edge).includes(selectedNode.id)) ? false : true,
+    };
+  }, { attributes: ['hidden'] });
+  return graph;
 }
 
 const getThematicFromCluster = (cluster) => {
@@ -83,23 +76,33 @@ export default function Graph({ data }) {
   const [selectedNode, setSelectedNode] = useState(null);
   const graph = UndirectedGraph.from(data);
 
+  // Return alert if graph empty
   if (graph.order == 0) {
     return (
       <Alert title="No results found" description="Your query returned no results" type="warning" closable />
     )
   }
 
+  // Fill communities
   const communities = graph.reduceNodes((acc, node, attr) => {
-    const { label, size, color, topics, weight } = attr;
-    if (!acc[color]) {
-      acc[color] = [{ id: node, label, size, degree: graph.degree(node), topics, weight }];
+    const { label, size, community, topics, weight } = attr;
+    if (!acc[community]) {
+      acc[community] = [{ id: node, label, size, degree: graph.degree(node), topics, weight }];
     } else {
-      acc[color] = [...acc[color], { id: node, label, size, degree: graph.degree(node), topics, weight }].sort((a, b) => b.size - a.size);
+      acc[community] = [...acc[community], { id: node, label, size, degree: graph.degree(node), topics, weight }].sort((a, b) => b.size - a.size);
     }
     return acc;
   }, {});
   const clustersKeys = Object.keys(communities)
     .sort((a, b) => communities[b].length - communities[a].length).slice(0, 6);
+
+  // Update community colors
+  graph.updateEachNodeAttributes((node, attr) => {
+    return {
+      ...attr,
+      color: COMMUNTIY_COLORS?.[attr.community] || DEFAULT_NODE_COLOR
+    };
+  }, { attributes: ['color'] });
 
   return (
     <>
@@ -108,9 +111,11 @@ export default function Graph({ data }) {
           <Col n="12">
             <SigmaContainer
               style={{ height: '500px' }}
-              graph={graph}
+              graph={selectedNode ? highlightGraph(graph, selectedNode) : graph}
             >
-              <GraphEvents onNodeClick={(event) => { setSelectedNode({ id: event.node, degree: graph.degree(event.node), ...graph.getNodeAttributes(event.node) }); }} />
+              <GraphEvents
+                onNodeClick={(event) => { setSelectedNode({ id: event.node, degree: graph.degree(event.node), ...graph.getNodeAttributes(event.node) }); }}
+                onStageClick={() => { setSelectedNode(null) }} />
               <ControlsContainer position="bottom-right">
                 <ZoomControl />
                 <FullScreenControl />
@@ -136,7 +141,7 @@ export default function Graph({ data }) {
                   <Text bold className="fr-mb-1v">
                     Cluster wordcloud:
                     <BadgeGroup>
-                      {getThematicFromCluster(communities[selectedNode.color]).map((topic) => (
+                      {getThematicFromCluster(communities[selectedNode.community]).map((topic) => (
                         <Badge type="info" text={`${topic.label} (${topic.publicationIds.length})`} />))}
                     </BadgeGroup>
                   </Text>
@@ -171,19 +176,19 @@ export default function Graph({ data }) {
           </Col>
         </Row>
       </Container>
-      <Title as="h3">6 main clusters</Title>
+      <Title as="h3">{clustersKeys.length} main clusters</Title>
       <Container fluid className="fr-my-3w">
         <Row gutters>
-          {clustersKeys.map((cluster) => (
-            <Col key={cluster} n="4">
+          {clustersKeys.map((community) => (
+            <Col key={community} n="4">
               <div className="fr-card fr-card--shadow">
-                <p style={{ backgroundColor: cluster }}>
-                  {cluster}
+                <p style={{ backgroundColor: COMMUNTIY_COLORS[community] }}>
+                  &nbsp;Community {community}
                 </p>
                 <div className="fr-card__body">
                   <Title as="h6">5 main topics</Title>
                   <ul>
-                    {getThematicFromCluster(communities[cluster]).map((topic) => (
+                    {getThematicFromCluster(communities[community]).map((topic) => (
                       <li>
                         {topic.label}
                         {' '}
@@ -193,8 +198,8 @@ export default function Graph({ data }) {
                       </li>
                     ))}
                   </ul>
-                  <Title as="h6">10 main authors</Title>
-                  {communities[cluster].slice(0, 10).map((node) => (
+                  <Title as="h6">{Math.min(10, communities[community].length)} main authors</Title>
+                  {communities[community].slice(0, 10).map((node) => (
                     <>
                       <Text bold className="fr-mb-1v" key={node.id}>
                         {node.label}
