@@ -11,6 +11,9 @@ import matplotlib
 import matplotlib.pyplot as plt
 import mpld3
 
+DEFAULT_SIZE = 5000
+ELASTIC_SOURCE_FIELDS = ["id", "authors", "domains", "title"]
+
 
 def scanr_get_credentials() -> tuple[str, str]:
     """
@@ -40,44 +43,53 @@ def scanr_query_by_keywords(keywords: list[str], filters) -> dict:
 
     # Create query block
     condition = "AND" if filters.get("and_condition") else "OR"
-    keywords = [f"({keyword})" for keyword in keywords]
+    keywords = [f"({keyword.replace(' ', ' AND ')})" for keyword in keywords]
     keywords = f" {condition} ".join(keywords)
     print(keywords)
 
     # Query json
     json_query = {
-        "size": 10000,
+        "size": DEFAULT_SIZE,
+        "_source": ELASTIC_SOURCE_FIELDS,
         "query": {
-            "bool": {
-                "filter": [
-                    {"terms": {"authors.role.keyword": ["author", "directeurthese"]}},
-                    {"range": {"year": {"gte": filters.get("start_year"), "lte": filters.get("end_year")}}},
-                ],
-                "must": {
-                    "query_string": {
-                        "fields": [
-                            "title.default",
-                            "title.fr",
-                            "title.en",
-                            "keywords.en",
-                            "keywords.fr",
-                            "keywords.default",
-                            "domains.label.default",
-                            "domains.label.fr",
-                            "domains.label.en",
-                            "summary.default",
-                            "summary.fr",
-                            "summary.en",
-                            "alternativeSummary.default",
-                            "alternativeSummary.fr",
-                            "alternativeSummary.en",
+            "function_score": {
+                "query": {
+                    "bool": {
+                        "filter": [
+                            {"terms": {"authors.role.keyword": ["author", "directeurthese"]}},
+                            {"range": {"year": {"gte": filters.get("start_year"), "lte": filters.get("end_year")}}},
                         ],
-                        "query": f"{keywords}",
+                        "must": {
+                            "query_string": {
+                                "fields": [
+                                    "title.default",
+                                    "title.fr",
+                                    "title.en",
+                                    "keywords.en",
+                                    "keywords.fr",
+                                    "keywords.default",
+                                    "domains.label.default",
+                                    "domains.label.fr",
+                                    "domains.label.en",
+                                    "summary.default",
+                                    "summary.fr",
+                                    "summary.en",
+                                    "alternativeSummary.default",
+                                    "alternativeSummary.fr",
+                                    "alternativeSummary.en",
+                                ],
+                                "query": f"{keywords}",
+                            }
+                        },
                     }
                 },
+                "random_score": {"seed": 2001},
+                "boost_mode": "replace",
             }
         },
     }
+
+    # print(json_query)
 
     return json_query
 
@@ -108,8 +120,15 @@ def scanr_query_by_authors(idrefs: list[str], filters: dict) -> dict:
 
     # Query json
     json_query = {
-        "size": 10000,
-        "query": {"bool": {"filter": filter_block}},
+        "size": DEFAULT_SIZE,
+        "_source": ELASTIC_SOURCE_FIELDS,
+        "query": {
+            "function_score": {
+                "query": {"bool": {"filter": filter_block}},
+                "random_score": {"seed": 2001},
+                "boost_mode": "replace",
+            }
+        },
     }
 
     return json_query
@@ -139,8 +158,15 @@ def scanr_query_by_structures(struc_ids: list[str], filters: dict) -> dict:
 
     # Query json
     json_query = {
-        "size": 10000,
-        "query": {"bool": {"filter": filter_block}},
+        "size": DEFAULT_SIZE,
+        "_source": ELASTIC_SOURCE_FIELDS,
+        "query": {
+            "function_score": {
+                "query": {"bool": {"filter": filter_block}},
+                "random_score": {"seed": 2001},
+                "boost_mode": "replace",
+            }
+        },
     }
 
     return json_query
