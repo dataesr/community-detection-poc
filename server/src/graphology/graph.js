@@ -10,17 +10,6 @@ import { weightedDegree } from 'graphology-metrics/node/weighted-degree';
 const DEFAULT_NODE_RANGE = [5, 20];
 const DEFAULT_EDGE_RANGE = [0.5, 10];
 
-const DEFAULT_NODE_COLOR = '#7b7b7b';
-const COLORS = [
-    '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f',
-    '#bcbd22', '#17becf', '#aec7e8', '#ffbb78', '#98df8a', '#ff9896', '#c5b0d5', '#c49c94',
-    '#f7b6d2', '#c7c7c7', '#dbdb8d', '#9edae5', '#b3e2cd', '#fddaec', '#c7e9c0', '#fdae6b',
-    '#b5cf6b', '#ce6dbd', '#dadaeb', '#393b79', '#637939', '#8c6d31', '#843c39', '#ad494a',
-    '#d6616b', '#e7ba52', '#e7cb94', '#843c39', '#ad494a', '#d6616b', '#e7969c', '#7b4173',
-    '#a55194', '#ce6dbd', '#de9ed6', '#3182bd', '#6baed6', '#9ecae1', '#c6dbef', '#e6550d',
-    '#fd8d3c', '#fdae6b', '#fdd0a2', '#31a354',
-];
-
 const GRAPH_MAX_ORDER = 150
 
 const nodeComputeDefaultDegree = (degree, min_degree, max_degree) => {
@@ -82,6 +71,9 @@ export function dataToGraphology(nodes, edges) {
     console.log("_density :", metrics.graph.density(graph));
     // console.log("_degreeCentrality :", metrics.centrality.degree(graph))
 
+    // Add communities
+    louvain.assign(graph);
+
     // Compute size range for visualization
     const node_max_degree = Math.max.apply(null, graph.mapNodes((n, atrr) => weightedDegree(graph, n)));
     const node_min_degree = Math.min.apply(null, graph.mapNodes((n, atrr) => weightedDegree(graph, n)));
@@ -92,21 +84,19 @@ export function dataToGraphology(nodes, edges) {
     console.log('Edge max weight :', edge_max_weight);
     console.log('Edge min weight :', edge_min_weight);
 
-    // Apply default range
-    graph.forEachNode((n, attr) => {
-        graph.setNodeAttribute(n, 'size', nodeComputeDefaultDegree(weightedDegree(graph, n), node_min_degree, node_max_degree));
-    })
-    graph.forEachEdge((e, attr) => {
-        graph.setEdgeAttribute(e, 'size', edgeComputeDefaultWeight(attr.weight, edge_min_weight, edge_max_weight));
-    })
-
-    // Add communities and colors
-    louvain.assign(graph);
-    graph.forEachNode((node, attr) => {
-        const { community } = attr;
-        const color = COLORS?.[community] || DEFAULT_NODE_COLOR;
-        graph.setNodeAttribute(node, 'color', color);
-    });
+    // Update node and edge size
+    graph.updateEachNodeAttributes((node, attr) => {
+        return {
+            ...attr,
+            size: nodeComputeDefaultDegree(weightedDegree(graph, node), node_min_degree, node_max_degree)
+        };
+    }, { attributes: ['size'] });
+    graph.updateEachEdgeAttributes((edge, attr) => {
+        return {
+            ...attr,
+            size: edgeComputeDefaultWeight(attr.weight, edge_min_weight, edge_max_weight)
+        };
+    }, { attributes: ['size'] });
 
     return graph;
 }
