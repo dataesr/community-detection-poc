@@ -28,11 +28,14 @@ function getEdgesFromPublicationList(publicationList) {
 
 export function scanrToGraphology(publicationList) {
 
-  console.log('Publications count : ', publicationList.length);
+  console.log('Publications count :', publicationList.length);
 
   const publicationListWithoutTooManyAuthors = publicationList.filter(({ authors = [] }) => authors.length <= MAX_NUMBER_OF_AUTHORS);
   const nodes = getNodesFromPublicationList(publicationListWithoutTooManyAuthors);
   const edges = getEdgesFromPublicationList(publicationListWithoutTooManyAuthors);
 
+  console.log('Publications with less than', MAX_NUMBER_OF_AUTHORS, 'authors :', nodes.length);
+
+  // Create graph
   return dataToGraphology(nodes, edges);
 }

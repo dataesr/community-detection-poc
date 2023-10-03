@@ -39,6 +39,7 @@ function GraphEvents({ onNodeClick, onStageClick }) {
 }
 
 const highlightGraph = (graph, selectedNode) => {
+  console.log("Node selected :", selectedNode.id)
   graph.updateEachNodeAttributes((node, attr) => {
     return {
       ...attr,
