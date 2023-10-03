@@ -143,7 +143,7 @@ export default function Graph({ data }) {
                     Cluster wordcloud:
                     <BadgeGroup>
                       {getThematicFromCluster(communities[selectedNode.community]).map((topic) => (
-                        <Badge type="info" text={`${topic.label} (${topic.publicationIds.length})`} />))}
+                        <Badge key={topic.id} type="info" text={`${topic.label} (${topic.publicationIds.length})`} />))}
                     </BadgeGroup>
                   </Text>
                   <Row gutters>
@@ -153,7 +153,7 @@ export default function Graph({ data }) {
                       </Text>
                       <BadgeGroup>
                         {getThematicFromCluster([graph.getNodeAttributes(selectedNode.id)])?.map((topic) => (
-                          <Badge type="info" text={`${topic.label} (${topic.publicationIds.length})`} />))}
+                          <Badge key={topic.id} type="info" text={`${topic.label} (${topic.publicationIds.length})`} />))}
                       </BadgeGroup>
                     </Col>
                     <Col n="12">
@@ -190,7 +190,7 @@ export default function Graph({ data }) {
                   <Title as="h6">5 main topics</Title>
                   <ul>
                     {getThematicFromCluster(communities[community]).map((topic) => (
-                      <li>
+                      <li key={topic.id}>
                         {topic.label}
                         {' '}
                         (
