@@ -1,5 +1,5 @@
 const DEFAULT_SIZE = 5000;
-const ELASTIC_SOURCE_FIELDS = ['id', 'authors', 'domains', 'title'];
+const ELASTIC_SOURCE_FIELDS = ['id', 'authors', 'domains', 'title', 'year'];
 
 export const makeQueryByKeywords = (queries, condition, startyear, endyear, size = DEFAULT_SIZE) => ({
   size,

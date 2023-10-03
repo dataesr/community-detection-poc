@@ -38,6 +38,7 @@ export function dataToGraphology(nodes, edges) {
         ...attributes,
         weight: (attr?.weight + 1) || 1,
         publications: (attr?.publications) ? [...attr?.publications, attributes?.publication] : [attributes?.publication],
+        years: (attr?.years) ? [...attr?.years, attributes?.year] : [attributes?.year]
     })));
 
     // Add edges and compute weight

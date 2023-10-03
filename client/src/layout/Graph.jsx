@@ -139,6 +139,9 @@ export default function Graph({ data }) {
                     {selectedNode.id.split('idref')[1]}
                   </Text>
                   <Text bold className="fr-mb-1v">
+                    Last publication: {Math.max(...graph.getNodeAttribute(selectedNode.id, 'years'))}
+                  </Text>
+                  <Text bold className="fr-mb-1v">
                     Cluster wordcloud:
                     <BadgeGroup>
                       {getThematicFromCluster(communities[selectedNode.community]).map((topic) => (
@@ -205,7 +208,7 @@ export default function Graph({ data }) {
                         {node.label}
                       </Text>
                       <BadgeGroup>
-                        <Badge colorFamily="purple-glycine" className="fr-ml-1w" text={`${node.degree} publications`} />
+                        <Badge colorFamily="purple-glycine" className="fr-ml-1w" text={`${node.weight} publications`} />
                         <Badge className="fr-ml-1w" text={`${node.degree} co-author(s)`} />
                       </BadgeGroup>
                     </>

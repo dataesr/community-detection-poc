@@ -3,13 +3,13 @@ import { dataToGraphology } from '../../graphology/graph';
 const MAX_NUMBER_OF_AUTHORS = 20;
 
 function getNodesFromPublicationList(publicationList) {
-  return publicationList.flatMap(({ authorships, id: publicationId, concepts = [], title }) => {
+  return publicationList.flatMap(({ authorships, id: publicationId, concepts = [], title, publication_year }) => {
     if (!authorships) return [];
     return authorships.reduce((acc, { author }) => {
       if (!author?.id) return acc;
       const { id: authorId, display_name: label } = author;
       const topics = concepts.filter((concept) => concept?.wikidata).reduce((a, { id, display_name }) => ({ ...a, [id]: { label: display_name.toLowerCase(), publicationId: publicationId } }), {});
-      return [...acc, { id: authorId, attributes: { id: authorId, label, topics, publication: title } }];
+      return [...acc, { id: authorId, attributes: { id: authorId, label, topics, publication: title, year: publication_year } }];
     }, []);
   });
 }
