@@ -1,7 +1,7 @@
 import streamlit as st
 from streamlit.components.v1 import html
 from annotated_text import annotated_text
-from community_detection_func_graph import graph_generate
+from community_detection_func_graph import graph_generate, network_to_vos_json
 from community_detection_func_tools import *
 
 st.title("Community detection application")
@@ -87,7 +87,7 @@ filters = dict(
 
 # Generate graph
 if st.button("Generate graph", disabled=not bool(valid_queries), type="primary"):
-    graph_html, authors_data = graph_generate(
+    graph_html, graph = graph_generate(
         data_source,
         search_types.index(search_by),
         valid_queries,
@@ -97,10 +97,7 @@ if st.button("Generate graph", disabled=not bool(valid_queries), type="primary")
         setting_visualizer,
     )
 
-    if graph_html and authors_data:
-        with st.expander("See authors data"):
-            st.json(authors_data, expanded=True)
-
+    if graph_html and graph:
         # Display graph
         st.markdown("Graph : ")
 
@@ -111,5 +108,6 @@ if st.button("Generate graph", disabled=not bool(valid_queries), type="primary")
             html(HtmlFile.read(), height=650, scrolling=True)
 
         st.balloons()
+        network_to_vos_json(graph)
     else:
         st.toast("No results found for this query", icon="😥")

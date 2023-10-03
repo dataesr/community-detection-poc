@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 
+import json
 import networkx as nx
 from networkx import Graph
 
@@ -91,7 +92,7 @@ def graph_create(authors_data: dict, min_works: int = None, max_order: int = 150
     return graph
 
 
-def graph_find_communities(graph: Graph, detection_algo: str) -> dict:
+def graph_find_communities(graph: Graph, detection_algo: str) -> Graph:
     """Find communities of a network
 
     Args:
@@ -115,7 +116,10 @@ def graph_find_communities(graph: Graph, detection_algo: str) -> dict:
         case _:
             raise ValueError("Incorrect detection algorithm")
 
-    return node_groups
+    # Add communities to graph
+    nx.set_node_attributes(graph, node_groups, "group")
+
+    return graph
 
 
 def graph_find_louvain_communities(graph: Graph) -> dict:
@@ -175,12 +179,11 @@ def graph_find_cpm_communities(graph: Graph) -> dict:
     return node_groups
 
 
-def graph_generate_html(graph: Graph, node_groups: dict, visualizer: str) -> str:
+def graph_generate_html(graph: Graph, visualizer: str) -> str:
     """Generate html graph and save it
 
     Args:
         graph (Graph): network graph
-        node_groups (dict): nodes groups
         visualizer (str): graph visualizer
 
     Returns:
@@ -191,17 +194,17 @@ def graph_generate_html(graph: Graph, node_groups: dict, visualizer: str) -> str
         case "Matplotlib":
             # Matplotlib
             graph_html = "dashboard/html/pyplot_graph.html"
+            node_groups = {n: items.get("group") for n, items in graph.nodes.items()}
             cmap = matplotlib.colormaps["turbo"].resampled(max(node_groups.values() or 0) + 1)
             fig = plt.figure(figsize=(10, 10), layout="tight")
             pos = nx.spring_layout(graph)
-            nx.draw_networkx(graph, pos, cmap=cmap, nodelist=node_groups.keys(), node_color=list(node_groups.values()))
+            nx.draw_networkx(graph, pos, cmap=cmap, nodelist=graph.nodes.keys(), node_color=list(node_groups.values()))
             mpld3.save_html(fig, graph_html)
 
         case "Pyvis":
             # Pyvis library
             graph_html = "dashboard/html/pyvis_graph.html"
             net = Network(height="600px", width="100%")
-            nx.set_node_attributes(graph, node_groups, "group")
             net.from_nx(graph)
             net.toggle_physics(True)
             net.write_html(graph_html)
@@ -225,7 +228,7 @@ def graph_generate_html(graph: Graph, node_groups: dict, visualizer: str) -> str
                 # },
                 node_label_size=graph.degree,
                 node_size=graph.degree,
-                node_color=node_groups,
+                # node_color=node_groups,
                 node_border_color_from="node",
                 default_edge_type="curve",
             )
@@ -269,16 +272,32 @@ def graph_generate(
         return None, None
 
     # Add communities
-    node_groups = None
     if enable_communities:
-        node_groups = graph_find_communities(graph, detection_algo)
-        authors_data = data_add_communities(authors_data, node_groups)
+        graph = graph_find_communities(graph, detection_algo)
 
     # Generate html
-    graph_html = graph_generate_html(graph, node_groups, visualizer)
+    graph_html = graph_generate_html(graph, visualizer)
 
-    return graph_html, authors_data
+    return graph_html, graph
 
 
-def data_add_communities(authors_data: dict, node_groups: dict) -> dict:
-    return authors_data
+def network_to_vos_json(graph: Graph):
+    items = [
+        {
+            "id": n,
+            "label": n,
+            "cluster": v.get("group") + 1,
+            "weights": {"Works": 1, "Coauthors": 1},
+            "scores": {"test": 1},
+        }
+        for n, v in graph.nodes.items()
+    ]
+    links = [{"source_id": u, "target_id": v, "strength": w} for u, v, w in graph.edges.data("weight")]
+
+    print(items)
+    print(links)
+
+    network = {"network": {"items": items, "links": links}}
+
+    with open("network_data.json", "w") as f:
+        json.dump(network, f)
