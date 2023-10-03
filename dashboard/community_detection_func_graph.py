@@ -61,7 +61,7 @@ def graph_create(authors_data: dict, min_works: int = None, max_order: int = 150
     # 1. Loop over all authors
     for author in authors_data.values():
         # 2. Add node
-        graph.add_node(author.get("name"), size=author.get("work_count"))
+        graph.add_node(author.get("name"), size=author.get("work_count"), coauthors=len(author.get("coauthors") or {}))
 
         # 3. Add edges between author and coauthors
         for coauthor, cowork_count in author.get("coauthors").items():
@@ -131,7 +131,6 @@ def graph_find_louvain_communities(graph: Graph) -> dict:
     Returns:
         dict: nodes groups
     """
-    print(graph)
 
     # Networkx louvain algo
     communities = nx.community.louvain_communities(graph, seed=42)
@@ -190,11 +189,13 @@ def graph_generate_html(graph: Graph, visualizer: str) -> str:
         str: filename of the saved graph
     """
 
+    # Community groups for visualization
+    node_groups = {n: items.get("group") for n, items in graph.nodes.items()}
+
     match visualizer:
         case "Matplotlib":
             # Matplotlib
             graph_html = "dashboard/html/pyplot_graph.html"
-            node_groups = {n: items.get("group") for n, items in graph.nodes.items()}
             cmap = matplotlib.colormaps["turbo"].resampled(max(node_groups.values() or 0) + 1)
             fig = plt.figure(figsize=(10, 10), layout="tight")
             pos = nx.spring_layout(graph)
@@ -228,7 +229,7 @@ def graph_generate_html(graph: Graph, visualizer: str) -> str:
                 # },
                 node_label_size=graph.degree,
                 node_size=graph.degree,
-                # node_color=node_groups,
+                node_color=node_groups,
                 node_border_color_from="node",
                 default_edge_type="curve",
             )
@@ -287,15 +288,12 @@ def network_to_vos_json(graph: Graph):
             "id": n,
             "label": n,
             "cluster": v.get("group") + 1,
-            "weights": {"Works": 1, "Coauthors": 1},
-            "scores": {"test": 1},
+            "weights": {"Works": v.get("size"), "Coauthors": v.get("coauthors")},
+            "scores": {"Coauthors/work ": v.get("coauthors") / v.get("size")},
         }
         for n, v in graph.nodes.items()
     ]
     links = [{"source_id": u, "target_id": v, "strength": w} for u, v, w in graph.edges.data("weight")]
-
-    print(items)
-    print(links)
 
     network = {"network": {"items": items, "links": links}}
 
