@@ -20,7 +20,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { PageSpinner } from '../components/spinner';
 
-import Graph from '../layout/Graph';
+import { Graph, dataToJson } from '../layout/Graph';
 import TagInput from '../layout/TagInput';
 
 async function getData({ datasource, type, queries, condition, startyear, endyear, countries }) {
@@ -32,6 +32,14 @@ async function getCountries() {
   return fetch('https://api.openalex.org/works?group_by=institutions.country_code&mailto=bso@recherche.gouv.fr')
     .then((response) => (response.ok ? response.json() : 'Oops... The request to the OpenAlex API failed'));
 }
+
+const exportData = (data) => {
+  const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(JSON.stringify(data))}`;
+  const link = document.createElement("a");
+  link.href = jsonString;
+  link.download = "graph.json";
+  link.click();
+};
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -241,7 +249,12 @@ export default function Home() {
       </Row>
       <Alert title="Error" description="Your query is empty" type="error" show={isError} closable onClose={() => setFormIsError(false)} />
       {isFetching && (<Container><PageSpinner /></Container>)}
-      {!isFetching && data && <Graph data={data} />}
+      {!isFetching && data && (
+        <Container>
+          <Graph data={data} />
+          <Button onClick={() => (exportData(dataToJson(data)))}>Download graph</Button>
+        </Container>
+      )}
     </Container>
   );
 }
