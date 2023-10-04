@@ -20,8 +20,10 @@ import { useSearchParams } from 'react-router-dom';
 
 import { PageSpinner } from '../components/spinner';
 
-import { Graph, dataToJson } from '../layout/Graph';
+import Graph from '../layout/Graph';
 import TagInput from '../layout/TagInput';
+
+import { dataToJson } from '../utils/utils.js'
 
 async function getData({ datasource, type, queries, condition, startyear, endyear, countries }) {
   return fetch(`/api/${datasource}?type=${type}&queries=${queries.join(',')}&condition=${condition}&startyear=${startyear}&endyear=${endyear}&countries=${countries}`)
