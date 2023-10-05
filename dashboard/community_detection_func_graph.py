@@ -7,12 +7,19 @@ from networkx import Graph
 from pyvis.network import Network
 from ipysigma import Sigma
 
+import pandas as pd
+import numpy as np
+
 import matplotlib
 import matplotlib.pyplot as plt
 import mpld3
 
 from community_detection_func_scanr import scanr_get_results, scanr_filter_results
 from community_detection_func_alex import alex_get_results, alex_filter_results
+from community_detection_func_tools import *
+
+from itertools import combinations
+from collections import Counter
 
 
 def api_get_data(source: str, search_type: str, args: list[str], filters: dict) -> dict:
@@ -44,7 +51,12 @@ def api_get_data(source: str, search_type: str, args: list[str], filters: dict) 
     return authors_data
 
 
-def graph_create(authors_data: dict, min_works: int = None, max_order: int = 150) -> Graph:
+def graph_create(
+    authors_data: dict,
+    edge_types: list[str] = [],
+    min_works: int = None,
+    max_order: int = 150,
+) -> Graph:
     """Create a graph object from the authors data
 
     Args:
@@ -55,19 +67,36 @@ def graph_create(authors_data: dict, min_works: int = None, max_order: int = 150
     Returns:
         Graph: graph object
     """
+
     # Create graph
-    graph = nx.Graph()
+    graph = nx.MultiGraph()
 
     # 1. Loop over all authors
     for author in authors_data.values():
         # 2. Add node
-        graph.add_node(author.get("name"), size=author.get("work_count"), coauthors=len(author.get("coauthors") or {}))
+        graph.add_node(
+            author.get("name"),
+            size=author.get("work_count"),
+            coauthors=len(author.get("coauthors") or {}),
+            topics=author.get("wikidata"),
+            years=author.get("years"),
+        )
 
-        # 3. Add edges between author and coauthors
-        for coauthor, cowork_count in author.get("coauthors").items():
-            author_name = author.get("name")
-            coauthor_name = authors_data.get(coauthor).get("name") if coauthor in authors_data else coauthor
-            graph.add_edge(author_name, coauthor_name, weight=cowork_count)
+        if "Copublications" in edge_types:
+            # 3. Add edges between author and coauthors
+            for coauthor, cowork_count in author.get("coauthors").items():
+                author_name = author.get("name")
+                coauthor_name = authors_data.get(coauthor).get("name") if coauthor in authors_data else coauthor
+                graph.add_edge(author_name, coauthor_name, weight=cowork_count)
+
+    if "Similar topics" in edge_types:
+        # 3. Add edges between all authors if same topic
+        for source, target in combinations(authors_data.values(), 2):
+            similar_topics = set(source.get("wikidata")) & set(target.get("wikidata"))
+            if similar_topics:
+                source_name = source.get("name")
+                target_name = target.get("name")
+                graph.add_edge(source_name, target_name, weight=len(similar_topics))
 
     # 4. Filter authors by minimun works
     if min_works:
@@ -88,6 +117,7 @@ def graph_create(authors_data: dict, min_works: int = None, max_order: int = 150
             print(f"Minimum number of works auto computed : {auto_min_works} (order={graph.order()})")
 
     print(f"Graph filtered : {len(graph.nodes) or 0}/{len(authors_data)}")
+    print(graph)
 
     return graph
 
@@ -199,7 +229,13 @@ def graph_generate_html(graph: Graph, visualizer: str) -> str:
             cmap = matplotlib.colormaps["turbo"].resampled(max(node_groups.values() or 0) + 1)
             fig = plt.figure(figsize=(10, 10), layout="tight")
             pos = nx.spring_layout(graph)
-            nx.draw_networkx(graph, pos, cmap=cmap, nodelist=graph.nodes.keys(), node_color=list(node_groups.values()))
+            nx.draw_networkx(
+                graph,
+                pos,
+                cmap=cmap,
+                nodelist=graph.nodes.keys(),
+                node_color=list(node_groups.values()),
+            )
             mpld3.save_html(fig, graph_html)
 
         case "Pyvis":
@@ -231,7 +267,7 @@ def graph_generate_html(graph: Graph, visualizer: str) -> str:
                 node_size=graph.degree,
                 node_color=node_groups,
                 node_border_color_from="node",
-                default_edge_type="curve",
+                default_edge_types="curve",
             )
 
         case _:
@@ -247,6 +283,7 @@ def graph_generate(
     filters: dict,
     enable_communities: bool,
     detection_algo: str,
+    edge_types: list[str],
     visualizer: str,
 ) -> str:
     """Generate graph with api search
@@ -258,6 +295,7 @@ def graph_generate(
         filters (dict): search filters
         enable_communities (bool): communities detection toggle
         detection_algo (str): communities detection algorithm
+        edge_types (list[str]): type of edge
         visualizer (str): visualizer
 
     Returns:
@@ -266,7 +304,7 @@ def graph_generate(
     authors_data = api_get_data(source, search_type, args, filters)
 
     # Create graph
-    graph = graph_create(authors_data, filters.get("min_works"))
+    graph = graph_create(authors_data, edge_types, filters.get("min_works"))
 
     # Check graph
     if not graph:
@@ -282,7 +320,13 @@ def graph_generate(
     return graph_html, graph
 
 
-def network_to_vos_json(graph: Graph):
+def graph_export_vos_json(graph: Graph):
+    """Save network as json file for vos viewer
+
+    Args:
+        graph (Graph): network graph
+    """
+
     items = [
         {
             "id": n,
@@ -297,5 +341,41 @@ def network_to_vos_json(graph: Graph):
 
     network = {"network": {"items": items, "links": links}}
 
-    with open("network_data.json", "w") as f:
+    with open("graph_vos.json", "w") as f:
         json.dump(network, f)
+
+
+def graph_cluster_df(graph: Graph) -> pd.DataFrame:
+    YEARS = [2018, 2019, 2020, 2021]
+
+    # Create df from nodes
+    nodes = [
+        {
+            "Community": v.get("group"),
+            "Name": n,
+            "Works": v.get("size"),
+            "Coauthors": v.get("coauthors"),
+            "Coauthors/work": v.get("coauthors") / v.get("size"),
+            "Last publication year": max(v.get("years")),
+            "Years": v.get("years"),
+            "Topics": v.get("topics"),
+        }
+        for n, v in graph.nodes.items()
+    ]
+    nodes_df = pd.DataFrame(nodes).sort_values("Works", ascending=False)
+
+    # Group by community
+    group_df = nodes_df.groupby("Community").agg(
+        Works=pd.NamedAgg(column="Works", aggfunc="sum"),
+        Authors=pd.NamedAgg(column="Name", aggfunc="count"),
+        Top_author=pd.NamedAgg(column="Name", aggfunc="first"),
+        Top_author_works=pd.NamedAgg(column="Works", aggfunc="first"),
+        Avg_publication_year=pd.NamedAgg(column="Last publication year", aggfunc=lambda x: str(int(np.mean(x)))),
+        Last_publication_year=pd.NamedAgg(column="Last publication year", aggfunc=lambda x: str(max(x))),
+        Publication_years=pd.NamedAgg(
+            column="Years", aggfunc=lambda x: [[y for l in x for y in l].count(year) for year in YEARS]
+        ),
+        Top_topic=pd.NamedAgg(column="Topics", aggfunc=lambda x: max_from_dicts(x)),
+    )
+
+    return group_df

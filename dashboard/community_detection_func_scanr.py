@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import mpld3
 
 DEFAULT_SIZE = 5000
-ELASTIC_SOURCE_FIELDS = ["id", "authors", "domains", "title"]
+ELASTIC_SOURCE_FIELDS = ["id", "authors", "domains", "title", "year"]
 
 
 def scanr_get_credentials() -> tuple[str, str]:
@@ -276,8 +276,16 @@ def scanr_filter_results(answer: dict, max_coauthors: int = 20) -> dict:
             # 5. Get wikidata topics information
             for concept in work.get("_source").get("domains") or []:
                 wikidata = concept.get("code")
-                wikidata_names.setdefault(wikidata, concept.get("label").get("default"))
-                authors_data.get(author_id).get("wikidata").setdefault(wikidata, 0)
-                authors_data.get(author_id).get("wikidata")[wikidata] += 1
+                if wikidata:
+                    wikidata_names.setdefault(wikidata, concept.get("label").get("default"))
+                    authors_data.get(author_id).get("wikidata").setdefault(wikidata, 0)
+                    authors_data.get(author_id).get("wikidata")[wikidata] += 1
 
+            # 6. Get published years
+            year = work.get("_source").get("year")
+            if year:
+                authors_data.get(author_id).setdefault("years", [])
+                authors_data.get(author_id)["years"].append(int(year))
+
+    print(authors_data)
     return authors_data

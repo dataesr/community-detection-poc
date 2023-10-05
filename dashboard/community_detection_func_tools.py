@@ -137,3 +137,17 @@ def tag_get_color(tag: str) -> str:
             color = None
 
     return color
+
+
+def max_from_dicts(x):
+    concat = {}
+    for serie in x:
+        for elem in serie:
+            if elem in concat:
+                concat[elem] += serie[elem]
+            else:
+                concat[elem] = serie[elem]
+    if concat:
+        return max(concat, key=concat.get)
+    else:
+        return None

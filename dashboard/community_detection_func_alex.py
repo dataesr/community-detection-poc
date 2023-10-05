@@ -345,4 +345,10 @@ def alex_filter_results(results: list[dict], max_coauthors: int = 20) -> dict:
                     authors_data.get(author_id).get("wikidata").setdefault(wikidata, 0)
                     authors_data.get(author_id).get("wikidata")[wikidata] += 1
 
+                # 6. Get published years
+                year = work.get("publication_year")
+                if year:
+                    authors_data.get(author_id).setdefault("years", [])
+                    authors_data.get(author_id)["years"].append(int(year))
+
     return authors_data

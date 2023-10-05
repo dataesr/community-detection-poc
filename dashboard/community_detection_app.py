@@ -1,7 +1,7 @@
 import streamlit as st
 from streamlit.components.v1 import html
 from annotated_text import annotated_text
-from community_detection_func_graph import graph_generate, network_to_vos_json
+from community_detection_func_graph import graph_generate, graph_export_vos_json, graph_cluster_df
 from community_detection_func_tools import *
 
 st.title("Community detection application")
@@ -72,6 +72,7 @@ with st.sidebar:
         if setting_enable_communities
         else None
     )
+    setting_edge_types = st.multiselect("Edge type", ["Copublications", "Similar topics"], ["Copublications"])
     setting_visualizer = st.selectbox("Graph visualizer", ("Matplotlib", "Pyvis", "Sigma"))
 
 # Filter dictionnary
@@ -87,15 +88,17 @@ filters = dict(
 
 # Generate graph
 if st.button("Generate graph", disabled=not bool(valid_queries), type="primary"):
-    graph_html, graph = graph_generate(
-        data_source,
-        search_types.index(search_by),
-        valid_queries,
-        filters,
-        setting_enable_communities,
-        setting_detection_algo,
-        setting_visualizer,
-    )
+    with st.spinner():
+        graph_html, graph = graph_generate(
+            data_source,
+            search_types.index(search_by),
+            valid_queries,
+            filters,
+            setting_enable_communities,
+            setting_detection_algo,
+            setting_edge_types,
+            setting_visualizer,
+        )
 
     if graph_html and graph:
         # Display graph
@@ -107,7 +110,13 @@ if st.button("Generate graph", disabled=not bool(valid_queries), type="primary")
             HtmlFile = open(graph_html, "r", encoding="utf-8")
             html(HtmlFile.read(), height=650, scrolling=True)
 
+        # Display cluster info
+        st.write("Clusters information :")
+        st.dataframe(graph_cluster_df(graph), column_config={"Publication_years": st.column_config.LineChartColumn()})
+
+        # Hourraaa
         st.balloons()
-        network_to_vos_json(graph)
+        graph_export_vos_json(graph)
+
     else:
         st.toast("No results found for this query", icon="😥")
