@@ -322,10 +322,18 @@ def alex_filter_results(results: list[dict], max_coauthors: int = 20) -> dict:
                 author_data = {"name": author_name, "orcid": author_orcid}
                 authors_data.setdefault(
                     author_id,
-                    {"work_count": 0, "work_id": [], "coauthors": {}, "wikidata": {}},
+                    {
+                        "work_count": 0,
+                        "work_ids": [],
+                        "work_years": {},
+                        "work_isoa": {},
+                        "coauthors": {},
+                        "wikidata": {},
+                        "types": {},
+                    },
                 ).update(author_data)
                 authors_data.get(author_id)["work_count"] += 1
-                authors_data.get(author_id)["work_id"].append(work_id)
+                authors_data.get(author_id)["work_ids"].append(work_id)
 
                 # print(f"{author_name}: number of coauthors = {len(authorships) - 1}")
 
@@ -346,9 +354,16 @@ def alex_filter_results(results: list[dict], max_coauthors: int = 20) -> dict:
                     authors_data.get(author_id).get("wikidata")[wikidata] += 1
 
                 # 6. Get published years
-                year = work.get("publication_year")
-                if year:
-                    authors_data.get(author_id).setdefault("years", [])
-                    authors_data.get(author_id)["years"].append(int(year))
+                authors_data.get(author_id).get("work_years")[work_id] = work.get("publication_year")
 
+                # 7. Get if publication is open
+                authors_data.get(author_id).get("work_isoa")[work_id] = work.get("open_access").get("is_oa")
+
+                # 8. Get publication type
+                work_type = work.get("type")
+                if work_type:
+                    authors_data.get(author_id).get("types").setdefault(work_type, 0)
+                    authors_data.get(author_id).get("types")[work_type] += 1
+
+    # print(authors_data)
     return authors_data

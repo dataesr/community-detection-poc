@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import mpld3
 
 DEFAULT_SIZE = 5000
-ELASTIC_SOURCE_FIELDS = ["id", "authors", "domains", "title", "year"]
+ELASTIC_SOURCE_FIELDS = ["id", "authors", "domains", "title", "year", "isOa", "type", "affiliations"]
 
 
 def scanr_get_credentials() -> tuple[str, str]:
@@ -218,7 +218,6 @@ def scanr_filter_results(answer: dict, max_coauthors: int = 20) -> dict:
     # Init arrays
     nb_pub_removed = 0
     authors_data = {}
-    wikidata_names = {}
 
     print("Number of results :", answer.get("hits").get("total").get("value"))
 
@@ -252,10 +251,19 @@ def scanr_filter_results(answer: dict, max_coauthors: int = 20) -> dict:
             # Add author
             author_data = {"name": author_name}
             authors_data.setdefault(
-                author_id, {"work_count": 0, "work_id": [], "coauthors": {}, "wikidata": {}}
+                author_id,
+                {
+                    "work_count": 0,
+                    "work_ids": [],
+                    "work_years": {},
+                    "work_isoa": {},
+                    "coauthors": {},
+                    "wikidata": {},
+                    "types": {},
+                },
             ).update(author_data)
             authors_data.get(author_id)["work_count"] += 1
-            authors_data.get(author_id)["work_id"].append(work_id)
+            authors_data.get(author_id)["work_ids"].append(work_id)
 
             # print(f"{author_name}: number of coauthors = {len(authorships) - 1}")
 
@@ -277,15 +285,20 @@ def scanr_filter_results(answer: dict, max_coauthors: int = 20) -> dict:
             for concept in work.get("_source").get("domains") or []:
                 wikidata = concept.get("code")
                 if wikidata:
-                    wikidata_names.setdefault(wikidata, concept.get("label").get("default"))
                     authors_data.get(author_id).get("wikidata").setdefault(wikidata, 0)
                     authors_data.get(author_id).get("wikidata")[wikidata] += 1
 
             # 6. Get published years
-            year = work.get("_source").get("year")
-            if year:
-                authors_data.get(author_id).setdefault("years", [])
-                authors_data.get(author_id)["years"].append(int(year))
+            authors_data.get(author_id).get("work_years")[work_id] = work.get("_source").get("year")
 
-    print(authors_data)
+            # 7. Get if publication is open
+            authors_data.get(author_id).get("work_isoa")[work_id] = work.get("_source").get("isOa")
+
+            # 8. Get publication type
+            work_type = work.get("_source").get("type")
+            if work_type:
+                authors_data.get(author_id).get("types").setdefault(work_type, 0)
+                authors_data.get(author_id).get("types")[work_type] += 1
+
+    # print(authors_data)
     return authors_data

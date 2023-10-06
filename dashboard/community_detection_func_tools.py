@@ -139,7 +139,8 @@ def tag_get_color(tag: str) -> str:
     return color
 
 
-def max_from_dicts(x):
+def max_from_dicts(x: dict):
+    """Get max value from dicts"""
     concat = {}
     for serie in x:
         for elem in serie:
@@ -149,5 +150,20 @@ def max_from_dicts(x):
                 concat[elem] = serie[elem]
     if concat:
         return max(concat, key=concat.get)
+    else:
+        return None
+
+
+def count_from_dicts(x: dict, count=None):
+    """Get count from dicts"""
+    concat = {}
+    for serie in x:
+        for elem in serie:
+            concat.update({elem: serie[elem]})
+    if concat:
+        if count:
+            return sum(x == count for x in concat.values())
+        else:
+            return len(concat)
     else:
         return None

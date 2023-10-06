@@ -78,25 +78,37 @@ def graph_create(
             author.get("name"),
             size=author.get("work_count"),
             coauthors=len(author.get("coauthors") or {}),
+            work_ids=author.get("work_ids"),
+            work_years=author.get("work_years"),
+            work_isoa=author.get("work_isoa"),
             topics=author.get("wikidata"),
-            years=author.get("years"),
+            types=author.get("types"),
         )
 
         if "Copublications" in edge_types:
-            # 3. Add edges between author and coauthors
+            # 3.1. Add edges between author and coauthors
             for coauthor, cowork_count in author.get("coauthors").items():
                 author_name = author.get("name")
                 coauthor_name = authors_data.get(coauthor).get("name") if coauthor in authors_data else coauthor
                 graph.add_edge(author_name, coauthor_name, weight=cowork_count)
 
     if "Similar topics" in edge_types:
-        # 3. Add edges between all authors if same topic
+        # 3.2. Add edges between all authors if same topic
         for source, target in combinations(authors_data.values(), 2):
             similar_topics = set(source.get("wikidata")) & set(target.get("wikidata"))
             if similar_topics:
                 source_name = source.get("name")
                 target_name = target.get("name")
                 graph.add_edge(source_name, target_name, weight=len(similar_topics))
+
+    if "Similar types" in edge_types:
+        # 3.3 Add edges between all authors if same topic
+        for source, target in combinations(authors_data.values(), 2):
+            similar_types = set(source.get("types")) & set(target.get("types"))
+            if similar_types:
+                source_name = source.get("name")
+                target_name = target.get("name")
+                graph.add_edge(source_name, target_name, weight=len(similar_types))
 
     # 4. Filter authors by minimun works
     if min_works:
@@ -354,11 +366,14 @@ def graph_cluster_df(graph: Graph) -> pd.DataFrame:
             "Community": v.get("group"),
             "Name": n,
             "Works": v.get("size"),
+            "WorkIds": v.get("work_ids"),
+            "WorkYears": v.get("work_years"),
+            "WorkIsOa": v.get("work_isoa"),
             "Coauthors": v.get("coauthors"),
             "Coauthors/work": v.get("coauthors") / v.get("size"),
-            "Last publication year": max(v.get("years")),
-            "Years": v.get("years"),
+            "Last publication year": max(v.get("work_years").values()),
             "Topics": v.get("topics"),
+            "Types": v.get("types"),
         }
         for n, v in graph.nodes.items()
     ]
@@ -366,16 +381,24 @@ def graph_cluster_df(graph: Graph) -> pd.DataFrame:
 
     # Group by community
     group_df = nodes_df.groupby("Community").agg(
-        Works=pd.NamedAgg(column="Works", aggfunc="sum"),
+        Works=pd.NamedAgg(column="WorkIds", aggfunc=lambda x: x.explode().nunique()),
         Authors=pd.NamedAgg(column="Name", aggfunc="count"),
         Top_author=pd.NamedAgg(column="Name", aggfunc="first"),
         Top_author_works=pd.NamedAgg(column="Works", aggfunc="first"),
-        Avg_publication_year=pd.NamedAgg(column="Last publication year", aggfunc=lambda x: str(int(np.mean(x)))),
         Last_publication_year=pd.NamedAgg(column="Last publication year", aggfunc=lambda x: str(max(x))),
-        Publication_years=pd.NamedAgg(
-            column="Years", aggfunc=lambda x: [[y for l in x for y in l].count(year) for year in YEARS]
+        Work_years=pd.NamedAgg(
+            column="WorkYears",
+            aggfunc=lambda x: [count_from_dicts(x, year) for year in YEARS],
         ),
         Top_topic=pd.NamedAgg(column="Topics", aggfunc=lambda x: max_from_dicts(x)),
+        Top_type=pd.NamedAgg(column="Types", aggfunc=lambda x: max_from_dicts(x)),
+        isOa=pd.NamedAgg(
+            column="WorkIsOa", aggfunc=lambda x: int((count_from_dicts(x, True) / (count_from_dicts(x) or 1)) * 100)
+        ),
     )
 
-    return group_df
+    return group_df.sort_values(by="Works", ascending=False).head(5)
+
+
+def test(x):
+    print("ROW :", x)

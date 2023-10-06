@@ -112,7 +112,7 @@ if st.button("Generate graph", disabled=not bool(valid_queries), type="primary")
 
         # Display cluster info
         st.write("Clusters information :")
-        st.dataframe(graph_cluster_df(graph), column_config={"Publication_years": st.column_config.LineChartColumn()})
+        st.dataframe(graph_cluster_df(graph), column_config={"Work_years": st.column_config.LineChartColumn()})
 
         # Hourraaa
         st.balloons()
