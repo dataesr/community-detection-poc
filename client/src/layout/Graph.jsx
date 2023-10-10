@@ -11,6 +11,7 @@ import {
 import { LayoutForceAtlas2Control } from '@react-sigma/layout-forceatlas2';
 import { UndirectedGraph } from 'graphology';
 import { useState, useEffect } from 'react';
+import { GetColorName } from 'hex-color-to-color-name';
 
 const DEFAULT_NODE_COLOR = '#7b7b7b';
 const COMMUNTIY_COLORS = [
@@ -186,7 +187,7 @@ export default function Graph({ data }) {
             <Col key={community} n="4">
               <div className="fr-card fr-card--shadow">
                 <p style={{ backgroundColor: COMMUNTIY_COLORS[community] }}>
-                  &nbsp;Community {community}
+                  &nbsp;Community {GetColorName(COMMUNTIY_COLORS[community])}
                 </p>
                 <div className="fr-card__body">
                   <Title as="h6">5 main topics</Title>
