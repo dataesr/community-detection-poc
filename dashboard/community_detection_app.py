@@ -72,7 +72,9 @@ with st.sidebar:
         if setting_enable_communities
         else None
     )
-    setting_edge_types = st.multiselect("Edge type", ["Copublications", "Similar topics"], ["Copublications"])
+    setting_edge_types = st.multiselect(
+        "Edge type", ["Copublications", "Similar topics", "Similar types"], ["Copublications"]
+    )
     setting_visualizer = st.selectbox("Graph visualizer", ("Matplotlib", "Pyvis", "Sigma"))
 
 # Filter dictionnary
@@ -89,7 +91,7 @@ filters = dict(
 # Generate graph
 if st.button("Generate graph", disabled=not bool(valid_queries), type="primary"):
     with st.spinner():
-        graph_html, graph = graph_generate(
+        graph_html, graph, graph_df = graph_generate(
             data_source,
             search_types.index(search_by),
             valid_queries,
@@ -111,8 +113,15 @@ if st.button("Generate graph", disabled=not bool(valid_queries), type="primary")
             html(HtmlFile.read(), height=650, scrolling=True)
 
         # Display cluster info
-        st.write("Clusters information :")
-        st.dataframe(graph_cluster_df(graph), column_config={"Work_years": st.column_config.LineChartColumn()})
+        if graph_df is not None:
+            st.write("Clusters information :")
+            st.dataframe(
+                graph_df,
+                column_config={
+                    "Published_years": st.column_config.BarChartColumn(),
+                    "isOa": st.column_config.NumberColumn(format="%i %%"),
+                },
+            )
 
         # Hourraaa
         st.balloons()

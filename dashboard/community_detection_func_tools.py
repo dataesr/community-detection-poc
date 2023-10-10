@@ -1,6 +1,7 @@
 import requests
 import xmltodict
 import re
+from collections import Counter
 
 
 def url_get_last(url: str) -> str:
@@ -167,3 +168,13 @@ def count_from_dicts(x: dict, count=None):
             return len(concat)
     else:
         return None
+
+
+def list_top_str(lst: list, top: int = 1) -> list:
+    """Return str list of most frequent items in list"""
+    res = []
+    counter = Counter(lst).most_common(top)
+    for el, c in counter:
+        str = f"{el} ({c})"
+        res.append(str)
+    return res

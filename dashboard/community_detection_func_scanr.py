@@ -218,6 +218,8 @@ def scanr_filter_results(answer: dict, max_coauthors: int = 20) -> dict:
     # Init arrays
     nb_pub_removed = 0
     authors_data = {}
+    publications_data = {}
+    structures_data = {}
 
     print("Number of results :", answer.get("hits").get("total").get("value"))
 
@@ -225,7 +227,14 @@ def scanr_filter_results(answer: dict, max_coauthors: int = 20) -> dict:
     # 1. Loop over works
     for work in answer.get("hits").get("hits"):
         work_id = work.get("_id")
+        type = work.get("_source").get("type")
+        year = work.get("_source").get("year")
+        open_access = work.get("_source").get("isOa")
+
         authorships = work.get("_source").get("authors")
+        affiliations = work.get("_source").get("affiliations")
+        domains = work.get("_source").get("domains")
+        topics = []
 
         # 2. Loop over authors and remove publication if too many coauthors
         if len(authorships) > max_coauthors:
@@ -234,7 +243,7 @@ def scanr_filter_results(answer: dict, max_coauthors: int = 20) -> dict:
             continue
 
         # 3. Get author information
-        for author in authorships:
+        for author in authorships or []:
             if "person" in author:
                 author_id = author.get("person").get("id")
                 author_name = (
@@ -252,17 +261,8 @@ def scanr_filter_results(answer: dict, max_coauthors: int = 20) -> dict:
             author_data = {"name": author_name}
             authors_data.setdefault(
                 author_id,
-                {
-                    "work_count": 0,
-                    "work_ids": [],
-                    "work_years": {},
-                    "work_isoa": {},
-                    "coauthors": {},
-                    "wikidata": {},
-                    "types": {},
-                },
+                {"work_ids": [], "coauthors": {}},
             ).update(author_data)
-            authors_data.get(author_id)["work_count"] += 1
             authors_data.get(author_id)["work_ids"].append(work_id)
 
             # print(f"{author_name}: number of coauthors = {len(authorships) - 1}")
@@ -281,24 +281,40 @@ def scanr_filter_results(answer: dict, max_coauthors: int = 20) -> dict:
                     authors_data.get(author_id).get("coauthors").setdefault(coauthor_id, 0)
                     authors_data.get(author_id).get("coauthors")[coauthor_id] += 1
 
-            # 5. Get wikidata topics information
-            for concept in work.get("_source").get("domains") or []:
-                wikidata = concept.get("code")
-                if wikidata:
-                    authors_data.get(author_id).get("wikidata").setdefault(wikidata, 0)
-                    authors_data.get(author_id).get("wikidata")[wikidata] += 1
+        # 5. Get structures informations
+        for structure in affiliations or []:
+            structures_data.update(
+                {
+                    structure.get("id"): {
+                        "name": structure.get("label").get("default") or structure.get("label").get("default"),
+                        "country": structure.get("address")[0].get("country")
+                        if structure.get("address") is not None
+                        else "Undefined",
+                        "city": structure.get("address")[0].get("city")
+                        if structure.get("address") is not None
+                        else "Undefined",
+                    }
+                }
+            )
 
-            # 6. Get published years
-            authors_data.get(author_id).get("work_years")[work_id] = work.get("_source").get("year")
+        # 6. Get wikidata topics information
+        for concept in domains or []:
+            if concept.get("type") == "wikidata":
+                if concept.get("label").get("default") not in topics:
+                    topics.append(concept.get("label").get("default"))
 
-            # 7. Get if publication is open
-            authors_data.get(author_id).get("work_isoa")[work_id] = work.get("_source").get("isOa")
-
-            # 8. Get publication type
-            work_type = work.get("_source").get("type")
-            if work_type:
-                authors_data.get(author_id).get("types").setdefault(work_type, 0)
-                authors_data.get(author_id).get("types")[work_type] += 1
+        # 7. Create publications data
+        publications_data.update(
+            {
+                work_id: {
+                    "type": type,
+                    "year": year,
+                    "topics": topics,
+                    "open_access": open_access,
+                    "affiliations": [structure.get("id") for structure in affiliations or []],
+                }
+            }
+        )
 
     # print(authors_data)
-    return authors_data
+    return authors_data, publications_data, structures_data

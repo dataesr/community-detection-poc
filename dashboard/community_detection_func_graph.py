@@ -38,21 +38,27 @@ def api_get_data(source: str, search_type: str, args: list[str], filters: dict) 
         case "scanR":
             # scanr api search
             results = scanr_get_results(search_type, args, filters)
-            authors_data = scanr_filter_results(results, filters.get("max_coauthors"))
+            authors_data, publications_data, structures_data = scanr_filter_results(
+                results, filters.get("max_coauthors")
+            )
 
         case "OpenAlex":
             # openalex api search
             results = alex_get_results(search_type, args, filters)
-            authors_data = alex_filter_results(results, filters.get("max_coauthors"))
+            authors_data, publications_data, structures_data = alex_filter_results(
+                results, filters.get("max_coauthors")
+            )
 
         case _:
             raise ValueError("Api name has to be 'scanR' or 'OpenAlex'")
 
-    return authors_data
+    return authors_data, publications_data, structures_data
 
 
 def graph_create(
     authors_data: dict,
+    publications_data: dict,
+    structures_data: dict,
     edge_types: list[str] = [],
     min_works: int = None,
     max_order: int = 150,
@@ -76,35 +82,35 @@ def graph_create(
         # 2. Add node
         graph.add_node(
             author.get("name"),
-            size=author.get("work_count"),
+            size=len(author.get("work_ids")),
             coauthors=len(author.get("coauthors") or {}),
             work_ids=author.get("work_ids"),
-            work_years=author.get("work_years"),
-            work_isoa=author.get("work_isoa"),
-            topics=author.get("wikidata"),
-            types=author.get("types"),
         )
 
+        # 3.1. Add edges between author and coauthors
         if "Copublications" in edge_types:
-            # 3.1. Add edges between author and coauthors
             for coauthor, cowork_count in author.get("coauthors").items():
                 author_name = author.get("name")
                 coauthor_name = authors_data.get(coauthor).get("name") if coauthor in authors_data else coauthor
                 graph.add_edge(author_name, coauthor_name, weight=cowork_count)
 
+    # 3.2. Add edges between all authors if same topic
     if "Similar topics" in edge_types:
-        # 3.2. Add edges between all authors if same topic
         for source, target in combinations(authors_data.values(), 2):
-            similar_topics = set(source.get("wikidata")) & set(target.get("wikidata"))
+            source_topics = [t for id in source.get("work_id") for t in publications_data.get(id).get("topics")]
+            target_topics = [t for id in target.get("work_id") for t in publications_data.get(id).get("topics")]
+            similar_topics = set(source_topics) & set(target_topics)
             if similar_topics:
                 source_name = source.get("name")
                 target_name = target.get("name")
                 graph.add_edge(source_name, target_name, weight=len(similar_topics))
 
+    # 3.3 Add edges between all authors if same topic
     if "Similar types" in edge_types:
-        # 3.3 Add edges between all authors if same topic
         for source, target in combinations(authors_data.values(), 2):
-            similar_types = set(source.get("types")) & set(target.get("types"))
+            source_types = [t for id in source.get("work_id") for t in publications_data.get(id).get("type")]
+            target_types = [t for id in source.get("work_id") for t in publications_data.get(id).get("type")]
+            similar_types = set(source_types) & set(target_types)
             if similar_types:
                 source_name = source.get("name")
                 target_name = target.get("name")
@@ -239,7 +245,7 @@ def graph_generate_html(graph: Graph, visualizer: str) -> str:
             # Matplotlib
             graph_html = "dashboard/html/pyplot_graph.html"
             cmap = matplotlib.colormaps["turbo"].resampled(max(node_groups.values() or 0) + 1)
-            fig = plt.figure(figsize=(10, 10), layout="tight")
+            fig = plt.figure(figsize=(5, 5), layout="tight")
             pos = nx.spring_layout(graph)
             nx.draw_networkx(
                 graph,
@@ -313,23 +319,26 @@ def graph_generate(
     Returns:
         str: name of html graph
     """
-    authors_data = api_get_data(source, search_type, args, filters)
+    authors_data, publications_data, structures_data = api_get_data(source, search_type, args, filters)
 
     # Create graph
-    graph = graph_create(authors_data, edge_types, filters.get("min_works"))
+    graph = graph_create(authors_data, publications_data, structures_data, edge_types, filters.get("min_works"))
 
     # Check graph
     if not graph:
-        return None, None
+        return None, None, None
 
     # Add communities
     if enable_communities:
         graph = graph_find_communities(graph, detection_algo)
+        graph_df = graph_cluster_df(graph, authors_data, publications_data, structures_data)
+    else:
+        graph_df = None
 
     # Generate html
     graph_html = graph_generate_html(graph, visualizer)
 
-    return graph_html, graph
+    return graph_html, graph, graph_df
 
 
 def graph_export_vos_json(graph: Graph):
@@ -357,48 +366,61 @@ def graph_export_vos_json(graph: Graph):
         json.dump(network, f)
 
 
-def graph_cluster_df(graph: Graph) -> pd.DataFrame:
-    YEARS = [2018, 2019, 2020, 2021]
+def graph_cluster_df(graph: Graph, authors_data, publications_data, structures_data) -> pd.DataFrame:
+    YEARS = [2018, 2019, 2020, 2021, 2022, 2023]
 
     # Create df from nodes
     nodes = [
         {
             "Community": v.get("group"),
             "Name": n,
-            "Works": v.get("size"),
-            "WorkIds": v.get("work_ids"),
-            "WorkYears": v.get("work_years"),
-            "WorkIsOa": v.get("work_isoa"),
+            "Works": v.get("work_ids"),
+            # "WorkYears": v.get("work_years"),
             "Coauthors": v.get("coauthors"),
             "Coauthors/work": v.get("coauthors") / v.get("size"),
-            "Last publication year": max(v.get("work_years").values()),
-            "Topics": v.get("topics"),
-            "Types": v.get("types"),
+            # "Last publication year": max(v.get("work_years").values()),
         }
         for n, v in graph.nodes.items()
     ]
     nodes_df = pd.DataFrame(nodes).sort_values("Works", ascending=False)
+    print(nodes_df.head(5))
 
     # Group by community
     group_df = nodes_df.groupby("Community").agg(
-        Works=pd.NamedAgg(column="WorkIds", aggfunc=lambda x: x.explode().nunique()),
+        Works=pd.NamedAgg(column="Works", aggfunc=lambda x: list(set(x.explode()))),
         Authors=pd.NamedAgg(column="Name", aggfunc="count"),
         Top_author=pd.NamedAgg(column="Name", aggfunc="first"),
-        Top_author_works=pd.NamedAgg(column="Works", aggfunc="first"),
-        Last_publication_year=pd.NamedAgg(column="Last publication year", aggfunc=lambda x: str(max(x))),
-        Work_years=pd.NamedAgg(
-            column="WorkYears",
-            aggfunc=lambda x: [count_from_dicts(x, year) for year in YEARS],
-        ),
-        Top_topic=pd.NamedAgg(column="Topics", aggfunc=lambda x: max_from_dicts(x)),
-        Top_type=pd.NamedAgg(column="Types", aggfunc=lambda x: max_from_dicts(x)),
-        isOa=pd.NamedAgg(
-            column="WorkIsOa", aggfunc=lambda x: int((count_from_dicts(x, True) / (count_from_dicts(x) or 1)) * 100)
-        ),
+        # Top_author_works=pd.NamedAgg(column="Works", aggfunc=lambda x: len(x.iat[0])),
     )
 
+    def publications_get(x, key):
+        return [publications_data.get(el).get(key) for el in x]
+
+    def structures_get(x, key):
+        return [
+            structures_data.get(struct).get(key)
+            for id in x
+            for struct in publications_data.get(id).get("affiliations")
+        ]
+
+    # Add topic information
+    group_df["Topics"] = group_df["Works"].apply(
+        lambda x: list_top_str([t for id in x for t in publications_data.get(id).get("topics")], 5)
+    )
+    # Add type information
+    group_df["Types"] = group_df["Works"].apply(lambda x: list_top_str(publications_get(x, "type"), 3))
+    # Add country information
+    group_df["Countries"] = group_df["Works"].apply(lambda x: list_top_str(structures_get(x, "country"), 3))
+    # Add strucutres information
+    group_df["Structures"] = group_df["Works"].apply(lambda x: list_top_str(structures_get(x, "name"), 3))
+    # Add open access information
+    group_df["isOa"] = group_df["Works"].apply(lambda x: sum(publications_get(x, "open_access")) / len(x) * 100)
+    # Add years information
+    group_df["Published_years"] = group_df["Works"].apply(
+        lambda x: [publications_get(x, "year").count(year) for year in YEARS]
+    )
+
+    # Only display count of works
+    group_df["Works"] = group_df["Works"].apply(lambda x: len(x) if x is not None else 0)
+
     return group_df.sort_values(by="Works", ascending=False).head(5)
-
-
-def test(x):
-    print("ROW :", x)

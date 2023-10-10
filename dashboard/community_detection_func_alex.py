@@ -296,14 +296,20 @@ def alex_filter_results(results: list[dict], max_coauthors: int = 20) -> dict:
     # Init arrays
     nb_pub_removed = 0
     authors_data = {}
-    wikidata_names = {}
+    publications_data = {}
+    structures_data = {}
 
     # Filter data
     # 1. Loop over works
     for json in results:
         for work in json.get("results"):
             work_id = url_get_last(work.get("id"))
+            type = work.get("type")
+            year = work.get("publication_year")
+            open_access = work.get("open_access").get("is_oa")
             authorships = work.get("authorships")
+            concepts = work.get("concepts")
+            topics = []
 
             # 2. Loop over authors and remove publication if too many coauthors
             if len(authorships) > max_coauthors:
@@ -322,17 +328,8 @@ def alex_filter_results(results: list[dict], max_coauthors: int = 20) -> dict:
                 author_data = {"name": author_name, "orcid": author_orcid}
                 authors_data.setdefault(
                     author_id,
-                    {
-                        "work_count": 0,
-                        "work_ids": [],
-                        "work_years": {},
-                        "work_isoa": {},
-                        "coauthors": {},
-                        "wikidata": {},
-                        "types": {},
-                    },
+                    {"work_ids": [], "coauthors": {}},
                 ).update(author_data)
-                authors_data.get(author_id)["work_count"] += 1
                 authors_data.get(author_id)["work_ids"].append(work_id)
 
                 # print(f"{author_name}: number of coauthors = {len(authorships) - 1}")
@@ -346,24 +343,41 @@ def alex_filter_results(results: list[dict], max_coauthors: int = 20) -> dict:
                         authors_data.get(author_id).get("coauthors").setdefault(coauthor_id, 0)
                         authors_data.get(author_id).get("coauthors")[coauthor_id] += 1
 
-                # 5. Get wikidata topics information
-                for concept in work.get("concepts"):
-                    wikidata = url_get_last(concept.get("wikidata"))
-                    wikidata_names.setdefault(wikidata, concept.get("display_name"))
-                    authors_data.get(author_id).get("wikidata").setdefault(wikidata, 0)
-                    authors_data.get(author_id).get("wikidata")[wikidata] += 1
+            # 5. Get structures informations
+            for authorship in authorships:
+                for structure in authorship.get("institutions"):
+                    structures_data.update(
+                        {
+                            url_get_last(structure.get("id")): {
+                                "name": structure.get("display_name"),
+                                "country": structure.get("country_code") or "Undefined",
+                                "city": None,
+                            }
+                        }
+                    )
 
-                # 6. Get published years
-                authors_data.get(author_id).get("work_years")[work_id] = work.get("publication_year")
+            # 5. Get wikidata topics information
+            for concept in concepts:
+                wikidata = url_get_last(concept.get("wikidata"))
+                if wikidata and concept.get("display_name") not in topics:
+                    topics.append(concept.get("display_name"))
 
-                # 7. Get if publication is open
-                authors_data.get(author_id).get("work_isoa")[work_id] = work.get("open_access").get("is_oa")
-
-                # 8. Get publication type
-                work_type = work.get("type")
-                if work_type:
-                    authors_data.get(author_id).get("types").setdefault(work_type, 0)
-                    authors_data.get(author_id).get("types")[work_type] += 1
+            # 7. Create publications data
+            publications_data.update(
+                {
+                    work_id: {
+                        "type": type,
+                        "year": year,
+                        "topics": topics,
+                        "open_access": open_access,
+                        "affiliations": [
+                            url_get_last(structure.get("id"))
+                            for authorship in authorships
+                            for structure in authorship.get("institutions")
+                        ],
+                    }
+                }
+            )
 
     # print(authors_data)
-    return authors_data
+    return authors_data, publications_data, structures_data
