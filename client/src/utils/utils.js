@@ -1,4 +1,4 @@
-export const dataToJson = (data) => {
+export const dataEncodeToJson = (data) => {
 
     const items = []
     const links = []
@@ -19,5 +19,8 @@ export const dataToJson = (data) => {
         links.push({ "source_id": edge?.source, "target_id": edge?.target, "strength": edge?.attributes?.weight });
     });
 
-    return { "network": { "items": items, "links": links } }
-};  
+    const network = { "network": { "items": items, "links": links } };
+    const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(JSON.stringify(network))}`
+
+    return jsonString
+};

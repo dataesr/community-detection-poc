@@ -23,7 +23,7 @@ import { PageSpinner } from '../components/spinner';
 import Graph from '../layout/Graph';
 import TagInput from '../layout/TagInput';
 
-import { dataToJson } from '../utils/utils.js'
+import { dataEncodeToJson } from '../utils/utils.js'
 
 async function getData({ datasource, type, queries, condition, startyear, endyear, countries }) {
   return fetch(`/api/${datasource}?type=${type}&queries=${queries.join(',')}&condition=${condition}&startyear=${startyear}&endyear=${endyear}&countries=${countries}`)
@@ -35,8 +35,7 @@ async function getCountries() {
     .then((response) => (response.ok ? response.json() : 'Oops... The request to the OpenAlex API failed'));
 }
 
-const exportData = (data) => {
-  const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(JSON.stringify(data))}`;
+const exportJson = (jsonString) => {
   const link = document.createElement("a");
   link.href = jsonString;
   link.download = "graph.json";
@@ -254,9 +253,8 @@ export default function Home() {
       {!isFetching && data && (
         <Container>
           <Graph data={data} />
-          <Button onClick={() => (exportData(dataToJson(data)))}>Download graph</Button>
-        </Container>
-      )}
-    </Container>
+          <Button onClick={() => (exportJson(dataEncodeToJson(data)))}>Download graph</Button>
+        </Container>)}
+    </Container >
   );
 }
