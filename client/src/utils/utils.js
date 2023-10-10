@@ -1,3 +1,20 @@
+export const getThematicFromCluster = (cluster) => {
+    const clusterTopics = {};
+    cluster.forEach((node) => {
+        Object.keys(node?.topics || []).forEach((topic) => {
+            if (!(Object.keys(clusterTopics).includes(topic))) {
+                clusterTopics[topic] = { code: topic, label: node.topics[topic].label, publicationIds: [] };
+            }
+            clusterTopics[topic].publicationIds.push([node.topics[topic].publicationId]);
+        });
+    });
+    return Object.values(clusterTopics).map((clusterTopic) => {
+        // eslint-disable-next-line no-param-reassign
+        clusterTopic.publicationIds = [...new Set(clusterTopic.publicationIds)];
+        return clusterTopic;
+    }).sort((a, b) => b.publicationIds.length - a.publicationIds.length).slice(0, 5);
+};
+
 export const dataEncodeToJson = (data) => {
 
     const items = []
