@@ -9,8 +9,10 @@
   ],
   "dependencies": {
     "concurrently": "^8.0.1",
+    "d3": "^7.8.5",
     "graphology": "^0.25.1",
     "graphology-metrics": "^2.2.0",
+    "hex-color-to-color-name": "^1.0.2",
     "logger": "^0.0.1"
   },
   "scripts": {
@@ -22,5 +24,8 @@
     "server": "npm -w server run dev",
     "server:win": "npm -w server run dev:win",
     "start": "npm run dev"
+  },
+  "devDependencies": {
+    "raw-loader": "^4.0.2"
   }
 }

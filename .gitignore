@@ -23,3 +23,10 @@ dist-ssr
 *.sln
 *.sw?
 /notebooks/__pycache__/
+dashboard/__pycache__/community_detection_func_alex.cpython-311.pyc
+dashboard/__pycache__/community_detection_func_graph.cpython-311.pyc
+dashboard/__pycache__/community_detection_func_scanr.cpython-311.pyc
+dashboard/__pycache__/community_detection_func_alex.cpython-311.pyc
+dashboard/__pycache__/community_detection_func_graph.cpython-311.pyc
+dashboard/__pycache__/community_detection_func_scanr.cpython-311.pyc
+dashboard/__pycache__/community_detection_func_tools.cpython-311.pyc

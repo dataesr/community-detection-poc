@@ -1,7 +1,7 @@
-import express from 'express';
+import express from "express";
 
-import fetchRouter from './routes/fetch';
-import helloRouter from './routes/hello';
+import fetchRouter from "./routes/fetch";
+import helloRouter from "./routes/hello";
 
 const router = new express.Router();
 

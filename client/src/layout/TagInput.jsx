@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
 
-import { Col, Icon, Row, Tag, TagGroup, TextInput } from '@dataesr/react-dsfr';
+import { Col, Icon, Row, Tag, TagGroup, TextInput } from "@dataesr/react-dsfr";
 
 export default function TagInput({ label, hint, tags, onTagsChange }) {
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [values, setValues] = useState(tags);
 
   const handleKeyDown = (e) => {
@@ -13,7 +13,7 @@ export default function TagInput({ label, hint, tags, onTagsChange }) {
       if (values.includes(input.trim())) return;
       const newValues = [...values, input.trim()];
       setValues(newValues);
-      setInput('');
+      setInput("");
       onTagsChange(newValues);
     }
   };
@@ -45,11 +45,7 @@ export default function TagInput({ label, hint, tags, onTagsChange }) {
           <Col className="fr-pt-2w">
             <TagGroup>
               {values.map((tag) => (
-                <Tag
-                  key={tag}
-                  className="fr-mr-1w"
-                  onClick={() => handleDeleteClick(tag)}
-                >
+                <Tag key={tag} className="fr-mr-1w" onClick={() => handleDeleteClick(tag)}>
                   {tag}
                   <Icon iconPosition="right" name="ri-close-line" />
                 </Tag>
