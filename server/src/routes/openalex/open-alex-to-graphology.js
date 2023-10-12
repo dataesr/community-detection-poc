@@ -1,4 +1,4 @@
-import { dataToGraphology } from "../../graphology/graph";
+import { dataToGraphology } from '../../graphology/graph';
 
 const MAX_NUMBER_OF_AUTHORS = 20;
 
@@ -13,9 +13,9 @@ function getNodesFromPublicationList(publicationList) {
         .reduce(
           (a, { id, display_name }) => ({
             ...a,
-            [id]: { label: display_name.toLowerCase(), publicationId: publicationId },
+            [id]: { label: display_name.toLowerCase(), publicationId },
           }),
-          {}
+          {},
         );
       return [
         ...acc,
@@ -31,17 +31,17 @@ function getEdgesFromPublicationList(publicationList) {
     const knownAuthors = authorships.filter(({ author }) => author?.id).map(({ author }) => author.id);
     const coAuthorships = knownAuthors.flatMap(
       // Graphology undirected edges must be sorted, to avoid duplicated edges.
-      (v, i) => knownAuthors.slice(i + 1).map((w) => (w < v ? { source: w, target: v } : { source: v, target: w }))
+      (v, i) => knownAuthors.slice(i + 1).map((w) => (w < v ? { source: w, target: v } : { source: v, target: w })),
     );
     return coAuthorships;
   });
 }
 
 export function openAlexToGraphology(publicationList) {
-  console.log("Publications count : ", publicationList.length);
+  console.log('Publications count : ', publicationList.length);
 
   const publicationListWithoutTooManyAuthors = publicationList.filter(
-    ({ authors = [] }) => authors.length <= MAX_NUMBER_OF_AUTHORS
+    ({ authors = [] }) => authors.length <= MAX_NUMBER_OF_AUTHORS,
   );
   const nodes = getNodesFromPublicationList(publicationListWithoutTooManyAuthors);
   const edges = getEdgesFromPublicationList(publicationListWithoutTooManyAuthors);

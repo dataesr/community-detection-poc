@@ -1,5 +1,5 @@
-import "@react-sigma/core/lib/react-sigma.min.css";
-import { Container, Col, Row, Alert } from "@dataesr/react-dsfr";
+import '@react-sigma/core/lib/react-sigma.min.css';
+import { Container, Col, Row, Alert } from '@dataesr/react-dsfr';
 import {
   ControlsContainer,
   FullScreenControl,
@@ -7,13 +7,13 @@ import {
   SigmaContainer,
   useRegisterEvents,
   ZoomControl,
-} from "@react-sigma/core";
-import { LayoutForceAtlas2Control } from "@react-sigma/layout-forceatlas2";
-import { UndirectedGraph } from "graphology";
-import { useState, useEffect } from "react";
-import NodePanel from "./NodePanel";
-import ClustersPanel from "./ClustersPanel";
-import { DEFAULT_NODE_COLOR, COMMUNTIY_COLORS } from "../styles/colors";
+} from '@react-sigma/core';
+import { LayoutForceAtlas2Control } from '@react-sigma/layout-forceatlas2';
+import { UndirectedGraph } from 'graphology';
+import { useState, useEffect } from 'react';
+import NodePanel from './NodePanel';
+import ClustersPanel from './ClustersPanel';
+import { DEFAULT_NODE_COLOR, COMMUNTIY_COLORS } from '../styles/colors';
 
 function GraphEvents({ onNodeClick, onStageClick }) {
   const registerEvents = useRegisterEvents();
@@ -36,23 +36,19 @@ function GraphEvents({ onNodeClick, onStageClick }) {
 
 const highlightGraph = (graph, selectedNode) => {
   graph.updateEachNodeAttributes(
-    (node, attr) => {
-      return {
-        ...attr,
-        highlighted: node === selectedNode.id ? true : false,
-        color: node === selectedNode.id || graph.neighbors(selectedNode.id).includes(node) ? attr.color : "#E2E2E2",
-      };
-    },
-    { attributes: ["highlighted", "color"] }
+    (node, attr) => ({
+      ...attr,
+      highlighted: node === selectedNode.id,
+      color: node === selectedNode.id || graph.neighbors(selectedNode.id).includes(node) ? attr.color : '#E2E2E2',
+    }),
+    { attributes: ['highlighted', 'color'] },
   );
   graph.updateEachEdgeAttributes(
-    (edge, attr) => {
-      return {
-        ...attr,
-        hidden: graph.extremities(edge).includes(selectedNode.id) ? false : true,
-      };
-    },
-    { attributes: ["hidden"] }
+    (edge, attr) => ({
+      ...attr,
+      hidden: !graph.extremities(edge).includes(selectedNode.id),
+    }),
+    { attributes: ['hidden'] },
   );
   return graph;
 };
@@ -85,52 +81,48 @@ export default function Graph({ data }) {
 
   // Update community colors
   graph.updateEachNodeAttributes(
-    (node, attr) => {
-      return {
-        ...attr,
-        color: COMMUNTIY_COLORS?.[attr.community] || DEFAULT_NODE_COLOR,
-      };
-    },
-    { attributes: ["color"] }
+    (node, attr) => ({
+      ...attr,
+      color: COMMUNTIY_COLORS?.[attr.community] || DEFAULT_NODE_COLOR,
+    }),
+    { attributes: ['color'] },
   );
 
   return (
-    <>
-      <Container fluid className="fr-my-3w">
-        <Row gutters>
-          <Col n="12">
-            <SigmaContainer
-              style={{ height: "500px" }}
-              graph={selectedNode ? highlightGraph(graph, selectedNode) : graph}
-            >
-              <GraphEvents
-                onNodeClick={(event) => {
-                  setSelectedNode({
-                    id: event.node,
-                    degree: graph.degree(event.node),
-                    ...graph.getNodeAttributes(event.node),
-                  });
-                }}
-                onStageClick={() => {
-                  setSelectedNode(null);
-                }}
-              />
-              <ControlsContainer position="bottom-right">
-                <ZoomControl />
-                <FullScreenControl />
-                {/* <LayoutForceAtlas2Control settings={{ settings: { slowDown: 10 } }} /> */}
-              </ControlsContainer>
-              <ControlsContainer position="top-right">
-                <SearchControl style={{ width: "200px" }} />
-              </ControlsContainer>
-            </SigmaContainer>
-          </Col>
-          <Col n="12">
-            <NodePanel selectedNode={selectedNode} graph={graph} data={data} />
-          </Col>
-        </Row>
-        <ClustersPanel graph={graph} data={data} />
-      </Container>
-    </>
+    <Container fluid className="fr-my-3w">
+      <Row gutters>
+        <Col n="12">
+          <SigmaContainer
+            style={{ height: '500px' }}
+            graph={selectedNode ? highlightGraph(graph, selectedNode) : graph}
+          >
+            <GraphEvents
+              onNodeClick={(event) => {
+                setSelectedNode({
+                  id: event.node,
+                  degree: graph.degree(event.node),
+                  ...graph.getNodeAttributes(event.node),
+                });
+              }}
+              onStageClick={() => {
+                setSelectedNode(null);
+              }}
+            />
+            <ControlsContainer position="bottom-right">
+              <ZoomControl />
+              <FullScreenControl />
+              {/* <LayoutForceAtlas2Control settings={{ settings: { slowDown: 10 } }} /> */}
+            </ControlsContainer>
+            <ControlsContainer position="top-right">
+              <SearchControl style={{ width: '200px' }} />
+            </ControlsContainer>
+          </SigmaContainer>
+        </Col>
+        <Col n="12">
+          <NodePanel selectedNode={selectedNode} graph={graph} data={data} />
+        </Col>
+      </Row>
+      <ClustersPanel graph={graph} data={data} />
+    </Container>
   );
 }

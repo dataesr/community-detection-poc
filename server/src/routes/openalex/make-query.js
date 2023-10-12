@@ -6,16 +6,16 @@ export const makeQueryByKeywords = ({
   startyear,
   endyear,
   countries = [],
-  cursor = "*",
+  cursor = '*',
   previousResponse = [],
 }) => {
-  let url = "https://api.openalex.org/works?search=";
-  const cond = condition === "OR" ? "|" : "+";
-  url += `${queries.split(",").join(cond)}`;
+  let url = 'https://api.openalex.org/works?search=';
+  const cond = condition === 'OR' ? '|' : '+';
+  url += `${queries.split(',').join(cond)}`;
   url += `&filter=publication_year:${startyear}-${endyear},is_paratext:false`;
-  url += countries.length > 0 ? `,institutions.country_code:${countries.split(",").join("|")}` : "";
-  url += "&mailto=bso@recherche.gouv.fr&per_page=200";
-  console.log("openalex url", url);
+  url += countries.length > 0 ? `,institutions.country_code:${countries.split(',').join('|')}` : '';
+  url += '&mailto=bso@recherche.gouv.fr&per_page=200';
+  console.log('openalex url', url);
   return fetch(`${url}&cursor=${cursor}`)
     .then((response) => response.json())
     .then(({ meta, results }) => {
@@ -41,15 +41,15 @@ export const makeQueryByAuthors = ({
   startyear,
   endyear,
   countries = [],
-  cursor = "*",
+  cursor = '*',
   previousResponse = [],
 }) => {
-  let url = "https://api.openalex.org/works?mailto=bso@recherche.gouv.fr&per_page=200";
+  let url = 'https://api.openalex.org/works?mailto=bso@recherche.gouv.fr&per_page=200';
   url += `&filter=publication_year:${startyear}-${endyear},is_paratext:false`;
-  const cond = condition === "OR" ? "|" : "+";
-  url += `,author.orcid:${queries.split(",").join(cond)}`;
-  url += countries.length > 0 ? `,institutions.country_code:${countries.split(",").join("|")}` : "";
-  console.log("openalex url", url);
+  const cond = condition === 'OR' ? '|' : '+';
+  url += `,author.orcid:${queries.split(',').join(cond)}`;
+  url += countries.length > 0 ? `,institutions.country_code:${countries.split(',').join('|')}` : '';
+  console.log('openalex url', url);
   return fetch(`${url}&cursor=${cursor}`)
     .then((response) => response.json())
     .then(({ meta, results }) => {
@@ -75,14 +75,14 @@ export const makeQueryByStructures = ({
   startyear,
   endyear,
   countries = [],
-  cursor = "*",
+  cursor = '*',
   previousResponse = [],
 }) => {
-  let url = "https://api.openalex.org/works?mailto=bso@recherche.gouv.fr&per_page=200";
+  let url = 'https://api.openalex.org/works?mailto=bso@recherche.gouv.fr&per_page=200';
   url += `&filter=publication_year:${startyear}-${endyear},is_paratext:false`;
-  const cond = condition === "OR" ? "|" : "+";
-  url += `,institutions.ror:${queries.split(",").join(cond)}`;
-  console.log("openalex url", url);
+  const cond = condition === 'OR' ? '|' : '+';
+  url += `,institutions.ror:${queries.split(',').join(cond)}`;
+  console.log('openalex url', url);
   return fetch(`${url}&cursor=${cursor}`)
     .then((response) => response.json())
     .then(({ meta, results }) => {

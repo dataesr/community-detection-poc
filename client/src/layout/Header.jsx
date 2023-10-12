@@ -1,5 +1,5 @@
-import PropTypes from "prop-types";
-import { Badge, Header as HeaderWrapper, HeaderBody, Logo, Service, Tool, ToolItemGroup } from "@dataesr/react-dsfr";
+import PropTypes from 'prop-types';
+import { Badge, Header as HeaderWrapper, HeaderBody, Logo, Service, Tool, ToolItemGroup } from '@dataesr/react-dsfr';
 
 const { VITE_APP_NAME, VITE_HEADER_TAG, VITE_HEADER_TAG_COLOR, VITE_MINISTER_NAME, VITE_DESCRIPTION } = import.meta
   .env;
@@ -12,19 +12,19 @@ export default function Header({ switchTheme }) {
       <HeaderBody>
         <Logo splitCharacter={9}>{VITE_MINISTER_NAME}</Logo>
         <Service
-          title={
+          title={(
             <>
               {VITE_APP_NAME}
               {VITE_HEADER_TAG && (
                 <Badge
                   text={VITE_HEADER_TAG}
-                  color={!VITE_HEADER_TAG_COLOR ? "info" : undefined}
+                  color={!VITE_HEADER_TAG_COLOR ? 'info' : undefined}
                   isSmall
                   colorFamily={VITE_HEADER_TAG_COLOR}
                 />
               )}
             </>
-          }
+          )}
           description={VITE_DESCRIPTION}
         />
         <Tool closeButtonLabel="fermer" className="extend">

@@ -1,5 +1,5 @@
-import { NavLink } from "react-router-dom";
-import PropTypes from "prop-types";
+import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import {
   Footer as FooterWrapper,
   FooterBody,
@@ -8,7 +8,7 @@ import {
   FooterLink,
   Link,
   Logo,
-} from "@dataesr/react-dsfr";
+} from '@dataesr/react-dsfr';
 
 const { VITE_APP_NAME, VITE_MINISTER_NAME, VITE_DESCRIPTION, VITE_GIT_REPOSITORY_URL, VITE_VERSION } = import.meta.env;
 

@@ -1,6 +1,6 @@
-import { error as OAVError } from "express-openapi-validator";
-import { HTTPError } from "../errors";
-import logger from "../../services/logger";
+import { error as OAVError } from 'express-openapi-validator';
+import { HTTPError } from '../errors';
+import logger from '../../services/logger';
 
 export function handleErrors(err, req, res, next) {
   const { path, method } = req;
@@ -19,35 +19,35 @@ export function handleErrors(err, req, res, next) {
   if (err instanceof OAVError.BadRequest) {
     logger.info(err, { path, method });
     return res.status(400).json({
-      error: "Validation failed",
+      error: 'Validation failed',
       details: err.errors,
     });
   }
   if (err instanceof OAVError.NotFound) {
     logger.info(err, { path, method });
     return res.status(404).json({
-      error: "NotFound",
+      error: 'NotFound',
       details: err.errors,
     });
   }
   if (err instanceof OAVError.InternalServerError) {
     logger.error(err, { path, method });
     return res.status(500).json({
-      error: "Something went wrong",
+      error: 'Something went wrong',
       details: err.errors,
     });
   }
   if (err instanceof OAVError.Unauthorized) {
     logger.info(err, { path, method });
     return res.status(401).json({
-      error: "User must be logged in",
+      error: 'User must be logged in',
       details: err.errors,
     });
   }
   if (err) {
     logger.error(err);
     return res.status(err.status || 500).json({
-      message: "Something went wrong",
+      message: 'Something went wrong',
       details: [],
     });
   }

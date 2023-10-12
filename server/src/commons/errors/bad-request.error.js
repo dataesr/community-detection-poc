@@ -1,8 +1,8 @@
-import HTTPError from "./http.error";
+import HTTPError from './http.error';
 
 class BadRequestError extends HTTPError {
   constructor(message, errors = []) {
-    super(message || "Bad request", errors);
+    super(message || 'Bad request', errors);
     this.statusCode = 400;
   }
 }

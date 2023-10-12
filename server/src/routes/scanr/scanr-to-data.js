@@ -1,4 +1,4 @@
-import { dataToGraphology } from "../../graphology/graph";
+import { dataToGraphology } from '../../graphology/graph';
 
 function getNodesFromPublicationList(publicationList) {
   return publicationList.flatMap(({ authors, id: publicationId }) => {
@@ -6,7 +6,7 @@ function getNodesFromPublicationList(publicationList) {
     return authors.reduce((acc, { person }) => {
       if (!person?.id) return acc;
       const { id: authorId, fullName: name } = person;
-      return [...acc, { id: authorId, attributes: { id: authorId, name: name, publicationId: publicationId } }];
+      return [...acc, { id: authorId, attributes: { id: authorId, name, publicationId } }];
     }, []);
   });
 }
@@ -17,7 +17,7 @@ function getEdgesFromPublicationList(publicationList) {
     const knownAuthors = authors.filter(({ person }) => person?.id).map(({ person }) => person.id);
     const coAuthorships = knownAuthors.flatMap(
       // Graphology undirected edges must be sorted, to avoid duplicated edges.
-      (v, i) => knownAuthors.slice(i + 1).map((w) => (w < v ? { source: w, target: v } : { source: v, target: w }))
+      (v, i) => knownAuthors.slice(i + 1).map((w) => (w < v ? { source: w, target: v } : { source: v, target: w })),
     );
     return coAuthorships;
   });
@@ -31,27 +31,29 @@ export function scanrToGraphology(publicationList) {
 }
 
 export function scanrToPublications(publicationList) {
-  return publicationList.flatMap(({ id, title, type, year, isOa, domains = [], affiliations = [] }) => {
+  return publicationList.flatMap(({
+    id, title, type, year, isOa, domains = [], affiliations = [],
+  }) => {
     if (!id) return [];
     const topics = domains
-      .filter((domain) => domain.type === "wikidata")
+      .filter((domain) => domain.type === 'wikidata')
       .reduce(
         (acc, { code, label }) => ({
           ...acc,
           [code]: { label: label.default.toLowerCase() },
         }),
-        {}
+        {},
       );
     const affiliationIds = affiliations.reduce((acc, { id }) => ({ ...acc, id }), []);
 
     return {
-      id: id,
+      id,
       attributes: {
         title: title.default,
-        type: type,
-        year: year,
-        isOa: isOa,
-        topics: topics,
+        type,
+        year,
+        isOa,
+        topics,
         affiliations: affiliationIds,
       },
     };
@@ -64,10 +66,10 @@ export function scanrToStructures(publicationList) {
     return affiliations.reduce(
       (acc, { id, label, address = [] }) => ({
         ...acc,
-        id: id,
+        id,
         attributes: { name: label.default.toLowerCase(), country: address[0]?.country, city: address[0]?.city },
       }),
-      {}
+      {},
     );
   });
 }

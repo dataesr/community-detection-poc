@@ -1,13 +1,13 @@
-import React, { useEffect, useId } from "react";
-import PropTypes from "prop-types";
-import "./spinner.scss";
-import { Row, Text } from "@dataesr/react-dsfr";
+import React, { useEffect, useId } from 'react';
+import PropTypes from 'prop-types';
+import './spinner.scss';
+import { Row, Text } from '@dataesr/react-dsfr';
 
 function Spinner({ size }) {
   const id = useId();
   useEffect(() => {
-    document.getElementById(id).style.setProperty("width", `${size}px`);
-    document.getElementById(id).style.setProperty("height", `${size}px`);
+    document.getElementById(id).style.setProperty('width', `${size}px`);
+    document.getElementById(id).style.setProperty('height', `${size}px`);
   }, [size, id]);
 
   return (

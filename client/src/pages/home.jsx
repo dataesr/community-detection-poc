@@ -13,61 +13,60 @@ import {
   TagGroup,
   TextInput,
   Title,
-} from "@dataesr/react-dsfr";
-import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+} from '@dataesr/react-dsfr';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
-import { PageSpinner } from "../components/spinner";
+import { PageSpinner } from '../components/spinner';
 
-import Graph from "../layout/Graph";
-import TagInput from "../layout/TagInput";
+import Graph from '../layout/Graph';
+import TagInput from '../layout/TagInput';
 
-import { graphEncodeToJson } from "../utils/utils.js";
+import { graphEncodeToJson } from '../utils/utils.js';
 
 async function getData({ datasource, type, queries, condition, startyear, endyear, countries }) {
   return fetch(
     `/api/${datasource}?type=${type}&queries=${queries.join(
-      ","
-    )}&condition=${condition}&startyear=${startyear}&endyear=${endyear}&countries=${countries}`
-  ).then((response) => (response.ok ? response.json() : "Oops... The request to the API failed"));
+      ',',
+    )}&condition=${condition}&startyear=${startyear}&endyear=${endyear}&countries=${countries}`,
+  ).then((response) => (response.ok ? response.json() : 'Oops... The request to the API failed'));
 }
 
 async function alexGetCountries() {
-  return fetch("https://api.openalex.org/works?group_by=institutions.country_code&mailto=bso@recherche.gouv.fr").then(
-    (response) => (response.ok ? response.json() : "Oops... The request to the OpenAlex API failed")
+  return fetch('https://api.openalex.org/works?group_by=institutions.country_code&mailto=bso@recherche.gouv.fr').then(
+    (response) => (response.ok ? response.json() : 'Oops... The request to the OpenAlex API failed'),
   );
 }
 
 const exportJson = (jsonString) => {
-  const link = document.createElement("a");
+  const link = document.createElement('a');
   link.href = jsonString;
-  link.download = "graph.json";
+  link.download = 'graph.json';
   link.click();
 };
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [formDatasource, setFormDatasource] = useState(searchParams.getAll("datasource")?.[0] || "scanr");
-  const [formType, setFormType] = useState(searchParams.getAll("type")?.[0] || "keyword");
-  const [formQueries, setFormQueries] = useState(searchParams.getAll("queries") || []);
-  const [formCondition, setFormCondition] = useState(searchParams.getAll("condition")[0] || "OR");
-  const [formStartYear, setFormStartYear] = useState(searchParams.getAll("startyear")[0] || 2018);
-  const [formEndYear, setFormEndYear] = useState(searchParams.getAll("endyear")[0] || 2023);
-  const [formCountries, setFormCountries] = useState(searchParams.getAll("countries") || ["FR"]);
+  const [formDatasource, setFormDatasource] = useState(searchParams.getAll('datasource')?.[0] || 'scanr');
+  const [formType, setFormType] = useState(searchParams.getAll('type')?.[0] || 'keyword');
+  const [formQueries, setFormQueries] = useState(searchParams.getAll('queries') || []);
+  const [formCondition, setFormCondition] = useState(searchParams.getAll('condition')[0] || 'OR');
+  const [formStartYear, setFormStartYear] = useState(searchParams.getAll('startyear')[0] || 2018);
+  const [formEndYear, setFormEndYear] = useState(searchParams.getAll('endyear')[0] || 2023);
+  const [formCountries, setFormCountries] = useState(searchParams.getAll('countries') || ['FR']);
   const [isError, setFormIsError] = useState(false);
 
   useEffect(
-    () =>
-      setSearchParams({
-        datasource: formDatasource,
-        type: formType,
-        queries: formQueries,
-        condition: formCondition,
-        startyear: formStartYear,
-        endyear: formEndYear,
-        countries: formCountries,
-      }),
+    () => setSearchParams({
+      datasource: formDatasource,
+      type: formType,
+      queries: formQueries,
+      condition: formCondition,
+      startyear: formStartYear,
+      endyear: formEndYear,
+      countries: formCountries,
+    }),
     [
       ,
       formDatasource,
@@ -78,28 +77,27 @@ export default function Home() {
       formEndYear,
       formCountries,
       setSearchParams,
-    ]
+    ],
   );
 
   const { data, isFetching, refetch } = useQuery({
-    queryKey: ["data"],
-    queryFn: () =>
-      getData({
-        datasource: formDatasource,
-        type: formType,
-        queries: formQueries,
-        condition: formCondition,
-        startyear: formStartYear,
-        endyear: formEndYear,
-        countries: formCountries,
-      }),
+    queryKey: ['data'],
+    queryFn: () => getData({
+      datasource: formDatasource,
+      type: formType,
+      queries: formQueries,
+      condition: formCondition,
+      startyear: formStartYear,
+      endyear: formEndYear,
+      countries: formCountries,
+    }),
     enabled: false,
     staleTime: Infinity,
     cacheTime: Infinity,
   });
 
   const { data: countries, isFetching: isCountriesFetching } = useQuery({
-    queryKey: ["countries"],
+    queryKey: ['countries'],
     queryFn: alexGetCountries,
     staleTime: Infinity,
     cacheTime: Infinity,
@@ -117,43 +115,43 @@ export default function Home() {
 
   const datasources = [
     {
-      label: "scanR",
-      value: "scanr",
+      label: 'scanR',
+      value: 'scanr',
     },
     {
-      label: "OpenAlex",
-      value: "openalex",
+      label: 'OpenAlex',
+      value: 'openalex',
     },
     {
-      label: "HAL",
-      value: "hal",
+      label: 'HAL',
+      value: 'hal',
       disabled: true,
     },
   ];
 
   const types = [
     {
-      label: "Coauthoring by keywords",
-      value: "keyword",
+      label: 'Coauthoring by keywords',
+      value: 'keyword',
     },
     {
-      label: "Coauthoring by authors ids",
-      value: "author",
+      label: 'Coauthoring by authors ids',
+      value: 'author',
     },
     {
-      label: "Coauthoring by structures ids",
-      value: "structure",
+      label: 'Coauthoring by structures ids',
+      value: 'structure',
     },
   ];
 
   const conditions = [
     {
-      label: "OR",
-      value: "OR",
+      label: 'OR',
+      value: 'OR',
     },
     {
-      label: "AND",
-      value: "AND",
+      label: 'AND',
+      value: 'AND',
     },
   ];
 
@@ -185,13 +183,13 @@ export default function Home() {
         onChange={(e) => {
           setFormType(e.target.value);
           setFormQueries([]);
-          setFormCondition("OR");
+          setFormCondition('OR');
         }}
       />
       <Row gutters>
         <Col>
           <TagInput
-            label={formType.charAt(0).toUpperCase() + formType.slice(1) + "s"}
+            label={`${formType.charAt(0).toUpperCase() + formType.slice(1) }s`}
             hint='Validate by pressing "Return" key'
             tags={formQueries}
             onTagsChange={(tags) => setFormQueries(tags)}
@@ -211,9 +209,9 @@ export default function Home() {
           </Col>
         )}
       </Row>
-      {formDatasource === "openalex" &&
-        formType != "structure" &&
-        (isCountriesFetching ? (
+      {formDatasource === 'openalex'
+        && formType != 'structure'
+        && (isCountriesFetching ? (
           <Container>
             <PageSpinner />
           </Container>
@@ -224,7 +222,7 @@ export default function Home() {
               hint="An OR will be perform"
               onChange={(selectedCountry) => addCountry(selectedCountry)}
               options={countries.group_by
-                .filter((country) => country.key !== "unknown")
+                .filter((country) => country.key !== 'unknown')
                 .map((item) => ({ value: item.key, label: item.key_display_name }))}
             />
             <TagGroup>
