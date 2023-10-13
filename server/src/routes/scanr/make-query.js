@@ -46,15 +46,15 @@ export const makeQueryByKeywords = (queries, condition, startyear, endyear, size
 });
 
 export const makeQueryByAuthors = (queries, condition, startyear, endyear, size = DEFAULT_SIZE) => {
-  const filter_block = [
+  const filterBlock = [
     { terms: { 'authors.role.keyword': ['author', 'directeurthese'] } },
     { range: { year: { gte: startyear, lte: endyear } } },
   ];
 
-  if (condition == 'AND') {
-    queries.split(',').map((id) => filter_block.push({ terms: { 'authors.person.id.keyword': [`idref${id}`] } }));
+  if (condition === 'AND') {
+    queries.split(',').map((id) => filterBlock.push({ terms: { 'authors.person.id.keyword': [`idref${id}`] } }));
   } else {
-    filter_block.push({ terms: { 'authors.person.id.keyword': queries.split(',').map((id) => `idref${id}`) } });
+    filterBlock.push({ terms: { 'authors.person.id.keyword': queries.split(',').map((id) => `idref${id}`) } });
   }
 
   return {
@@ -64,7 +64,7 @@ export const makeQueryByAuthors = (queries, condition, startyear, endyear, size 
       function_score: {
         query: {
           bool: {
-            filter: filter_block,
+            filter: filterBlock,
           },
         },
         random_score: { seed: 2001 },
@@ -75,15 +75,15 @@ export const makeQueryByAuthors = (queries, condition, startyear, endyear, size 
 };
 
 export const makeQueryByStructures = (queries, condition, startyear, endyear, size = DEFAULT_SIZE) => {
-  const filter_block = [
+  const filterBlock = [
     { terms: { 'authors.role.keyword': ['author', 'directeurthese'] } },
     { range: { year: { gte: startyear, lte: endyear } } },
   ];
 
-  if (condition == 'AND') {
-    queries.split(',').map((id) => filter_block.push({ terms: { 'affiliations.id.keyword': [`${id}`] } }));
+  if (condition === 'AND') {
+    queries.split(',').map((id) => filterBlock.push({ terms: { 'affiliations.id.keyword': [`${id}`] } }));
   } else {
-    filter_block.push({ terms: { 'affiliations.id.keyword': queries.split(',') } });
+    filterBlock.push({ terms: { 'affiliations.id.keyword': queries.split(',') } });
   }
 
   return {
@@ -93,7 +93,7 @@ export const makeQueryByStructures = (queries, condition, startyear, endyear, si
       function_score: {
         query: {
           bool: {
-            filter: filter_block,
+            filter: filterBlock,
           },
         },
         random_score: { seed: 2001 },

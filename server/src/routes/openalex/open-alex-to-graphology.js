@@ -3,7 +3,7 @@ import { dataToGraphology } from '../../graphology/graph';
 const MAX_NUMBER_OF_AUTHORS = 20;
 
 function getNodesFromPublicationList(publicationList) {
-  return publicationList.flatMap(({ authorships, id: publicationId, concepts = [], title, publication_year }) => {
+  return publicationList.flatMap(({ authorships, id: publicationId, concepts = [], title, publicationYear }) => {
     if (!authorships) return [];
     return authorships.reduce((acc, { author }) => {
       if (!author?.id) return acc;
@@ -19,7 +19,7 @@ function getNodesFromPublicationList(publicationList) {
         );
       return [
         ...acc,
-        { id: authorId, attributes: { id: authorId, label, topics, publication: title, year: publication_year } },
+        { id: authorId, attributes: { id: authorId, label, topics, publication: title, year: publicationYear } },
       ];
     }, []);
   });

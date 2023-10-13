@@ -11,18 +11,19 @@
   },
   "dependencies": {
     "@dataesr/react-dsfr": "^3.9.0",
+    "@react-sigma/core": "^3.4.0",
     "@react-sigma/layout-forceatlas2": "^3.4.1",
     "@tanstack/react-query": "^4.29.5",
     "@tanstack/react-query-devtools": "^4.29.6",
     "classnames": "^2.3.2",
     "graphology": "^0.25.1",
+    "hex-color-to-color-name": "^1.0.2",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.1"
   },
   "devDependencies": {
-    "@react-sigma/core": "^3.4.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^4.0.0",

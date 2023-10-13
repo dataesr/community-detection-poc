@@ -23,7 +23,7 @@ import { PageSpinner } from '../components/spinner';
 import Graph from '../layout/Graph';
 import TagInput from '../layout/TagInput';
 
-import { graphEncodeToJson } from '../utils/utils.js';
+import { graphEncodeToJson } from '../utils/graphUtils';
 
 async function getData({ datasource, type, queries, condition, startyear, endyear, countries }) {
   return fetch(
@@ -68,7 +68,6 @@ export default function Home() {
       countries: formCountries,
     }),
     [
-      ,
       formDatasource,
       formType,
       formQueries,

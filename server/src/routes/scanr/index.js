@@ -1,4 +1,4 @@
-import express, { response } from 'express';
+import express from 'express';
 import { scanrToGraphology, scanrToPublications, scanrToStructures } from './scanr-to-data';
 import { makeQueryByKeywords, makeQueryByAuthors, makeQueryByStructures } from './make-query';
 import config from '../../config';
@@ -25,6 +25,7 @@ router.route('/scanr').get(async (req, res) => {
     .then(({ hits }) => hits?.hits?.map(({ _source }) => _source));
 
   console.log('Publications count : ', publicationList.length);
+
   const publicationListFiltered = publicationList.filter(
     ({ authors = [] }) => authors.length <= MAX_NUMBER_OF_AUTHORS,
   );
@@ -34,6 +35,8 @@ router.route('/scanr').get(async (req, res) => {
     publications: scanrToPublications(publicationListFiltered),
     structures: scanrToStructures(publicationListFiltered),
   };
+
+  console.log('scanr data', data);
 
   res.json(data);
 });

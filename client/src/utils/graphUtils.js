@@ -1,22 +1,3 @@
-export const getPublicationAttributes = (data, publicationId, attribute) => data.publications?.find((publication) => publication.id === publicationId)?.attributes?.[attribute];
-
-export const getStructuresAttributes = (data, structureId, attribute) => data.structures?.find((structure) => structure.id === structureId)?.attributes?.[attribute];
-
-export const getThematicFromCluster = (cluster, data) => {
-  const clusterTopics = {};
-  cluster.forEach((author) => {
-    author.attributes.publications.forEach((id) => {
-      Object.values(getPublicationAttributes(data, id, 'topics')).forEach((topic) => {
-        clusterTopics[topic.label] = clusterTopics?.[topic.label] + 1 || 1;
-      });
-    });
-  });
-
-  console.log(clusterTopics);
-
-  return clusterTopics;
-};
-
 export const graphEncodeToJson = (data) => {
   const items = [];
   const links = [];

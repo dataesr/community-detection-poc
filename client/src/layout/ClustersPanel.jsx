@@ -1,14 +1,11 @@
 import '@react-sigma/core/lib/react-sigma.min.css';
 import { Container, Title, Text, Col, Row, Badge, BadgeGroup } from '@dataesr/react-dsfr';
 import { GetColorName } from 'hex-color-to-color-name';
-import { getThematicFromCluster } from '../utils/utils';
+import { communityGetTopicsCount } from '../utils/communityUtils';
 import { COMMUNTIY_COLORS } from '../styles/colors';
 
-export default function ClustersPanel({ graph, data }) {
+export default function ClustersPanel({ graph, communities, publications }) {
   if (!graph.order) return null;
-
-  const communities = Object.groupBy(data.graph.nodes, ({ attributes }) => attributes.community);
-  console.log('communities', communities);
 
   return (
     <Container fluid className="fr-my-3w">
@@ -29,12 +26,12 @@ export default function ClustersPanel({ graph, data }) {
               <div className="fr-card__body">
                 <Title as="h6">5 main topics</Title>
                 <ul>
-                  {Object.entries(getThematicFromCluster(communities[community], data)).map((entry) => (
-                    <li key={entry[0]}>
-                      {entry[0]}
+                  {communityGetTopicsCount(communities[community], publications).map((topic) => (
+                    <li key={topic[0]}>
+                      {topic[0]}
                       {' '}
                       (
-                      {entry[1]}
+                      {topic[1]}
                       )
                     </li>
                   ))}

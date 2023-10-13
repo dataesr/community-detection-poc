@@ -31,33 +31,38 @@ export function scanrToGraphology(publicationList) {
 }
 
 export function scanrToPublications(publicationList) {
-  return publicationList.flatMap(({
-    id, title, type, year, isOa, domains = [], affiliations = [],
-  }) => {
-    if (!id) return [];
-    const topics = domains
+  const publications = {};
+
+  console.log('publicationList', publicationList);
+
+  publicationList.forEach((publication) => {
+    console.log('publication', publication);
+    if (!('id' in publication)) return {};
+    const topics = publication?.domains
       .filter((domain) => domain.type === 'wikidata')
       .reduce(
-        (acc, { code, label }) => ({
+        (acc, { code, label }) => ([
           ...acc,
-          [code]: { label: label.default.toLowerCase() },
-        }),
-        {},
+          { code, label: label.default.toLowerCase() },
+        ]),
+        [],
       );
-    const affiliationIds = affiliations.reduce((acc, { id }) => ({ ...acc, id }), []);
+    const affiliationIds = publication?.affiliations.reduce((acc, { id: affiliationId }) => ({ ...acc, affiliationId }), []);
 
-    return {
-      id,
-      attributes: {
-        title: title.default,
-        type,
-        year,
-        isOa,
-        topics,
-        affiliations: affiliationIds,
-      },
+    publications[publication.id] = {
+      id: publication.id,
+      title: publication?.title.default,
+      type: publication?.type,
+      year: publication?.year,
+      isOa: publication?.isOa,
+      topics,
+      affiliations: affiliationIds,
     };
   });
+
+  console.log('scanr publications', publications);
+
+  return publications;
 }
 
 export function scanrToStructures(publicationList) {

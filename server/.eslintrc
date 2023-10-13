@@ -6,6 +6,8 @@
     "ecmaVersion": 13
   },
   "rules": {
+    "no-continue": "off",
+    "no-console": "off",
     "import/prefer-default-export": 0,
     "max-len": [
       "error",

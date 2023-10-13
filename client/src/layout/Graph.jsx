@@ -8,7 +8,7 @@ import {
   useRegisterEvents,
   ZoomControl,
 } from '@react-sigma/core';
-import { LayoutForceAtlas2Control } from '@react-sigma/layout-forceatlas2';
+// import { LayoutForceAtlas2Control } from '@react-sigma/layout-forceatlas2';
 import { UndirectedGraph } from 'graphology';
 import { useState, useEffect } from 'react';
 import NodePanel from './NodePanel';
@@ -54,32 +54,21 @@ const highlightGraph = (graph, selectedNode) => {
 };
 
 export default function Graph({ data }) {
-  console.log(data);
-  const [selectedNode, setSelectedNode] = useState(null);
+  console.log('data', data);
   const graph = UndirectedGraph.from(data.graph);
+  const { publications, structures } = data;
+
+  const [selectedNode, setSelectedNode] = useState(null);
 
   // Return alert if graph empty
-  if (graph.order == 0) {
+  if (graph.order === 0) {
     return <Alert title="No results found" description="Your query returned no results" type="warning" closable />;
   }
 
-  // Fill communities
-  // const communities = graph.reduceNodes((acc, node, attr) => {
-  //   const { label, size, community, topics, weight } = attr;
-  //   if (!acc[community]) {
-  //     acc[community] = [{ id: node, label, size, degree: graph.degree(node), topics, weight }];
-  //   } else {
-  //     acc[community] = [...acc[community], { id: node, label, size, degree: graph.degree(node), topics, weight }].sort(
-  //       (a, b) => b.size - a.size
-  //     );
-  //   }
-  //   return acc;
-  // }, {});
-  // const clustersKeys = Object.keys(communities)
-  //   .sort((a, b) => communities[b].length - communities[a].length)
-  //   .slice(0, 6);
+  const communities = Object.groupBy(data.graph.nodes, ({ attributes }) => attributes.community);
+  console.log('communities', communities);
 
-  // Update community colors
+  // Update nodes
   graph.updateEachNodeAttributes(
     (node, attr) => ({
       ...attr,
@@ -119,10 +108,10 @@ export default function Graph({ data }) {
           </SigmaContainer>
         </Col>
         <Col n="12">
-          <NodePanel selectedNode={selectedNode} graph={graph} data={data} />
+          <NodePanel selectedNode={selectedNode} graph={graph} publications={publications} />
         </Col>
       </Row>
-      <ClustersPanel graph={graph} data={data} />
+      <ClustersPanel graph={graph} communities={communities} publications={publications} />
     </Container>
   );
 }

@@ -6,6 +6,7 @@
     "browser": true
   },
   "rules": {
+    "no-console": "off",
     "jsx-a11y/anchor-is-valid": "off",
     "react/jsx-filename-extension": 0,
     "react/react-in-jsx-scope": 0,
@@ -20,10 +21,9 @@
       "warn",
       200
     ],
-    "react/prop-types": "warn",
+    "react/prop-types": "off",
     "import/prefer-default-export": 0,
     "no-underscore-dangle": 0,
-    "no-console": "warn",
     "indent": [
       "warn",
       2,
