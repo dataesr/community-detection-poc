@@ -1,7 +1,12 @@
 import '@react-sigma/core/lib/react-sigma.min.css';
 import { Container, Title, Text, Col, Row, Badge, BadgeGroup } from '@dataesr/react-dsfr';
 import { GetColorName } from 'hex-color-to-color-name';
-import { communityGetTopicsCount } from '../utils/communityUtils';
+import {
+  communityGetUniquePublications,
+  communityGetTopicsCount,
+  communityGetTypesCount,
+  communityGetBestAuthors,
+} from '../utils/communityUtils';
 import { COMMUNTIY_COLORS } from '../styles/colors';
 
 export default function ClustersPanel({ graph, communities, publications }) {
@@ -24,38 +29,39 @@ export default function ClustersPanel({ graph, communities, publications }) {
                 {GetColorName(COMMUNTIY_COLORS[community])}
               </p>
               <div className="fr-card__body">
+                <Badge className="fr-mb-2w" colorFamily="green-emeraude" text={`${communityGetUniquePublications(communities[community]).length} publications`} />
                 <Title as="h6">5 main topics</Title>
-                <ul>
-                  {communityGetTopicsCount(communities[community], publications).map((topic) => (
-                    <li key={topic[0]}>
-                      {topic[0]}
-                      {' '}
-                      (
-                      {topic[1]}
-                      )
-                    </li>
+                <BadgeGroup className="fr-mb-2w">
+                  {communityGetTopicsCount(communities[community], publications, 5).map((topic) => (
+                    <Badge type="info" text={`${topic[0]} (${topic[1]})`} />
                   ))}
-                </ul>
+                </BadgeGroup>
                 <Title as="h6">
                   {Math.min(10, communities[community].length)}
                   {' '}
                   main authors
                 </Title>
-                {Object.values(communities[community]).map((node) => (
-                  <>
-                    <Text bold className="fr-mb-1v" key={node.key}>
-                      {node.attributes.name}
-                    </Text>
-                    <BadgeGroup>
-                      <Badge
-                        colorFamily="purple-glycine"
-                        className="fr-ml-1w"
-                        text={`${node.attributes.weight} publications`}
-                      />
-                      <Badge className="fr-ml-1w" text={`${node.attributes.size} co-author(s)`} />
-                    </BadgeGroup>
-                  </>
-                ))}
+                <BadgeGroup className="fr-mb-2w">
+                  {communityGetBestAuthors(communities[community], 10).map((node) => (
+                    <Badge
+                      colorFamily="purple-glycine"
+                      text={`${node.attributes.name} (${node.attributes.weight})`}
+                    />
+                  ))}
+                </BadgeGroup>
+                <Title as="h6">
+                  {Math.min(3, communityGetTypesCount(communities[community], publications).length)}
+                  {' '}
+                  main types
+                </Title>
+                <BadgeGroup className="fr-mb-2w">
+                  {communityGetTypesCount(communities[community], publications, 3).map((type) => (
+                    <Badge
+                      colorFamily="yellow-tournesol"
+                      text={`${type[0]} (${type[1]})`}
+                    />
+                  ))}
+                </BadgeGroup>
               </div>
             </div>
           </Col>

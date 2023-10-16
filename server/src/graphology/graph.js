@@ -12,16 +12,16 @@ const DEFAULT_EDGE_RANGE = [0.5, 10];
 
 const GRAPH_MAX_ORDER = 150;
 
-const nodeComputeDefaultDegree = (degree, min_degree, max_degree) => {
-  const default_node_range = DEFAULT_NODE_RANGE[1] - DEFAULT_NODE_RANGE[0];
-  if (max_degree - min_degree <= default_node_range) return DEFAULT_NODE_RANGE[1] - (max_degree - degree);
-  return (degree / (max_degree - min_degree)) * default_node_range + DEFAULT_NODE_RANGE[0];
+const nodeComputeDefaultDegree = (degree, degreeMin, degreeMax) => {
+  const defaultNodeRange = DEFAULT_NODE_RANGE[1] - DEFAULT_NODE_RANGE[0];
+  if (degreeMax - degreeMin <= defaultNodeRange) return DEFAULT_NODE_RANGE[1] - (degreeMax - degree);
+  return (degree / (degreeMax - degreeMin)) * defaultNodeRange + DEFAULT_NODE_RANGE[0];
 };
 
-const edgeComputeDefaultWeight = (weight, min_weight, max_weight) => {
-  const default_edge_range = DEFAULT_EDGE_RANGE[1] - DEFAULT_EDGE_RANGE[0];
-  if (max_weight - min_weight <= default_edge_range) return DEFAULT_EDGE_RANGE[0] + (weight - min_weight);
-  return (weight / (max_weight - min_weight)) * default_edge_range + DEFAULT_EDGE_RANGE[0];
+const edgeComputeDefaultWeight = (weight, weightMin, weightMax) => {
+  const defaultEdgeRange = DEFAULT_EDGE_RANGE[1] - DEFAULT_EDGE_RANGE[0];
+  if (weightMax - weightMin <= defaultEdgeRange) return DEFAULT_EDGE_RANGE[0] + (weight - weightMin);
+  return (weight / (weightMax - weightMin)) * defaultEdgeRange + DEFAULT_EDGE_RANGE[0];
 };
 
 export function dataToGraphology(nodes, edges) {
@@ -31,15 +31,15 @@ export function dataToGraphology(nodes, edges) {
   // Add nodes and compute weight
   nodes.forEach(({ id, attributes }) => graph.updateNode(id, (attr) => ({
     ...attributes,
-    weight: attr?.weight + 1 || 1,
+    weight: (attr?.weight ?? 0) + 1,
     publications: attr?.publications
-      ? [...attr?.publications, attributes?.publicationId]
+      ? [...attr.publications, attributes?.publicationId]
       : [attributes?.publicationId],
   })));
 
   // Add edges and compute weight
   edges.forEach(({ source, target }) => graph.updateUndirectedEdgeWithKey(`(${source}--${target})`, source, target, (attr) => ({
-    weight: attr?.weight + 1 || 1,
+    weight: (attr?.weight ?? 0) + 1,
     label: `${attr?.weight || 1} copublications`,
   })));
 
@@ -47,7 +47,7 @@ export function dataToGraphology(nodes, edges) {
   let publiMinThresh = 1;
   while (graph.order > GRAPH_MAX_ORDER) {
     publiMinThresh += 1;
-    graph = subgraph(graph, (_, attr) => attr?.weight >= publiMinThresh);
+    graph = subgraph(graph, (key, attr) => (attr?.weight >= publiMinThresh)); // eslint-disable-line no-loop-func
   }
   console.log('Publications min threshold :', publiMinThresh);
   console.log('Graph order :', graph.order);
@@ -67,39 +67,27 @@ export function dataToGraphology(nodes, edges) {
   louvain.assign(graph);
 
   // Compute size range for visualization
-  const node_max_degree = Math.max.apply(
-    null,
-    graph.mapNodes((n, atrr) => weightedDegree(graph, n)),
-  );
-  const node_min_degree = Math.min.apply(
-    null,
-    graph.mapNodes((n, atrr) => weightedDegree(graph, n)),
-  );
-  const edge_max_weight = Math.max.apply(
-    null,
-    graph.mapEdges((e, atrr) => atrr.weight),
-  );
-  const edge_min_weight = Math.min.apply(
-    null,
-    graph.mapEdges((e, atrr) => atrr.weight),
-  );
-  console.log('Node max degree :', node_max_degree);
-  console.log('Node min degree :', node_min_degree);
-  console.log('Edge max weight :', edge_max_weight);
-  console.log('Edge min weight :', edge_min_weight);
+  const nodeMaxDegree = Math.max.apply(null, graph.mapNodes((n) => weightedDegree(graph, n)));
+  const nodeMinDegree = Math.min.apply(null, graph.mapNodes((n) => weightedDegree(graph, n)));
+  const edgeMaxDegree = Math.max.apply(null, graph.mapEdges((e, attr) => attr.weight));
+  const edgeMinDegree = Math.min.apply(null, graph.mapEdges((e, attr) => attr.weight));
+  console.log('Node max degree :', nodeMaxDegree);
+  console.log('Node min degree :', nodeMinDegree);
+  console.log('Edge max weight :', edgeMaxDegree);
+  console.log('Edge min weight :', edgeMinDegree);
 
   // Update node and edge size
   graph.updateEachNodeAttributes(
     (node, attr) => ({
       ...attr,
-      size: nodeComputeDefaultDegree(weightedDegree(graph, node), node_min_degree, node_max_degree),
+      size: nodeComputeDefaultDegree(weightedDegree(graph, node), nodeMinDegree, nodeMaxDegree),
     }),
     { attributes: ['size'] },
   );
   graph.updateEachEdgeAttributes(
     (edge, attr) => ({
       ...attr,
-      size: edgeComputeDefaultWeight(attr.weight, edge_min_weight, edge_max_weight),
+      size: edgeComputeDefaultWeight(attr.weight, edgeMinDegree, edgeMaxDegree),
     }),
     { attributes: ['size'] },
   );

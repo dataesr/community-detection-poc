@@ -33,34 +33,30 @@ export function scanrToGraphology(publicationList) {
 export function scanrToPublications(publicationList) {
   const publications = {};
 
-  console.log('publicationList', publicationList);
-
   publicationList.forEach((publication) => {
-    console.log('publication', publication);
-    if (!('id' in publication)) return {};
-    const topics = publication?.domains
-      .filter((domain) => domain.type === 'wikidata')
-      .reduce(
-        (acc, { code, label }) => ([
-          ...acc,
-          { code, label: label.default.toLowerCase() },
-        ]),
-        [],
-      );
-    const affiliationIds = publication?.affiliations.reduce((acc, { id: affiliationId }) => ({ ...acc, affiliationId }), []);
+    // console.log('publication', publication);
+    if ('id' in publication) {
+      const topics = publication?.domains?.filter((domain) => domain.type === 'wikidata')
+        .reduce(
+          (acc, { code, label }) => ([
+            ...acc,
+            { code, label: label.default.toLowerCase() },
+          ]),
+          [],
+        );
+      const affiliationIds = publication?.affiliations?.reduce((acc, { id: affiliationId }) => ([...acc, affiliationId]), []);
 
-    publications[publication.id] = {
-      id: publication.id,
-      title: publication?.title.default,
-      type: publication?.type,
-      year: publication?.year,
-      isOa: publication?.isOa,
-      topics,
-      affiliations: affiliationIds,
-    };
+      publications[publication.id] = {
+        id: publication.id,
+        title: publication?.title.default ?? 'undefined',
+        type: publication?.type ?? 'undefined',
+        year: publication?.year ?? null,
+        isOa: publication?.isOa ?? false,
+        topics,
+        affiliations: affiliationIds,
+      };
+    }
   });
-
-  console.log('scanr publications', publications);
 
   return publications;
 }

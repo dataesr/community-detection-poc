@@ -36,8 +36,6 @@ router.route('/scanr').get(async (req, res) => {
     structures: scanrToStructures(publicationListFiltered),
   };
 
-  console.log('scanr data', data);
-
   res.json(data);
 });
 

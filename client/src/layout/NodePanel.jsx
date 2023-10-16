@@ -1,6 +1,6 @@
 import '@react-sigma/core/lib/react-sigma.min.css';
 import { Badge, BadgeGroup, Title, Accordion, AccordionItem } from '@dataesr/react-dsfr';
-import { publicationGetTopicsCount } from '../utils/publicationUtils';
+import { publicationsGetTopicsCount } from '../utils/publicationUtils';
 
 export default function NodePanel({ selectedNode, graph, publications }) {
   if (!selectedNode) return null;
@@ -9,7 +9,7 @@ export default function NodePanel({ selectedNode, graph, publications }) {
     <div className="fr-card fr-card--shadow">
       <div className="fr-my-2w fr-card__body">
         <Title look="h6" as="p" className="fr-mb-1v">
-          {selectedNode.label}
+          {selectedNode.name}
         </Title>
         <BadgeGroup className="fr-mt-1w">
           <Badge colorFamily="yellow-tournesol" text={`${selectedNode.id}`} />
@@ -26,14 +26,13 @@ export default function NodePanel({ selectedNode, graph, publications }) {
           </AccordionItem>
           <AccordionItem title={`${selectedNode.weight} publications`}>
             {graph.getNodeAttribute(selectedNode.id, 'publications').map((publicationId) => (
-              <p>{publications[publicationId].title}</p>
+              <p>{publications[publicationId]?.title}</p>
             ))}
           </AccordionItem>
         </Accordion>
         <BadgeGroup className="fr-mt-2w">
-          {graph.getNodeAttribute(selectedNode.id, 'publications')
-            .map((publicationId) => publicationGetTopicsCount(publications, publicationId)
-              .map((topic) => <Badge type="info" text={`${topic[0]} (${topic[1]})`} />))}
+          {publicationsGetTopicsCount(publications, graph.getNodeAttribute(selectedNode.id, 'publications'), 10)
+            .map((topic) => <Badge type="info" text={`${topic[0]} (${topic[1]})`} />)}
         </BadgeGroup>
       </div>
     </div>
