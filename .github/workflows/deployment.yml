@@ -3,7 +3,7 @@ name: Deployment
 on:
   push:
     branches:
-      - main
+      - staging
 
 env:
   # Must match k8s deployment name
