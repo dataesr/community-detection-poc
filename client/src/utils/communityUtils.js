@@ -1,13 +1,13 @@
-export const communityGetUniquePublications = (community) => (
+const communityGetUniquePublications = (community) => (
   community.reduce((acc, node) => [...acc, ...node.attributes.publications.flatMap((id) => (!acc.includes(id) ? id : []))], [])
 );
 
-export function communityGetTopicsCount(community, publications, limit = 0) {
+function communityGetTopicsCount(community, publications, limit = 0) {
   const topics = {};
 
   // Count topics from unique publication ids
   community.reduce((acc, node) => [...acc, ...node.attributes.publications.flatMap((id) => (!acc.includes(id) ? id : []))], []).forEach((id) => {
-    publications[id]?.topics.forEach(({ label }) => { topics[label] = topics[label] + 1 || 1; });
+    publications[id]?.topics?.forEach(({ label }) => { topics[label] = topics[label] + 1 || 1; });
   });
 
   const numberOfTopics = Object.keys(topics).length;
@@ -26,7 +26,7 @@ export function communityGetTopicsCount(community, publications, limit = 0) {
   return Object.entries(topTopics);
 }
 
-export function communityGetTypesCount(community, publications, limit = 0) {
+function communityGetTypesCount(community, publications, limit = 0) {
   const types = {};
 
   // Count types from unique publication ids
@@ -52,8 +52,31 @@ export function communityGetTypesCount(community, publications, limit = 0) {
   return Object.entries(topTypes);
 }
 
-export function communityGetBestAuthors(community, limit = 0) {
+function communityGetBestAuthors(community, limit = 0) {
   const endSlice = limit > 0 ? limit : community.length;
   // Count and sort coauthors
   return community.sort((a, b) => b.attributes.publications.length - a.attributes.publications.length).slice(0, endSlice);
+}
+
+export function fillAndSortCommunities(communities, publications, { communitiesLimit = 0, topicsLimit = 0, typesLimit = 0, authorsLimit = 0 }) {
+  const filledCommunities = {};
+  const numberOfCommunities = Object.keys(communities).length;
+  const endSlice = communitiesLimit > 0 ? communitiesLimit : numberOfCommunities;
+
+  // Sort communities
+  const sortedCommunities = Object.entries(communities).sort((a, b) => b[1].length - a[1].length).slice(0, endSlice);
+
+  // Fill communities
+  sortedCommunities.forEach(([key, values]) => {
+    filledCommunities[key] = {
+      nodes: values,
+      size: values.length,
+      publications: communityGetUniquePublications(values),
+      topics: communityGetTopicsCount(values, publications, topicsLimit),
+      types: communityGetTypesCount(values, publications, typesLimit),
+      authors: communityGetBestAuthors(values, authorsLimit),
+    };
+  });
+
+  return filledCommunities;
 }
