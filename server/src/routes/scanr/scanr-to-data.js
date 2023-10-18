@@ -62,15 +62,21 @@ export function scanrToPublications(publicationList) {
 }
 
 export function scanrToStructures(publicationList) {
-  return publicationList.flatMap(({ affiliations = [] }) => {
-    if (!affiliations) return {};
-    return affiliations.reduce(
-      (acc, { id, label, address = [] }) => ({
-        ...acc,
-        id,
-        attributes: { name: label.default.toLowerCase(), country: address[0]?.country, city: address[0]?.city },
-      }),
-      {},
-    );
+  const structures = {};
+
+  publicationList.forEach(({ affiliations = [] }) => {
+    if (affiliations) {
+      affiliations.forEach(({ id, label, address = [] }) => {
+        if (!(id in structures)) {
+          structures[id] = {
+            name: label.default.toLowerCase(),
+            country: address[0]?.country ?? 'undefined',
+            city: address[0]?.city ?? 'undefined',
+          };
+        }
+      });
+    }
   });
+
+  return structures;
 }

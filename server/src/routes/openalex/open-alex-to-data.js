@@ -64,19 +64,21 @@ export function openAlexToPublications(publicationList) {
 }
 
 export function openAlexToStructures(publicationList) {
-  return publicationList.flatMap(({ authorships = [] }) => {
-    if (!authorships) return {};
-    return authorships.reduce(
-      (acc, { institutions = {} }) => {
-        if (!institutions || !('id' in institutions)) return acc;
-        return { ...acc,
-          id: institutions.id,
-          attributes: {
-            name: institutions?.display_name.toLowerCase() ?? 'Undefined',
-            country: institutions?.country_code ?? 'Undefined',
-          } };
-      },
-      {},
-    );
+  const structures = {};
+
+  publicationList.forEach(({ affiliations = [] }) => {
+    if (affiliations) {
+      affiliations.forEach(({ id, display_name: name, country_code: country }) => {
+        if (!(id in structures)) {
+          structures[id] = {
+            name: name.toLowerCase(),
+            country: country ?? 'undefined',
+            city: 'undefined',
+          };
+        }
+      });
+    }
   });
+
+  return structures;
 }

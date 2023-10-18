@@ -54,11 +54,36 @@ function communityGetTypesCount(community, publications, limit = 0) {
 
 function communityGetBestAuthors(community, limit = 0) {
   const endSlice = limit > 0 ? limit : community.length;
-  // Count and sort coauthors
+  // Count and sort authors by publications
   return community.sort((a, b) => b.attributes.publications.length - a.attributes.publications.length).slice(0, endSlice);
 }
 
-export function fillAndSortCommunities(communities, publications, { communitiesLimit = 0, topicsLimit = 0, typesLimit = 0, authorsLimit = 0 }) {
+function communityGetAffiliationsCount(community, publications, structures, limit = 0) {
+  const affiliations = {};
+
+  // Count affiliations from unique publication ids
+  community.reduce((acc, node) => [...acc, ...node.attributes.publications.flatMap((id) => (!acc.includes(id) ? id : []))], []).forEach((publicationId) => {
+    publications[publicationId]?.affiliations?.forEach((structureId) => { affiliations[structures[structureId].name] = affiliations[structures[structureId].name] + 1 || 1; });
+  });
+
+  const numberOfAffiliations = Object.keys(affiliations).length;
+
+  if (numberOfAffiliations === 0) return [];
+
+  // Get max affiliations
+  const endSlice = limit > 0 ? limit : numberOfAffiliations;
+  const topAffiliations = Object.assign(
+    ...Object
+      .entries(affiliations)
+      .sort(({ 1: a }, { 1: b }) => b - a)
+      .slice(0, endSlice)
+      .map(([k, v]) => ({ [k]: v })),
+  );
+
+  return Object.entries(topAffiliations);
+}
+
+export function fillAndSortCommunities(communities, publications, structures, { communitiesLimit = 0, topicsLimit = 0, typesLimit = 0, authorsLimit = 0, institutionsLimit = 0 }) {
   const filledCommunities = {};
   const numberOfCommunities = Object.keys(communities).length;
   const endSlice = communitiesLimit > 0 ? communitiesLimit : numberOfCommunities;
@@ -75,6 +100,7 @@ export function fillAndSortCommunities(communities, publications, { communitiesL
       topics: communityGetTopicsCount(values, publications, topicsLimit),
       types: communityGetTypesCount(values, publications, typesLimit),
       authors: communityGetBestAuthors(values, authorsLimit),
+      affiliations: communityGetAffiliationsCount(values, publications, structures, institutionsLimit),
     };
   });
 

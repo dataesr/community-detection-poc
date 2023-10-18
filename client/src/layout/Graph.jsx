@@ -111,7 +111,7 @@ export default function Graph({ data }) {
           <NodePanel selectedNode={selectedNode} graph={graph} publications={publications} />
         </Col>
       </Row>
-      <ClustersPanel graph={graph} communities={communities} publications={publications} />
+      <ClustersPanel graph={graph} communities={communities} publications={publications} structures={structures} />
     </Container>
   );
 }

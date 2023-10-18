@@ -1,15 +1,15 @@
 import '@react-sigma/core/lib/react-sigma.min.css';
-import { Container, Title, Text, Col, Row, Badge, BadgeGroup } from '@dataesr/react-dsfr';
+import { Container, Title, Col, Row, Badge, BadgeGroup } from '@dataesr/react-dsfr';
 import { GetColorName } from 'hex-color-to-color-name';
 import { fillAndSortCommunities } from '../utils/communityUtils';
 import { COMMUNTIY_COLORS } from '../styles/colors';
 
-export default function ClustersPanel({ graph, communities, publications }) {
+export default function ClustersPanel({ graph, communities, publications, structures }) {
   if (!graph.order) return null;
 
   // Fill communities
-  const filledCommunities = fillAndSortCommunities(communities, publications, { communitiesLimit: 6, authorsLimit: 10, topicsLimit: 5, typesLimit: 3 });
-  console.log(filledCommunities);
+  const filledCommunities = fillAndSortCommunities(communities, publications, structures, { communitiesLimit: 6, authorsLimit: 10, institutionsLimit: 5, topicsLimit: 5, typesLimit: 3 });
+  console.log('filledCommunities', filledCommunities);
 
   return (
     <Container fluid className="fr-my-3w">
@@ -65,6 +65,19 @@ export default function ClustersPanel({ graph, communities, publications }) {
                     <Badge
                       colorFamily="yellow-tournesol"
                       text={`${type} (${count})`}
+                    />
+                  ))}
+                </BadgeGroup>
+                <Title as="h6">
+                  {community.affiliations.length}
+                  {' '}
+                  main affiliations
+                </Title>
+                <BadgeGroup className="fr-mb-2w">
+                  {community.affiliations.map(([structure, count]) => (
+                    <Badge
+                      colorFamily="pink-tuile"
+                      text={`${structure} (${count})`}
                     />
                   ))}
                 </BadgeGroup>
