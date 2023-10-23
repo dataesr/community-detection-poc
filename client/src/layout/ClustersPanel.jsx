@@ -1,6 +1,7 @@
 import '@react-sigma/core/lib/react-sigma.min.css';
 import { Container, Title, Col, Row, Badge, BadgeGroup } from '@dataesr/react-dsfr';
 import { GetColorName } from 'hex-color-to-color-name';
+import { BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
 import { fillAndSortCommunities } from '../utils/communityUtils';
 import { COMMUNTIY_COLORS } from '../styles/colors';
 
@@ -81,6 +82,20 @@ export default function ClustersPanel({ graph, communities, publications, struct
                     />
                   ))}
                 </BadgeGroup>
+                <Title as="h6">
+                  Publications years
+                </Title>
+                <BarChart
+                  height={200}
+                  width={300}
+                  data={community.years}
+                  margin={{ left: -30 }}
+                >
+                  <Bar dataKey="publications" fill="#82ca9d" />
+                  <XAxis dataKey="year" />
+                  <YAxis />
+                  <Tooltip />
+                </BarChart>
               </div>
             </div>
           </Col>

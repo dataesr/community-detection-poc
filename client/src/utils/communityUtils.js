@@ -83,6 +83,18 @@ function communityGetAffiliationsCount(community, publications, structures, limi
   return Object.entries(topAffiliations);
 }
 
+function communityGetYearsCount(community, publications) {
+  const DEFAULT_YEARS = [2018, 2019, 2020, 2021, 2022, 2023];
+  const years = {};
+
+  // Count years from unique publication ids
+  community.reduce((acc, node) => [...acc, ...node.attributes.publications.flatMap((id) => (!acc.includes(id) ? id : []))], []).forEach((id) => {
+    years[publications[id].year] = years[publications[id].year] + 1 || 1;
+  });
+
+  return DEFAULT_YEARS.map((year) => ({ year, publications: years[year] ?? 0 }));
+}
+
 export function fillAndSortCommunities(communities, publications, structures, { communitiesLimit = 0, topicsLimit = 0, typesLimit = 0, authorsLimit = 0, institutionsLimit = 0 }) {
   const filledCommunities = {};
   const numberOfCommunities = Object.keys(communities).length;
@@ -101,6 +113,7 @@ export function fillAndSortCommunities(communities, publications, structures, { 
       types: communityGetTypesCount(values, publications, typesLimit),
       authors: communityGetBestAuthors(values, authorsLimit),
       affiliations: communityGetAffiliationsCount(values, publications, structures, institutionsLimit),
+      years: communityGetYearsCount(values, publications),
     };
   });
 
