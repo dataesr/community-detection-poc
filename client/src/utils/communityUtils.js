@@ -83,6 +83,31 @@ function communityGetAffiliationsCount(community, publications, structures, limi
   return Object.entries(topAffiliations);
 }
 
+function communityGetCountryCount(community, publications, structures, limit = 0) {
+  const countries = {};
+
+  // Count countries from unique publication ids
+  community.reduce((acc, node) => [...acc, ...node.attributes.publications.flatMap((id) => (!acc.includes(id) ? id : []))], []).forEach((publicationId) => {
+    publications[publicationId]?.affiliations?.forEach((structureId) => { countries[structures[structureId].country] = countries[structures[structureId].country] + 1 || 1; });
+  });
+
+  const numberOfCountries = Object.keys(countries).length;
+
+  if (numberOfCountries === 0) return [];
+
+  // Get max countries
+  const endSlice = limit > 0 ? limit : numberOfCountries;
+  const topCountries = Object.assign(
+    ...Object
+      .entries(countries)
+      .sort(({ 1: a }, { 1: b }) => b - a)
+      .slice(0, endSlice)
+      .map(([k, v]) => ({ [k]: v })),
+  );
+
+  return Object.entries(topCountries);
+}
+
 function communityGetYearsCount(community, publications) {
   const DEFAULT_YEARS = [2018, 2019, 2020, 2021, 2022, 2023];
   const years = {};
@@ -114,6 +139,7 @@ export function fillAndSortCommunities(communities, publications, structures, { 
       authors: communityGetBestAuthors(values, authorsLimit),
       affiliations: communityGetAffiliationsCount(values, publications, structures, institutionsLimit),
       years: communityGetYearsCount(values, publications),
+      country: communityGetCountryCount(values, publications, structures, 1),
     };
   });
 

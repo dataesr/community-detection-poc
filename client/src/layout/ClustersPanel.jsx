@@ -83,6 +83,13 @@ export default function ClustersPanel({ graph, communities, publications, struct
                   ))}
                 </BadgeGroup>
                 <Title as="h6">
+                  {' '}
+                  1 main country :
+                  {' '}
+                  {community.country[0][0]}
+                  {' '}
+                </Title>
+                <Title as="h6">
                   Publications years
                 </Title>
                 <BarChart
