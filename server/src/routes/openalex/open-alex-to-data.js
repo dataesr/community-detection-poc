@@ -46,7 +46,7 @@ export function openAlexToPublications(publicationList) {
         ]),
         [],
       );
-      const affiliationIds = publication?.authorships?.reduce((acc, { institutions = {} }) => ([...acc, institutions?.id]), []);
+      const affiliationIds = publication?.authorships?.flatMap(({ institutions = [] }) => institutions.map(({ id }) => id));
 
       publications[publication.id] = {
         id: publication.id,
@@ -66,9 +66,9 @@ export function openAlexToPublications(publicationList) {
 export function openAlexToStructures(publicationList) {
   const structures = {};
 
-  publicationList.forEach(({ affiliations = [] }) => {
-    if (affiliations) {
-      affiliations.forEach(({ id, display_name: name, country_code: country }) => {
+  publicationList.forEach(({ authorships = [] }) => {
+    authorships.forEach(({ institutions = [] }) => {
+      institutions.forEach(({ id, display_name: name, country_code: country }) => {
         if (!(id in structures)) {
           structures[id] = {
             name: name.toLowerCase(),
@@ -77,7 +77,7 @@ export function openAlexToStructures(publicationList) {
           };
         }
       });
-    }
+    });
   });
 
   return structures;
