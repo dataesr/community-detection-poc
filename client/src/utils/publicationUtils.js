@@ -3,7 +3,7 @@ export function publicationsGetTopicsCount(publications, publicationsIds, limit 
 
   // Count topics
   publicationsIds.forEach((publicationId) => (
-    publications[publicationId]?.topics.forEach(({ label }) => {
+    publications[publicationId]?.topics?.forEach(({ label }) => {
       topics[label] = topics[label] + 1 || 1;
     })));
 
@@ -11,8 +11,6 @@ export function publicationsGetTopicsCount(publications, publicationsIds, limit 
   // console.log('numberOfTopics', numberOfTopics);
 
   if (numberOfTopics === 0) return [];
-
-  console.log('topics: ', topics);
 
   // Get max topics
   const endSlice = limit > 0 ? limit : numberOfTopics;

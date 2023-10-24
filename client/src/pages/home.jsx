@@ -209,7 +209,7 @@ export default function Home() {
         )}
       </Row>
       {formDatasource === 'openalex'
-        && formType != 'structure'
+        && formType !== 'structure'
         && (isCountriesFetching ? (
           <Container>
             <PageSpinner />
