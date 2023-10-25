@@ -23,3 +23,14 @@ export const graphEncodeToJson = (data) => {
 
   return jsonString;
 };
+
+export function groupBy(array, key) {
+  return array.reduce((result, item) => {
+    const group = key(item);
+    if (!result[group]) {
+      result[group] = [];
+    }
+    result[group].push(item);
+    return result;
+  }, {});
+}

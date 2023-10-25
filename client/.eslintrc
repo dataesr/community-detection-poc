@@ -6,6 +6,12 @@
     "browser": true
   },
   "rules": {
+    "no-param-reassign": [
+      "error",
+      {
+        "props": false
+      }
+    ],
     "no-console": "off",
     "jsx-a11y/anchor-is-valid": "off",
     "react/jsx-filename-extension": 0,

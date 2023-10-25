@@ -13,6 +13,7 @@ import { UndirectedGraph } from 'graphology';
 import { useState, useEffect } from 'react';
 import NodePanel from './NodePanel';
 import ClustersPanel from './ClustersPanel';
+import { groupBy } from '../utils/graphUtils';
 import { DEFAULT_NODE_COLOR, COMMUNTIY_COLORS } from '../styles/colors';
 
 function GraphEvents({ onNodeClick, onStageClick }) {
@@ -65,7 +66,7 @@ export default function Graph({ data }) {
     return <Alert title="No results found" description="Your query returned no results" type="warning" closable />;
   }
 
-  const communities = Object.groupBy(data.graph.nodes, ({ attributes }) => attributes.community);
+  const communities = groupBy(data.graph.nodes, ({ attributes }) => attributes.community);
   console.log('communities', communities);
 
   // Update nodes
