@@ -120,16 +120,16 @@ function communityGetYearsCount(community, publications) {
   return DEFAULT_YEARS.map((year) => ({ year, publications: years[year] ?? 0 }));
 }
 
-export function fillAndSortCommunities(communities, publications, structures, { communitiesLimit = 0, topicsLimit = 0, typesLimit = 0, authorsLimit = 0, institutionsLimit = 0 }) {
+export function fillMainCommunities(communities, publications, structures, { communitiesLimit = 0, topicsLimit = 0, typesLimit = 0, authorsLimit = 0, institutionsLimit = 0 }) {
   const filledCommunities = {};
   const numberOfCommunities = Object.keys(communities).length;
   const endSlice = communitiesLimit > 0 ? communitiesLimit : numberOfCommunities;
 
-  // Sort communities
-  const sortedCommunities = Object.entries(communities).sort((a, b) => b[1].length - a[1].length).slice(0, endSlice);
+  // Get main communities
+  const mainCommunities = Object.entries(communities).sort((a, b) => b[1].length - a[1].length).slice(0, endSlice);
 
   // Fill communities
-  sortedCommunities.forEach(([key, values]) => {
+  mainCommunities.forEach(([key, values]) => {
     filledCommunities[key] = {
       nodes: values,
       size: values.length,

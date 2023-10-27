@@ -2,14 +2,14 @@ import '@react-sigma/core/lib/react-sigma.min.css';
 import { Container, Title, Col, Row, Badge, BadgeGroup } from '@dataesr/react-dsfr';
 import { GetColorName } from 'hex-color-to-color-name';
 import { BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
-import { fillAndSortCommunities } from '../utils/communityUtils';
+import { fillMainCommunities } from '../utils/communityUtils';
 import { COMMUNTIY_COLORS } from '../styles/colors';
 
 export default function ClustersPanel({ graph, communities, publications, structures }) {
   if (!graph.order) return null;
 
   // Fill communities
-  const filledCommunities = fillAndSortCommunities(communities, publications, structures, { communitiesLimit: 6, authorsLimit: 10, institutionsLimit: 5, topicsLimit: 5, typesLimit: 3 });
+  const filledCommunities = fillMainCommunities(communities, publications, structures, { communitiesLimit: 6, authorsLimit: 10, institutionsLimit: 5, topicsLimit: 5, typesLimit: 3 });
   console.log('filledCommunities', filledCommunities);
 
   return (
@@ -20,7 +20,7 @@ export default function ClustersPanel({ graph, communities, publications, struct
         main clusters
       </Title>
       <Row gutters>
-        {Object.entries(filledCommunities).map(([key, community]) => (
+        {Object.entries(filledCommunities).sort((a, b) => b[1].size - a[1].size).map(([key, community]) => (
           <Col key={key} n="4">
             <div className="fr-card fr-card--shadow">
               <p style={{ backgroundColor: COMMUNTIY_COLORS[key], color: '#f6f6f6' }}>
