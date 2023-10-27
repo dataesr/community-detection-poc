@@ -83,10 +83,11 @@ export default function ClustersPanel({ graph, communities, publications, struct
                   ))}
                 </BadgeGroup>
                 <Title as="h6">
+                  {Math.min(1, community.country.length)}
                   {' '}
-                  1 main country :
+                  main country
                   {' '}
-                  {community.country[0][0]}
+                  {community.country[0]?.[0]}
                   {' '}
                 </Title>
                 <Title as="h6">
