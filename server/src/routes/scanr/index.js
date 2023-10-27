@@ -16,6 +16,7 @@ const router = new express.Router();
 router.route('/scanr').get(async (req, res) => {
   const { queries, type, condition, startyear, endyear } = req.query;
   const body = getQueryFunction[type](queries, condition, startyear, endyear);
+  console.log('scanr body', JSON.stringify(body));
   const publicationList = await fetch(`${config.scanr.apiUrl}`, {
     method: 'POST',
     body: JSON.stringify(body),

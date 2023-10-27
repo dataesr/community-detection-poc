@@ -5,44 +5,45 @@ export const makeQueryByKeywords = (queries, condition, startyear, endyear, size
   size,
   _source: ELASTIC_SOURCE_FIELDS,
   query: {
-    function_score: {
-      query: {
-        bool: {
-          filter: [
-            { terms: { 'authors.role.keyword': ['author', 'directeurthese'] } },
-            { range: { year: { gte: startyear, lte: endyear } } },
+    // function_score: {
+    //   query: {
+    bool: {
+      filter: [
+        { terms: { 'authors.role.keyword': ['author', 'directeurthese'] } },
+        { range: { year: { gte: startyear, lte: endyear } } },
+      ],
+      must: {
+        query_string: {
+          fields: [
+            'title.default^3',
+            'title.fr^3',
+            'title.en^3',
+            'keywords.en',
+            'keywords.fr',
+            'keywords.default',
+            'domains.label.default',
+            'domains.label.fr',
+            'domains.label.en',
+            'summary.default',
+            'summary.fr',
+            'summary.en',
+            'alternativeSummary.default',
+            'alternativeSummary.fr',
+            'alternativeSummary.en',
           ],
-          must: {
-            query_string: {
-              fields: [
-                'title.default',
-                'title.fr',
-                'title.en',
-                'keywords.en',
-                'keywords.fr',
-                'keywords.default',
-                'domains.label.default',
-                'domains.label.fr',
-                'domains.label.en',
-                'summary.default',
-                'summary.fr',
-                'summary.en',
-                'alternativeSummary.default',
-                'alternativeSummary.fr',
-                'alternativeSummary.en',
-              ],
-              query: queries
-                .split(',')
-                .map((q) => `(${q.replace(' ', ' AND ')})`)
-                .join(` ${condition} `),
-            },
-          },
+          query: queries
+            .split(',')
+            .map((q) => `(${q})`)
+            .join(` ${condition} `),
+          phrase_slop: 0,
         },
       },
-      random_score: { seed: 2001 },
-      boost_mode: 'replace',
     },
   },
+  //     random_score: { seed: 2001 },
+  //     boost_mode: 'replace',
+  //   },
+  // },
 });
 
 export const makeQueryByAuthors = (queries, condition, startyear, endyear, size = DEFAULT_SIZE) => {
@@ -61,16 +62,16 @@ export const makeQueryByAuthors = (queries, condition, startyear, endyear, size 
     size,
     _source: ELASTIC_SOURCE_FIELDS,
     query: {
-      function_score: {
-        query: {
-          bool: {
-            filter: filterBlock,
-          },
-        },
-        random_score: { seed: 2001 },
-        boost_mode: 'replace',
+      // function_score: {
+      //   query: {
+      bool: {
+        filter: filterBlock,
       },
     },
+    //     random_score: { seed: 2001 },
+    //     boost_mode: 'replace',
+    //   },
+    // },
   };
 };
 
@@ -90,15 +91,15 @@ export const makeQueryByStructures = (queries, condition, startyear, endyear, si
     size,
     _source: ELASTIC_SOURCE_FIELDS,
     query: {
-      function_score: {
-        query: {
-          bool: {
-            filter: filterBlock,
-          },
-        },
-        random_score: { seed: 2001 },
-        boost_mode: 'replace',
+      // function_score: {
+      //   query: {
+      bool: {
+        filter: filterBlock,
       },
     },
+    //     random_score: { seed: 2001 },
+    //     boost_mode: 'replace',
+    //   },
+    // },
   };
 };
