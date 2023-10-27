@@ -1,6 +1,8 @@
 import '@react-sigma/core/lib/react-sigma.min.css';
 import { Badge, BadgeGroup, Title, Accordion, AccordionItem } from '@dataesr/react-dsfr';
+import { GetColorName } from 'hex-color-to-color-name';
 import { publicationsGetTopicsCount } from '../utils/publicationUtils';
+import { COMMUNTIY_COLORS } from '../styles/colors';
 
 export default function NodePanel({ selectedNode, graph, publications }) {
   if (!selectedNode) return null;
@@ -18,6 +20,10 @@ export default function NodePanel({ selectedNode, graph, publications }) {
             text={`Last publication: ${Math.max(
               ...graph.getNodeAttribute(selectedNode.id, 'publications').map((publicationId) => publications[publicationId].year),
             )}`}
+          />
+          <Badge
+            colorFamily="blue-cumulus"
+            text={`Community ${GetColorName(COMMUNTIY_COLORS[selectedNode.community])} (${selectedNode.community})`}
           />
         </BadgeGroup>
         <Accordion className="fr-mt-1w">
