@@ -280,7 +280,15 @@ export default function Home() {
           <PageSpinner />
         </Container>
       )}
-      {!isFetching && data && (
+      {!isFetching && typeof data === 'string' && (
+        <Alert
+          title="Error"
+          description={data}
+          type="error"
+          closable
+        />
+      )}
+      {!isFetching && data?.graph && (
         <Container>
           <Graph data={data} />
           <Button
