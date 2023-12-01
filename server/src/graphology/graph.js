@@ -31,6 +31,7 @@ export function dataToGraphology(nodes, edges) {
   // Add nodes and compute weight
   nodes.forEach(({ id, attributes }) => graph.updateNode(id, (attr) => ({
     ...attributes,
+    label: attr.name,
     weight: (attr?.weight ?? 0) + 1,
     publications: attr?.publications
       ? [...attr.publications, attributes?.publicationId]
