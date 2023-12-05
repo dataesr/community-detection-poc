@@ -24,30 +24,12 @@ const edgeComputeDefaultWeight = (weight, weightMin, weightMax) => {
   return (weight / (weightMax - weightMin)) * defaultEdgeRange + DEFAULT_EDGE_RANGE[0];
 };
 
-export function dataToGraphology(nodes, edges) {
-  // Create Graph object
-  let graph = new graphology.UndirectedGraph();
-
-  // Add nodes and compute weight
-  nodes.forEach(({ id, attributes }) => graph.updateNode(id, (attr) => ({
-    ...attributes,
-    label: attr.name,
-    weight: (attr?.weight ?? 0) + 1,
-    publications: attr?.publications
-      ? [...attr.publications, attributes?.publicationId]
-      : [attributes?.publicationId],
-  })));
-
-  // Add edges and compute weight
-  edges.forEach(({ source, target }) => graph.updateUndirectedEdgeWithKey(`(${source}--${target})`, source, target, (attr) => ({
-    weight: (attr?.weight ?? 0) + 1,
-    label: `${attr?.weight || 1} copublications`,
-  })));
-
+function configureGraph(graph) {
   // Filter with minimal number of publications
   let publiMinThresh = 1;
   while (graph.order > GRAPH_MAX_ORDER) {
     publiMinThresh += 1;
+    // eslint-disable-next-line no-param-reassign
     graph = subgraph(graph, (key, attr) => (attr?.weight >= publiMinThresh)); // eslint-disable-line no-loop-func
   }
   console.log('Publications min threshold :', publiMinThresh);
@@ -94,4 +76,52 @@ export function dataToGraphology(nodes, edges) {
   );
 
   return graph;
+}
+
+export function dataToGraphology(nodes, edges) {
+  // Create Graph object
+  const graph = new graphology.UndirectedGraph();
+
+  // Add nodes and compute weight
+  nodes.forEach(({ id, attributes }) => graph.updateNode(id, (attr) => ({
+    ...attributes,
+    label: attr.name,
+    weight: (attr?.weight ?? 0) + 1,
+    publications: attr?.publications
+      ? [...attr.publications, attributes?.publicationId]
+      : [attributes?.publicationId],
+  })));
+
+  // Add edges and compute weight
+  edges.forEach(({ source, target }) => graph.updateUndirectedEdgeWithKey(`(${source}--${target})`, source, target, (attr) => ({
+    weight: (attr?.weight ?? 0) + 1,
+    label: `${attr?.weight || 1} copublications`,
+  })));
+
+  // Return configured graph
+  return configureGraph(graph);
+}
+
+export function aggToGraphology(aggregation) {
+  // Create Graph object
+  const graph = new graphology.UndirectedGraph();
+
+  aggregation.forEach(({ key, doc_count: count }) => {
+    const nodes = key.split('---');
+
+    // Add nodes and compute weight
+    nodes.forEach((id) => graph.updateNode(id, (attr) => ({
+      label: id.split('###')[1],
+      weight: (attr?.weight ?? 0) + count,
+    })));
+
+    // Add edges and compute weight
+    graph.updateUndirectedEdgeWithKey(key, nodes[0], nodes[1], (attr) => ({
+      weight: (attr?.weight ?? 0) + count,
+      label: `${attr?.weight || 1} copublications`,
+    }));
+  });
+
+  // Return configured graph
+  return configureGraph(graph);
 }

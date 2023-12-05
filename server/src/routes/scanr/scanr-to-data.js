@@ -26,6 +26,8 @@ export function scanrToGraphology(publicationList) {
   const nodes = getNodesFromPublicationList(publicationList);
   const edges = getEdgesFromPublicationList(publicationList);
 
+  console.log(nodes, edges);
+
   return dataToGraphology(nodes, edges);
 }
 

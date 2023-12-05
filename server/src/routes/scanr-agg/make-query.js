@@ -1,12 +1,10 @@
-const DEFAULT_SIZE = 5000;
+const DEFAULT_SIZE = 2000;
 const ELASTIC_SOURCE_FIELDS = ['id', 'authors', 'domains', 'title', 'year', 'isOa', 'type', 'affiliations'];
 
 export const makeQuery = (queries, condition, startyear, endyear, size = DEFAULT_SIZE) => ({
-  size,
+  size: 0,
   _source: ELASTIC_SOURCE_FIELDS,
   query: {
-    // function_score: {
-    //   query: {
     bool: {
       filter: [
         { range: { year: { gte: startyear, lte: endyear } } },
@@ -28,8 +26,24 @@ export const makeQuery = (queries, condition, startyear, endyear, size = DEFAULT
       },
     },
   },
-  //     random_score: { seed: 2001 },
-  //     boost_mode: 'replace',
-  //   },
-  // },
+  aggs: {
+    agg_authors: {
+      terms: {
+        field: 'co_authors.keyword',
+        size,
+      },
+    },
+    // agg_institutions: {
+    //   terms: {
+    //     field: 'co_institutions.keyword',
+    //     size,
+    //   },
+    // },
+    // agg_domains: {
+    //   terms: {
+    //     field: 'co_domains.keyword',
+    //     size,
+    //   },
+    // },
+  },
 });

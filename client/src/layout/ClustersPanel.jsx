@@ -6,7 +6,7 @@ import { fillMainCommunities } from '../utils/communityUtils';
 import { COMMUNTIY_COLORS } from '../styles/colors';
 
 export default function ClustersPanel({ graph, communities, publications, structures }) {
-  if (!graph.order) return null;
+  if (!graph.order || Object.keys(publications).length === 0) return null;
 
   // Fill communities
   const filledCommunities = fillMainCommunities(communities, publications, structures, { communitiesLimit: 6, authorsLimit: 10, institutionsLimit: 5, topicsLimit: 5, typesLimit: 3 });

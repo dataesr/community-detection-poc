@@ -1,11 +1,11 @@
 import '@react-sigma/core/lib/react-sigma.min.css';
-import { Badge, BadgeGroup, Title, Accordion, AccordionItem } from '@dataesr/react-dsfr';
+import { Badge, BadgeGroup, Title, Accordion, AccordionItem, Container } from '@dataesr/react-dsfr';
 import { GetColorName } from 'hex-color-to-color-name';
 import { publicationsGetTopicsCount } from '../utils/publicationUtils';
 import { COMMUNTIY_COLORS } from '../styles/colors';
 
 export default function NodePanel({ selectedNode, graph, publications }) {
-  if (!selectedNode) return null;
+  if (!selectedNode || !graph.order || Object.keys(publications).length === 0) return null;
 
   return (
     <div className="fr-card fr-card--shadow">
