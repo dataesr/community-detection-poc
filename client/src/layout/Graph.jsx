@@ -40,6 +40,7 @@ const highlightGraph = (graph, selectedNode) => {
     (node, attr) => ({
       ...attr,
       highlighted: node === selectedNode.id,
+      label: node === selectedNode.id || graph.neighbors(selectedNode.id).includes(node) ? attr.label : '',
       color: node === selectedNode.id || graph.neighbors(selectedNode.id).includes(node) ? attr.color : '#E2E2E2',
     }),
     { attributes: ['highlighted', 'color'] },
