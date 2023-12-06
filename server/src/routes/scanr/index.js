@@ -32,7 +32,7 @@ router.route('/scanr').get(async (req, res) => {
   );
 
   const data = {
-    graph: scanrToGraphology(publicationListFiltered),
+    graph: { main: scanrToGraphology(publicationListFiltered) },
     publications: scanrToPublications(publicationListFiltered),
     structures: scanrToStructures(publicationListFiltered),
   };

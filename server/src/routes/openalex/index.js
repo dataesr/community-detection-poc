@@ -25,7 +25,7 @@ router.route('/openalex').get(async (req, res) => {
   );
 
   const data = {
-    graph: openAlexToGraphology(publicationListFiltered),
+    graph: { main: openAlexToGraphology(publicationListFiltered) },
     publications: openAlexToPublications(publicationListFiltered),
     structures: openAlexToStructures(publicationListFiltered),
   };

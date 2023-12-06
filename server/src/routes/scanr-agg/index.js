@@ -23,7 +23,11 @@ router.route('/scanr-agg').get(async (req, res) => {
   console.log('Publications count : ', publicationList.length);
 
   const data = {
-    graph: aggToGraphology(aggregations?.agg_authors?.buckets),
+    graph: {
+      authors: aggToGraphology(aggregations?.agg_authors?.buckets),
+      institutions: aggToGraphology(aggregations?.agg_institutions?.buckets),
+      domains: aggToGraphology(aggregations?.agg_domains?.buckets),
+    },
     publications: {},
     structures: {},
   };

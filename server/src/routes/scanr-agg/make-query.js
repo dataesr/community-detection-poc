@@ -1,4 +1,4 @@
-const DEFAULT_SIZE = 2000;
+const DEFAULT_SIZE = 5000;
 const ELASTIC_SOURCE_FIELDS = ['id', 'authors', 'domains', 'title', 'year', 'isOa', 'type', 'affiliations'];
 
 export const makeQuery = (queries, condition, startyear, endyear, size = DEFAULT_SIZE) => ({
@@ -19,7 +19,7 @@ export const makeQuery = (queries, condition, startyear, endyear, size = DEFAULT
           ],
           query: queries
             .split(',')
-            .map((q) => `(${q})`)
+            .map((q) => `"${q}"`)
             .join(` ${condition} `),
           phrase_slop: 0,
         },
@@ -33,17 +33,17 @@ export const makeQuery = (queries, condition, startyear, endyear, size = DEFAULT
         size,
       },
     },
-    // agg_institutions: {
-    //   terms: {
-    //     field: 'co_institutions.keyword',
-    //     size,
-    //   },
-    // },
-    // agg_domains: {
-    //   terms: {
-    //     field: 'co_domains.keyword',
-    //     size,
-    //   },
-    // },
+    agg_institutions: {
+      terms: {
+        field: 'co_institutions.keyword',
+        size,
+      },
+    },
+    agg_domains: {
+      terms: {
+        field: 'co_domains.keyword',
+        size,
+      },
+    },
   },
 });
