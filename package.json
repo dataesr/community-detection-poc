@@ -11,6 +11,7 @@
     "concurrently": "^8.0.1",
     "d3": "^7.8.5",
     "graphology": "^0.25.1",
+    "graphology-components": "^1.5.4",
     "graphology-metrics": "^2.2.0",
     "hex-color-to-color-name": "^1.0.2",
     "logger": "^0.0.1",

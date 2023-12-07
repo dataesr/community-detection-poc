@@ -122,9 +122,8 @@ export default function Home() {
       value: 'openalex',
     },
     {
-      label: 'HAL',
-      value: 'hal',
-      disabled: true,
+      label: 'scanR with aggregations',
+      value: 'scanr-agg',
     },
   ];
 
@@ -175,16 +174,18 @@ export default function Home() {
           // setFormCondition('OR')
         }}
       />
-      <Select
-        label="Choose your graph type"
-        options={types}
-        selected={formType}
-        onChange={(e) => {
-          setFormType(e.target.value);
-          setFormQueries([]);
-          setFormCondition('OR');
-        }}
-      />
+      {formDatasource !== 'scanr-agg' && (
+        <Select
+          label="Choose your graph type"
+          options={types}
+          selected={formType}
+          onChange={(e) => {
+            setFormType(e.target.value);
+            // setFormQueries([]);
+            // setFormCondition('OR');
+          }}
+        />
+      )}
       <Row gutters>
         <Col>
           <TagInput

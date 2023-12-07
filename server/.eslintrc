@@ -8,6 +8,7 @@
   "rules": {
     "no-continue": "off",
     "no-console": "off",
+    "import/no-extraneous-dependencies": "off",
     "import/prefer-default-export": 0,
     "max-len": [
       "error",

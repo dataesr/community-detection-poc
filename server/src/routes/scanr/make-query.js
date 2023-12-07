@@ -33,7 +33,7 @@ export const makeQueryByKeywords = (queries, condition, startyear, endyear, size
           ],
           query: queries
             .split(',')
-            .map((q) => `(${q})`)
+            .map((q) => `"${q}"`)
             .join(` ${condition} `),
           phrase_slop: 0,
         },

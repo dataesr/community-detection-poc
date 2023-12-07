@@ -1,5 +1,5 @@
 import '@react-sigma/core/lib/react-sigma.min.css';
-import { Container, Col, Row, Alert } from '@dataesr/react-dsfr';
+import { Container, Col, Row, Alert, Radio, RadioGroup } from '@dataesr/react-dsfr';
 import {
   ControlsContainer,
   FullScreenControl,
@@ -57,20 +57,24 @@ const highlightGraph = (graph, selectedNode) => {
 
 export default function Graph({ data }) {
   console.log('data', data);
-  const graph = UndirectedGraph.from(data.graph);
+
+  const graphOptions = Object.keys(data.graph);
   const { publications, structures } = data;
 
   const [selectedNode, setSelectedNode] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(graphOptions[0]);
+
+  const graph = UndirectedGraph.from(data.graph[selectedOption]);
 
   // Return alert if graph empty
   if (graph.order === 0) {
     return <Alert title="No results found" description="Your query returned no results" type="warning" closable />;
   }
 
-  const communities = groupBy(data.graph.nodes, ({ attributes }) => attributes.community);
-  console.log('communities', communities);
+  const communities = groupBy(data.graph[selectedOption].nodes, ({ attributes }) => attributes.community);
+  // console.log('communities', communities);
 
-  // Update nodes
+  // Update nodes color
   graph.updateEachNodeAttributes(
     (node, attr) => ({
       ...attr,
@@ -81,6 +85,21 @@ export default function Graph({ data }) {
 
   return (
     <Container fluid className="fr-my-3w">
+      {(graphOptions.length > 1) && (
+        <RadioGroup
+          isInline
+          label={selectedOption}
+        >
+          {graphOptions.map((option) => (
+            <Radio
+              label={option}
+              value={option}
+              defaultChecked={option === selectedOption}
+              onChange={(event) => setSelectedOption(event.target.value)}
+            />
+          ))}
+        </RadioGroup>
+      )}
       <Row gutters>
         <Col n="12">
           <SigmaContainer
