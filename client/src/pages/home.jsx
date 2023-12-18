@@ -262,7 +262,7 @@ export default function Home() {
       <Row gutters>
         <Col>
           <Button
-            onClick={() => (formQueries.length === 0 ? setFormIsError(true) : (setFormIsError(false), refetch()))}
+            onClick={() => ((formQueries.length === 0) && (formDatasource !== 'scanr-agg') ? setFormIsError(true) : (setFormIsError(false), refetch()))}
           >
             Generate graph
           </Button>

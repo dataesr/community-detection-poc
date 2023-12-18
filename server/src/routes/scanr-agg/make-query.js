@@ -9,7 +9,8 @@ export const makeQuery = (queries, condition, startyear, endyear, size = DEFAULT
       filter: [
         { range: { year: { gte: startyear, lte: endyear } } },
       ],
-      must: {
+      ...(queries.length > 0
+      && { must: {
         query_string: {
           fields: [
             'title.*^3',
@@ -23,7 +24,7 @@ export const makeQuery = (queries, condition, startyear, endyear, size = DEFAULT
             .join(` ${condition} `),
           phrase_slop: 0,
         },
-      },
+      } }),
     },
   },
   aggs: {
