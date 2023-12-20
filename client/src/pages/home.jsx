@@ -13,11 +13,14 @@ import {
   TagGroup,
   TextInput,
   Title,
+  RadioGroup,
+  Radio,
 } from '@dataesr/react-dsfr';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
+import { VOSviewerOnline } from 'vosviewer-online';
 import { PageSpinner } from '../components/spinner';
 
 import Graph from '../layout/Graph';
@@ -141,6 +144,9 @@ export default function Home() {
       value: 'structure',
     },
   ];
+
+  const graphOptions = Object.keys(data?.graph || { authors: 0 });
+  const [selectedOption, setSelectedOption] = useState(graphOptions[0]);
 
   const conditions = [
     {
@@ -290,16 +296,44 @@ export default function Home() {
         />
       )}
       {!isFetching && data?.graph && (
-        <Container>
-          <Graph data={data} />
+        <Container className="fr-mt-2w">
+          {(graphOptions.length > 1) && (
+            <RadioGroup
+              isInline
+              label={selectedOption}
+            >
+              {graphOptions.map((option) => (
+                <Radio
+                  label={option}
+                  value={option}
+                  defaultChecked={option === selectedOption}
+                  onChange={(event) => setSelectedOption(event.target.value)}
+                />
+              ))}
+            </RadioGroup>
+          )}
+          <Row gutters>
+            <Col>
+              <Graph data={data} selectedOption={selectedOption} />
+            </Col>
+            <Col>
+              <div style={{ height: '400px' }}>
+                <VOSviewerOnline
+                  data={graphEncodeToJson(data.graph[selectedOption])}
+                  parameters={{ attraction: 1, largest_component: false, simple_ui: true }}
+                />
+              </div>
+            </Col>
+          </Row>
           <Button
             className="fr-btn fr-btn--tertiary fr-btn--icon-right fr-icon-download-line"
-            onClick={() => exportJson(graphEncodeToJson(data.graph))}
+            onClick={() => exportJson(graphEncodeToJson(data.graph.authors))}
           >
             Download graph
           </Button>
         </Container>
       )}
     </Container>
+
   );
 }

@@ -11,6 +11,7 @@ import {
 // import { LayoutForceAtlas2Control } from '@react-sigma/layout-forceatlas2';
 import { UndirectedGraph } from 'graphology';
 import { useState, useEffect } from 'react';
+import NodeProgramBorder from 'sigma/rendering/webgl/programs/node';
 import NodePanel from './NodePanel';
 import ClustersPanel from './ClustersPanel';
 import { groupBy } from '../utils/graphUtils';
@@ -55,15 +56,13 @@ const highlightGraph = (graph, selectedNode) => {
   return graph;
 };
 
-export default function Graph({ data }) {
+export default function Graph({ data, selectedOption }) {
   console.log('data', data);
-
-  const graphOptions = Object.keys(data.graph);
   const { publications, structures } = data;
 
   const [selectedNode, setSelectedNode] = useState(null);
-  const [selectedOption, setSelectedOption] = useState(graphOptions[0]);
 
+  console.log('selectedOption', selectedOption);
   const graph = UndirectedGraph.from(data.graph[selectedOption]);
 
   // Return alert if graph empty
@@ -85,26 +84,12 @@ export default function Graph({ data }) {
 
   return (
     <Container fluid className="fr-my-3w">
-      {(graphOptions.length > 1) && (
-        <RadioGroup
-          isInline
-          label={selectedOption}
-        >
-          {graphOptions.map((option) => (
-            <Radio
-              label={option}
-              value={option}
-              defaultChecked={option === selectedOption}
-              onChange={(event) => setSelectedOption(event.target.value)}
-            />
-          ))}
-        </RadioGroup>
-      )}
       <Row gutters>
         <Col n="12">
           <SigmaContainer
-            style={{ height: '500px' }}
+            style={{ height: '400px' }}
             graph={selectedNode ? highlightGraph(graph, selectedNode) : graph}
+            settings={{ nodeProgramClasses: { border: NodeProgramBorder } }}
           >
             <GraphEvents
               onNodeClick={(event) => {
