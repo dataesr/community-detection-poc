@@ -11,7 +11,7 @@ import {
 // import { LayoutForceAtlas2Control } from '@react-sigma/layout-forceatlas2';
 import { UndirectedGraph } from 'graphology';
 import { useState, useEffect } from 'react';
-import NodeProgramBorder from 'sigma/rendering/webgl/programs/node';
+import NodeProgramBorder from '../styles/rendering/node.border';
 import NodePanel from './NodePanel';
 import ClustersPanel from './ClustersPanel';
 import { groupBy } from '../utils/graphUtils';

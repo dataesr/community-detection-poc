@@ -111,6 +111,7 @@ export function aggToGraphology(aggregation) {
     nodes.forEach((id) => graph.updateNode(id.split('###')[0], (attr) => ({
       label: id.split('###')[1],
       weight: (attr?.weight ?? 0) + count,
+      type: 'border'
     })));
 
     // Add edges and compute weight
