@@ -6,10 +6,10 @@ export const graphEncodeToJson = (data) => {
   data.nodes.forEach((node) => {
     items.push({
       id: node.key,
-      label: node.attributes?.name,
+      label: node.attributes?.label,
       cluster: (node.attributes?.community ?? 0) + 1,
-      weights: { Publications: node.attributes?.weight, Coauthors: node?.attributes?.degree },
-      scores: { 'Coauthors/publication ': (node.attributes?.degree ?? 0) / (node.attributes?.weight || 1) },
+      weights: { Weight: node.attributes?.weight, Degree: node.attributes?.degree },
+      scores: { 'Degree/weight': (node.attributes?.degree ?? 0) / (node.attributes?.weight || 1) },
     });
   });
 
