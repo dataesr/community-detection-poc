@@ -51,7 +51,7 @@ const exportJson = (jsonString) => {
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [formDatasource, setFormDatasource] = useState(searchParams.getAll('datasource')?.[0] || 'scanr');
+  const [formDatasource, setFormDatasource] = useState(searchParams.getAll('datasource')?.[0] || 'scanr-agg');
   const [formType, setFormType] = useState(searchParams.getAll('type')?.[0] || 'keyword');
   const [formQueries, setFormQueries] = useState(searchParams.getAll('queries') || []);
   const [formCondition, setFormCondition] = useState(searchParams.getAll('condition')[0] || 'OR');
@@ -59,6 +59,8 @@ export default function Home() {
   const [formEndYear, setFormEndYear] = useState(searchParams.getAll('endyear')[0] || 2023);
   const [formCountries, setFormCountries] = useState(searchParams.getAll('countries') || ['FR']);
   const [isError, setFormIsError] = useState(false);
+  const [displayGraph, setDisplayGraph] = useState(false);
+  const [selectedGraph, setSelectedGraph] = useState('main');
 
   useEffect(
     () => setSearchParams({
@@ -117,16 +119,16 @@ export default function Home() {
 
   const datasources = [
     {
+      label: 'scanR with aggregations',
+      value: 'scanr-agg',
+    },
+    {
       label: 'scanR',
       value: 'scanr',
     },
     {
       label: 'OpenAlex',
       value: 'openalex',
-    },
-    {
-      label: 'scanR with aggregations',
-      value: 'scanr-agg',
     },
   ];
 
@@ -145,9 +147,6 @@ export default function Home() {
     },
   ];
 
-  const graphOptions = Object.keys(data?.graph || { authors: 0 });
-  const [selectedOption, setSelectedOption] = useState(graphOptions[0]);
-
   const conditions = [
     {
       label: 'OR',
@@ -158,6 +157,13 @@ export default function Home() {
       value: 'AND',
     },
   ];
+
+  useEffect(() => {
+    if (data?.graph) {
+      setSelectedGraph(Object.keys(data.graph)[0]);
+      setDisplayGraph(true);
+    }
+  }, [data, setSelectedGraph, setDisplayGraph]);
 
   return (
     <Container className="fr-my-15w">
@@ -175,9 +181,11 @@ export default function Home() {
         selected={formDatasource}
         onChange={(e) => {
           setFormDatasource(e.target.value);
-          // setFormType('keyword');
-          // setFormQueries([]);
-          // setFormCondition('OR')
+          setSelectedGraph('main');
+          setDisplayGraph(false);
+          setFormType('keyword');
+          setFormQueries([]);
+          setFormCondition('OR');
         }}
       />
       {formDatasource !== 'scanr-agg' && (
@@ -295,39 +303,41 @@ export default function Home() {
           closable
         />
       )}
-      {!isFetching && data?.graph && (
+      {!isFetching && displayGraph && (
         <Container className="fr-mt-2w">
-          {(graphOptions.length > 1) && (
+          {(Object.keys(data.graph).length > 1) && (
             <RadioGroup
               isInline
-              label={selectedOption}
+              label={selectedGraph}
             >
-              {graphOptions.map((option) => (
+              {Object.keys(data.graph).map((option) => (
                 <Radio
                   label={option}
                   value={option}
-                  defaultChecked={option === selectedOption}
-                  onChange={(event) => setSelectedOption(event.target.value)}
+                  defaultChecked={option === Object.keys(data.graph)[0]}
+                  onChange={(event) => setSelectedGraph(event.target.value)}
                 />
               ))}
             </RadioGroup>
           )}
-          <Row gutters>
-            <Col>
-              <Graph data={data} selectedOption={selectedOption} />
-            </Col>
-            <Col>
-              <div key={selectedOption} style={{ height: '400px' }}>
-                <VOSviewerOnline
-                  data={graphEncodeToJson(data.graph[selectedOption])}
-                  parameters={{ attraction: 1, largest_component: false, simple_ui: true }}
-                />
-              </div>
-            </Col>
-          </Row>
+          {(selectedGraph in data.graph) && (
+            <Row gutters>
+              <Col>
+                <Graph data={data} selectedGraph={selectedGraph} />
+              </Col>
+              <Col>
+                <div key={selectedGraph} style={{ height: '400px' }}>
+                  <VOSviewerOnline
+                    data={graphEncodeToJson(data.graph[selectedGraph])}
+                    parameters={{ attraction: 1, largest_component: false, simple_ui: true }}
+                  />
+                </div>
+              </Col>
+            </Row>
+          )}
           <Button
             className="fr-btn fr-btn--tertiary fr-btn--icon-right fr-icon-download-line"
-            onClick={() => exportJson(graphEncodeToJson(data.graph.authors))}
+            onClick={() => exportJson(graphEncodeToJson(data.graph[selectedGraph]))}
           >
             Download graph
           </Button>

@@ -56,21 +56,21 @@ const highlightGraph = (graph, selectedNode) => {
   return graph;
 };
 
-export default function Graph({ data, selectedOption }) {
+export default function Graph({ data, selectedGraph }) {
   console.log('data', data);
   const { publications, structures } = data;
 
   const [selectedNode, setSelectedNode] = useState(null);
 
-  console.log('selectedOption', selectedOption);
-  const graph = UndirectedGraph.from(data.graph[selectedOption]);
+  console.log('selectedGraph', selectedGraph);
+  const graph = UndirectedGraph.from(data.graph[selectedGraph]);
 
   // Return alert if graph empty
   if (graph.order === 0) {
     return <Alert title="No results found" description="Your query returned no results" type="warning" closable />;
   }
 
-  const communities = groupBy(data.graph[selectedOption].nodes, ({ attributes }) => attributes.community);
+  const communities = groupBy(data.graph[selectedGraph].nodes, ({ attributes }) => attributes.community);
   // console.log('communities', communities);
 
   // Update nodes color
