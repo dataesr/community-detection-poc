@@ -317,7 +317,7 @@ export default function Home() {
               <Graph data={data} selectedOption={selectedOption} />
             </Col>
             <Col>
-              <div style={{ height: '400px' }}>
+              <div key={selectedOption} style={{ height: '400px' }}>
                 <VOSviewerOnline
                   data={graphEncodeToJson(data.graph[selectedOption])}
                   parameters={{ attraction: 1, largest_component: false, simple_ui: true }}
