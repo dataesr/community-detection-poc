@@ -26,6 +26,7 @@ router.route('/scanr-agg').get(async (req, res) => {
     graph: {
       authors: aggToGraphology(aggregations?.agg_authors?.buckets),
       institutions: aggToGraphology(aggregations?.agg_institutions?.buckets),
+      structures: aggToGraphology(aggregations?.agg_structures?.buckets),
       domains: aggToGraphology(aggregations?.agg_domains?.buckets),
     },
     publications: {},

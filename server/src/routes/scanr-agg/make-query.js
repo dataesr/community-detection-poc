@@ -40,6 +40,12 @@ export const makeQuery = (queries, condition, startyear, endyear, size = DEFAULT
         size,
       },
     },
+    agg_structures: {
+      terms: {
+        field: 'co_structures.keyword',
+        size,
+      },
+    },
     agg_domains: {
       terms: {
         field: 'co_domains.keyword',
