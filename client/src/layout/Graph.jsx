@@ -16,6 +16,7 @@ import NodePanel from './NodePanel';
 import ClustersPanel from './ClustersPanel';
 import { groupBy } from '../utils/graphUtils';
 import { DEFAULT_NODE_COLOR, COMMUNTIY_COLORS } from '../styles/colors';
+import iwanthue from 'iwanthue';
 
 function GraphEvents({ onNodeClick, onStageClick }) {
   const registerEvents = useRegisterEvents();
@@ -72,6 +73,16 @@ export default function Graph({ data, selectedGraph }) {
 
   const communities = groupBy(data.graph[selectedGraph].nodes, ({ attributes }) => attributes.community);
   // console.log('communities', communities);
+
+  // With some options
+  // const palette = iwanthue(Object.keys(communities).length, {
+  //   clustering: 'force-vector',
+  //   colorSpace: 'sensible',
+  //   seed: 42,
+  //   attempts: 5,
+  // });
+
+  // console.log('palette', palette);
 
   // Update nodes color
   graph.updateEachNodeAttributes(

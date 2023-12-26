@@ -14,6 +14,7 @@
     "graphology-components": "^1.5.4",
     "graphology-metrics": "^2.2.0",
     "hex-color-to-color-name": "^1.0.2",
+    "iwanthue": "^2.0.0",
     "logger": "^0.0.1",
     "recharts": "^2.9.0",
     "vosviewer-online": "^1.2.1"
