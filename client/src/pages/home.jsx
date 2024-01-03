@@ -203,7 +203,7 @@ export default function Home() {
       <Row gutters>
         <Col>
           <TagInput
-            label={`${formType.charAt(0).toUpperCase() + formType.slice(1) }s`}
+            label={`${formType.charAt(0).toUpperCase() + formType.slice(1)}s`}
             hint='Validate by pressing "Return" key'
             tags={formQueries}
             onTagsChange={(tags) => setFormQueries(tags)}
