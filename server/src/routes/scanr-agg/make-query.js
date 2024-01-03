@@ -33,11 +33,30 @@ export const makeQuery = (queries, condition, startyear, endyear, size = DEFAULT
         field: 'co_authors.keyword',
         size,
       },
+      aggs: {
+        agg_year: {
+          terms: {
+            field: 'year',
+          },
+        },
+        agg_domains: {
+          terms: {
+            field: 'co_domains.keyword',
+          },
+        },
+      },
     },
     agg_institutions: {
       terms: {
         field: 'co_institutions.keyword',
         size,
+      },
+      aggs: {
+        agg_year: {
+          terms: {
+            field: 'year',
+          },
+        },
       },
     },
     agg_structures: {
@@ -45,11 +64,25 @@ export const makeQuery = (queries, condition, startyear, endyear, size = DEFAULT
         field: 'co_structures.keyword',
         size,
       },
+      aggs: {
+        agg_year: {
+          terms: {
+            field: 'year',
+          },
+        },
+      },
     },
     agg_domains: {
       terms: {
         field: 'co_domains.keyword',
         size,
+      },
+      aggs: {
+        agg_year: {
+          terms: {
+            field: 'year',
+          },
+        },
       },
     },
   },

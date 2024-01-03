@@ -98,20 +98,36 @@ export function dataToGraphology(nodes, edges) {
   return graph;
 }
 
+const bucketToYears = (bucket) => bucket.reduce((acc, item) => ({ ...acc, [item.key]: item.doc_count }), {});
+const bucketToDomains = (bucket) => bucket.reduce((acc, item) => {
+  item.key.split('---').forEach((codomain) => {
+    const label = codomain.split('###')[1];
+    acc[label] = (acc[label]) ? acc[label] + item.doc_count : item.doc_count;
+  });
+  return acc;
+}, {});
+
 export function aggToGraphology(aggregation) {
   if (!aggregation) return {};
 
   // Create Graph object
   let graph = new graphology.UndirectedGraph();
 
-  aggregation.forEach(({ key, doc_count: count }) => {
+  aggregation.forEach((item) => {
+    const { key } = item;
+    const count = item.doc_count;
+    const bucketYears = item?.agg_year && ((item.agg_year.buckets.length) ? item.agg_year.buckets : undefined);
+    const bucketDomains = item?.agg_domains && ((item.agg_domains.buckets.length) ? item.agg_domains.buckets : undefined);
     const nodes = key.split('---');
 
     // Add nodes and compute weight
     nodes.forEach((id) => graph.updateNode(id.split('###')[0], (attr) => ({
       label: id.split('###')[1],
+      name: attr.label,
       weight: (attr?.weight ?? 0) + count,
-      type: 'border'
+      type: 'border',
+      ...(bucketYears) && { years: bucketToYears(bucketYears) },
+      ...(bucketDomains) && { domains: bucketToDomains(bucketDomains) },
     })));
 
     // Add edges and compute weight
