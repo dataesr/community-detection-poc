@@ -9,7 +9,7 @@ export const graphEncodeToJson = (data) => {
       label: node.attributes?.label,
       cluster: (node.attributes?.community ?? 0) + 1,
       weights: { Weight: node.attributes?.weight, Degree: node.attributes?.degree },
-      scores: { 'Degree/weight': (node.attributes?.degree ?? 0) / (node.attributes?.weight || 1) },
+      scores: { 'Last year': Math.max(Object.keys(node.attributes?.years ?? {})) ?? 0 },
     });
   });
 

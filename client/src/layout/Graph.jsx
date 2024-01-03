@@ -1,5 +1,5 @@
 import '@react-sigma/core/lib/react-sigma.min.css';
-import { Container, Col, Row, Alert, Radio, RadioGroup } from '@dataesr/react-dsfr';
+import { Container, Col, Row, Alert, Button } from '@dataesr/react-dsfr';
 import {
   ControlsContainer,
   FullScreenControl,
@@ -12,11 +12,11 @@ import {
 import { UndirectedGraph } from 'graphology';
 import { useState, useEffect } from 'react';
 import NodeProgramBorder from '../styles/rendering/node.border';
+import EdgeProgramCurve from '../styles/rendering/edge.curve';
 import NodePanel from './NodePanel';
 import ClustersPanel from './ClustersPanel';
 import { groupBy } from '../utils/graphUtils';
-import { DEFAULT_NODE_COLOR, COMMUNTIY_COLORS } from '../styles/colors';
-import iwanthue from 'iwanthue';
+import { DEFAULT_NODE_COLOR, getColormap, getPalette } from '../styles/colors';
 
 function GraphEvents({ onNodeClick, onStageClick }) {
   const registerEvents = useRegisterEvents();
@@ -42,8 +42,8 @@ const highlightGraph = (graph, selectedNode) => {
     (node, attr) => ({
       ...attr,
       highlighted: node === selectedNode.id,
-      label: node === selectedNode.id || graph.neighbors(selectedNode.id).includes(node) ? attr.label : '',
-      color: node === selectedNode.id || graph.neighbors(selectedNode.id).includes(node) ? attr.color : '#E2E2E2',
+      label: node === selectedNode.id || graph.neighbors(selectedNode.id).includes(node) ? attr.label : null,
+      color: node === selectedNode.id || graph.neighbors(selectedNode.id).includes(node) ? attr.color : DEFAULT_NODE_COLOR,
     }),
     { attributes: ['highlighted', 'color'] },
   );
@@ -62,6 +62,8 @@ export default function Graph({ data, selectedGraph }) {
   const { publications, structures } = data;
 
   const [selectedNode, setSelectedNode] = useState(null);
+  const [switchMode, enableSwitchMode] = useState(false);
+  console.log('switchMode', switchMode);
 
   console.log('selectedGraph', selectedGraph);
   const graph = UndirectedGraph.from(data.graph[selectedGraph]);
@@ -74,23 +76,15 @@ export default function Graph({ data, selectedGraph }) {
   const communities = groupBy(data.graph[selectedGraph].nodes, ({ attributes }) => attributes.community);
   // console.log('communities', communities);
 
-  // With some options
-  // const palette = iwanthue(Object.keys(communities).length, {
-  //   clustering: 'force-vector',
-  //   colorSpace: 'sensible',
-  //   seed: 42,
-  //   attempts: 5,
-  // });
-
-  // console.log('palette', palette);
-
   // Update nodes color
+  const palette = (switchMode) ? getColormap() : getPalette(Object.keys(communities).length);
   graph.updateEachNodeAttributes(
     (node, attr) => ({
       ...attr,
-      color: COMMUNTIY_COLORS?.[attr.community] || DEFAULT_NODE_COLOR,
+      color: ((switchMode) ? palette[palette.length - 1 + Math.max(Object.keys(attr?.years ?? {})) - 2023] : palette?.[attr.community]) || DEFAULT_NODE_COLOR,
+      communityColor: palette?.[attr.community] || DEFAULT_NODE_COLOR,
     }),
-    { attributes: ['color'] },
+    { attributes: ['color', 'communityColor'] },
   );
 
   return (
@@ -100,7 +94,8 @@ export default function Graph({ data, selectedGraph }) {
           <SigmaContainer
             style={{ height: '400px' }}
             graph={selectedNode ? highlightGraph(graph, selectedNode) : graph}
-            settings={{ nodeProgramClasses: { border: NodeProgramBorder } }}
+            settings={{ nodeProgramClasses: { border: NodeProgramBorder },
+              edgeProgramClasses: { curve: EdgeProgramCurve } }}
           >
             <GraphEvents
               onNodeClick={(event) => {
@@ -121,6 +116,18 @@ export default function Graph({ data, selectedGraph }) {
             </ControlsContainer>
             <ControlsContainer position="top-right">
               <SearchControl style={{ width: '200px' }} />
+            </ControlsContainer>
+            <ControlsContainer position="bottom-left">
+              <div style={{ fontSize: 12 }}>
+                &nbsp;
+                {`Items: ${graph.order} | Links: ${graph.size} | Clusters: ${Object.keys(communities).length}`}
+                &nbsp;
+              </div>
+            </ControlsContainer>
+            <ControlsContainer position="top-left">
+              <Button size="sm" icon={(switchMode) ? 'ri-palette-line' : 'ri-palette-fill'} hasBorder={false} onClick={() => enableSwitchMode(!switchMode)}>
+                Last year
+              </Button>
             </ControlsContainer>
           </SigmaContainer>
         </Col>

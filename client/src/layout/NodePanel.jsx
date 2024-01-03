@@ -2,7 +2,6 @@ import '@react-sigma/core/lib/react-sigma.min.css';
 import { Badge, BadgeGroup, Title, Accordion, AccordionItem, Container } from '@dataesr/react-dsfr';
 import { GetColorName } from 'hex-color-to-color-name';
 import { publicationsGetTopicsCount } from '../utils/publicationUtils';
-import { COMMUNTIY_COLORS } from '../styles/colors';
 
 export default function NodePanel({ selectedNode, graph, publications }) {
   if (!selectedNode || !graph.order) return null;
@@ -19,13 +18,13 @@ export default function NodePanel({ selectedNode, graph, publications }) {
             <Badge colorFamily="yellow-tournesol" text={`${selectedNode.id}`} />
             <Badge
               colorFamily="orange-terre-battue"
-              text={`Last publication: ${selectedNode?.years ?? Math.max(
+              text={`Last publication: ${Object.keys(selectedNode?.years || {}) ?? Math.max(
                 ...graph.getNodeAttribute(selectedNode.id, 'publications').map((publicationId) => publications[publicationId].year),
               )}`}
             />
             <Badge
               colorFamily="blue-cumulus"
-              text={`Community ${GetColorName(COMMUNTIY_COLORS[selectedNode.community])} (${selectedNode.community})`}
+              text={`Community ${GetColorName(selectedNode.communityColor)} (${selectedNode.community})`}
             />
           </BadgeGroup>
           <Accordion className="fr-mt-1w">
@@ -38,9 +37,9 @@ export default function NodePanel({ selectedNode, graph, publications }) {
               ))}
             </AccordionItem>
             {(selectedNode.domains && (
-              <AccordionItem title={`${selectedNode.domains.lenght} domains`}>
-                {Object.entries(selectedNode.domains).map(({ key, value }) => (
-                  <p>{`${key}: ${value}`}</p>
+              <AccordionItem title={`${Object.keys(selectedNode.domains).length} domains`}>
+                {Object.entries(selectedNode.domains).map((item) => (
+                  <p>{`${item[0]} (${item[1]})`}</p>
                 ))}
               </AccordionItem>
             ))}

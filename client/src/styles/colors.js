@@ -1,4 +1,7 @@
-export const DEFAULT_NODE_COLOR = '#7b7b7b';
+import iwanthue from 'iwanthue';
+import colormap from 'colormap';
+
+export const DEFAULT_NODE_COLOR = '#E2E2E2';
 export const COMMUNTIY_COLORS = [
   '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#bcbd22', '#17becf', '#66c2a5',
   '#fc8d62', '#8da0cb', '#e78ac3', '#a6d854', '#ffd92f', '#e5c494', '#aec7e8', '#ffbb78', '#98df8a', '#ff9896',
@@ -8,3 +11,18 @@ export const COMMUNTIY_COLORS = [
   '#a55194', '#ce6dbd', '#de9ed6', '#3182bd', '#6baed6', '#9ecae1', '#c6dbef', '#e6550d', '#fd8d3c', '#fdae6b',
   '#fdd0a2', '#31a354', '#74c476', '#a1d99b', '#c7e9c0', '#756bb1', '#9e9ac8', '#bcbddc', '#dadaeb',
 ];
+export const VIRIDIS_COLORS = ['#46327e', '#365c8d', '#277f8e', '#1fa187', '#4ac16d', '#a0da39'];
+
+export const getPalette = (size) => iwanthue(size, {
+  clustering: 'force-vector',
+  colorSpace: 'default',
+  quality: 100,
+  seed: 42,
+});
+
+export const getColormap = (size = 9) => colormap({
+  colormap: 'cool',
+  nshades: size,
+  format: 'hex',
+  alpha: 1,
+});
