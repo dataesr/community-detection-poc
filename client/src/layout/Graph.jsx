@@ -63,9 +63,7 @@ export default function Graph({ data, selectedGraph }) {
 
   const [selectedNode, setSelectedNode] = useState(null);
   const [switchMode, enableSwitchMode] = useState(false);
-  console.log('switchMode', switchMode);
 
-  console.log('selectedGraph', selectedGraph);
   const graph = UndirectedGraph.from(data.graph[selectedGraph]);
 
   // Return alert if graph empty

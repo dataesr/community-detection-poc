@@ -5,12 +5,11 @@ import { publicationsGetTopicsCount } from '../utils/publicationUtils';
 
 export default function NodePanel({ selectedNode, graph, publications }) {
   if (!selectedNode || !graph.order) return null;
-  console.log('selectedNode', selectedNode);
 
   return (
     <div className="fr-card fr-card--shadow">
       <div className="fr-my-2w fr-card__body">
-        <Title look="h6" as="p" className="fr-mb-1v">
+        <Title as="h6" className="fr-mb-1v">
           {selectedNode.name}
         </Title>
         <Container>
@@ -39,7 +38,7 @@ export default function NodePanel({ selectedNode, graph, publications }) {
             {(selectedNode.domains && (
               <AccordionItem title={`${Object.keys(selectedNode.domains).length} domains`}>
                 {Object.entries(selectedNode.domains).map((item) => (
-                  <p>{`${item[0]} (${item[1]})`}</p>
+                  <p key={item[0]}>{`${item[0]} (${item[1]})`}</p>
                 ))}
               </AccordionItem>
             ))}

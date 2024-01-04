@@ -8,17 +8,12 @@
     "server"
   ],
   "dependencies": {
-    "colormap": "^2.3.2",
     "concurrently": "^8.0.1",
     "d3": "^7.8.5",
     "graphology": "^0.25.1",
     "graphology-components": "^1.5.4",
     "graphology-metrics": "^2.2.0",
-    "hex-color-to-color-name": "^1.0.2",
-    "iwanthue": "^2.0.0",
-    "logger": "^0.0.1",
-    "recharts": "^2.9.0",
-    "vosviewer-online": "^1.2.1"
+    "logger": "^0.0.1"
   },
   "scripts": {
     "build": "rm -rf server/dist && npm -w client run build -- --mode ${npm_config_mode} --emptyOutDir --outDir ../server/dist",
