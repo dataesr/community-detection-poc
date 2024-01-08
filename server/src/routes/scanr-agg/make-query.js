@@ -29,60 +29,32 @@ export const makeQuery = (queries, condition, startyear, endyear, size = DEFAULT
   },
   aggs: {
     agg_authors: {
-      terms: {
-        field: 'co_authors.keyword',
-        size,
-      },
+      terms: { field: 'co_authors.keyword', size },
       aggs: {
-        agg_year: {
-          terms: {
-            field: 'year',
-          },
-        },
-        agg_domains: {
-          terms: {
-            field: 'co_domains.keyword',
-          },
-        },
+        agg_year: { terms: { field: 'year' } },
+        max_year: { max: { field: 'year' } },
+        agg_domains: { terms: { field: 'co_domains.keyword' } },
       },
     },
     agg_institutions: {
-      terms: {
-        field: 'co_institutions.keyword',
-        size,
-      },
+      terms: { field: 'co_institutions.keyword', size },
       aggs: {
-        agg_year: {
-          terms: {
-            field: 'year',
-          },
-        },
+        agg_year: { terms: { field: 'year' } },
+        max_year: { max: { field: 'year' } },
       },
     },
     agg_structures: {
-      terms: {
-        field: 'co_structures.keyword',
-        size,
-      },
+      terms: { field: 'co_structures.keyword', size },
       aggs: {
-        agg_year: {
-          terms: {
-            field: 'year',
-          },
-        },
+        agg_year: { terms: { field: 'year' } },
+        max_year: { max: { field: 'year' } },
       },
     },
     agg_domains: {
-      terms: {
-        field: 'co_domains.keyword',
-        size,
-      },
+      terms: { field: 'co_domains.keyword', size },
       aggs: {
-        agg_year: {
-          terms: {
-            field: 'year',
-          },
-        },
+        agg_year: { terms: { field: 'year' } },
+        max_year: { max: { field: 'year' } },
       },
     },
   },

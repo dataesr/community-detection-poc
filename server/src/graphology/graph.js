@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import graphology from 'graphology';
 import random from 'graphology-layout/random';
 import forceAtlas2 from 'graphology-layout-forceatlas2';
@@ -106,6 +107,7 @@ const bucketToDomains = (bucket) => bucket.reduce((acc, item) => {
   });
   return acc;
 }, {});
+const objectMerge = (obj1, obj2) => Object.entries(obj2).reduce((acc, [key, value]) => ({ ...acc, [key]: (acc[key] || 0) + value }), { ...obj1 });
 
 export function aggToGraphology(aggregation) {
   if (!aggregation) return {};
@@ -114,8 +116,8 @@ export function aggToGraphology(aggregation) {
   let graph = new graphology.UndirectedGraph();
 
   aggregation.forEach((item) => {
-    const { key } = item;
-    const count = item.doc_count;
+    const { key, doc_count: count } = item;
+    const maxYear = item?.max_year && item.max_year?.value;
     const bucketYears = item?.agg_year && ((item.agg_year.buckets.length) ? item.agg_year.buckets : undefined);
     const bucketDomains = item?.agg_domains && ((item.agg_domains.buckets.length) ? item.agg_domains.buckets : undefined);
     const nodes = key.split('---');
@@ -126,8 +128,9 @@ export function aggToGraphology(aggregation) {
       name: attr.label,
       weight: (attr?.weight ?? 0) + count,
       type: 'border',
-      ...(bucketYears) && { years: bucketToYears(bucketYears) },
-      ...(bucketDomains) && { domains: bucketToDomains(bucketDomains) },
+      ...(maxYear) && { maxYear: (attr?.maxYear) ? Math.max(attr.maxYear, maxYear) : maxYear },
+      ...(bucketYears) && { years: (attr?.years) ? objectMerge(attr.years, bucketToYears(bucketYears)) : bucketToYears(bucketYears) },
+      ...(bucketDomains) && { domains: (attr?.domains) ? objectMerge(attr.domains, bucketToDomains(bucketDomains)) : bucketToDomains(bucketDomains) },
     })));
 
     // Add edges and compute weight

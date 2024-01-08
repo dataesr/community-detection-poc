@@ -11,12 +11,22 @@ import {
 // import { LayoutForceAtlas2Control } from '@react-sigma/layout-forceatlas2';
 import { UndirectedGraph } from 'graphology';
 import { useState, useEffect } from 'react';
+import { VOSviewerOnline } from 'vosviewer-online';
 import NodeProgramBorder from '../styles/rendering/node.border';
 import EdgeProgramCurve from '../styles/rendering/edge.curve';
 import NodePanel from './NodePanel';
 import ClustersPanel from './ClustersPanel';
-import { groupBy } from '../utils/graphUtils';
+import AggClustersPanel from './AggClustersPanel';
+import { groupBy } from '../utils/utils';
+import { graphEncodeToJson } from '../utils/graphUtils';
 import { DEFAULT_NODE_COLOR, getColormap, getPalette } from '../styles/colors';
+
+const exportJson = (jsonString) => {
+  const link = document.createElement('a');
+  link.href = jsonString;
+  link.download = 'graph.json';
+  link.click();
+};
 
 function GraphEvents({ onNodeClick, onStageClick }) {
   const registerEvents = useRegisterEvents();
@@ -72,68 +82,91 @@ export default function Graph({ data, selectedGraph }) {
   }
 
   const communities = groupBy(data.graph[selectedGraph].nodes, ({ attributes }) => attributes.community);
-  // console.log('communities', communities);
+  console.log('communities', communities);
 
   // Update nodes color
-  const palette = (switchMode) ? getColormap() : getPalette(Object.keys(communities).length);
+  const palette = getPalette(Object.keys(communities).length);
+  const colormap = getColormap();
   graph.updateEachNodeAttributes(
     (node, attr) => ({
       ...attr,
-      color: ((switchMode) ? palette[palette.length - 1 + Math.max(Object.keys(attr?.years ?? {})) - 2023] : palette?.[attr.community]) || DEFAULT_NODE_COLOR,
+      color: ((switchMode) ? colormap[colormap.length - 1 + (attr?.maxYear || 0) - 2023] : palette?.[attr.community]) || DEFAULT_NODE_COLOR,
       communityColor: palette?.[attr.community] || DEFAULT_NODE_COLOR,
     }),
     { attributes: ['color', 'communityColor'] },
   );
 
   return (
-    <Container fluid className="fr-my-3w">
+    <Container>
       <Row gutters>
-        <Col n="12">
-          <SigmaContainer
-            style={{ height: '400px' }}
-            graph={selectedNode ? highlightGraph(graph, selectedNode) : graph}
-            settings={{ nodeProgramClasses: { border: NodeProgramBorder },
-              edgeProgramClasses: { curve: EdgeProgramCurve } }}
-          >
-            <GraphEvents
-              onNodeClick={(event) => {
-                setSelectedNode({
-                  id: event.node,
-                  degree: graph.degree(event.node),
-                  ...graph.getNodeAttributes(event.node),
-                });
-              }}
-              onStageClick={() => {
-                setSelectedNode(null);
-              }}
-            />
-            <ControlsContainer position="bottom-right">
-              <ZoomControl />
-              <FullScreenControl />
-              {/* <LayoutForceAtlas2Control settings={{ settings: { slowDown: 10 } }} /> */}
-            </ControlsContainer>
-            <ControlsContainer position="top-right">
-              <SearchControl style={{ width: '200px' }} />
-            </ControlsContainer>
-            <ControlsContainer position="bottom-left">
-              <div style={{ fontSize: 12 }}>
-                &nbsp;
-                {`Items: ${graph.order} | Links: ${graph.size} | Clusters: ${Object.keys(communities).length}`}
-                &nbsp;
-              </div>
-            </ControlsContainer>
-            <ControlsContainer position="top-left">
-              <Button size="sm" icon={(switchMode) ? 'ri-palette-line' : 'ri-palette-fill'} hasBorder={false} onClick={() => enableSwitchMode(!switchMode)}>
-                Last year
-              </Button>
-            </ControlsContainer>
-          </SigmaContainer>
+        <Col>
+          <Container fluid className="fr-my-3w">
+            <Row gutters>
+              <Col n="12">
+                <SigmaContainer
+                  style={{ height: '400px' }}
+                  graph={selectedNode ? highlightGraph(graph, selectedNode) : graph}
+                  settings={{ nodeProgramClasses: { border: NodeProgramBorder },
+                    edgeProgramClasses: { curve: EdgeProgramCurve } }}
+                >
+                  <GraphEvents
+                    onNodeClick={(event) => {
+                      setSelectedNode({
+                        id: event.node,
+                        degree: graph.degree(event.node),
+                        ...graph.getNodeAttributes(event.node),
+                      });
+                    }}
+                    onStageClick={() => {
+                      setSelectedNode(null);
+                    }}
+                  />
+                  <ControlsContainer position="bottom-right">
+                    <ZoomControl />
+                    <FullScreenControl />
+                    {/* <LayoutForceAtlas2Control settings={{ settings: { slowDown: 10 } }} /> */}
+                  </ControlsContainer>
+                  <ControlsContainer position="top-right">
+                    <SearchControl style={{ width: '200px' }} />
+                  </ControlsContainer>
+                  <ControlsContainer position="bottom-left">
+                    <div style={{ fontSize: 12 }}>
+                    &nbsp;
+                      {`Items: ${graph.order} | Links: ${graph.size} | Clusters: ${Object.keys(communities).length}`}
+                    &nbsp;
+                    </div>
+                  </ControlsContainer>
+                  <ControlsContainer position="top-left">
+                    <Button size="sm" icon={(switchMode) ? 'ri-palette-line' : 'ri-palette-fill'} hasBorder={false} onClick={() => enableSwitchMode(!switchMode)}>
+                      Last activity
+                    </Button>
+                  </ControlsContainer>
+                </SigmaContainer>
+              </Col>
+              <Col n="12">
+                <NodePanel selectedNode={selectedNode} graph={graph} publications={publications} />
+              </Col>
+            </Row>
+          </Container>
         </Col>
-        <Col n="12">
-          <NodePanel selectedNode={selectedNode} graph={graph} publications={publications} />
+        <Col>
+          <div key={selectedGraph} style={{ height: '400px' }}>
+            <VOSviewerOnline
+              data={graphEncodeToJson(data.graph[selectedGraph])}
+              parameters={{ attraction: 1, largest_component: false, simple_ui: true }}
+            />
+          </div>
         </Col>
       </Row>
-      <ClustersPanel graph={graph} communities={communities} publications={publications} structures={structures} />
+      {(Object.keys(publications).length > 0)
+        ? <ClustersPanel graph={graph} communities={communities} publications={publications} structures={structures} />
+        : <AggClustersPanel graph={graph} communities={communities} />}
+      <Button
+        className="fr-btn fr-btn--tertiary fr-btn--icon-right fr-icon-download-line"
+        onClick={() => exportJson(graphEncodeToJson(data.graph[selectedGraph]))}
+      >
+        Download graph
+      </Button>
     </Container>
   );
 }

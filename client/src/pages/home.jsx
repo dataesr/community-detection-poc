@@ -20,13 +20,10 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { VOSviewerOnline } from 'vosviewer-online';
 import { PageSpinner } from '../components/spinner';
 
 import Graph from '../layout/Graph';
 import TagInput from '../layout/TagInput';
-
-import { graphEncodeToJson } from '../utils/graphUtils';
 
 async function getData({ datasource, type, queries, condition, startyear, endyear, countries }) {
   return fetch(
@@ -41,13 +38,6 @@ async function alexGetCountries() {
     (response) => (response.ok ? response.json() : 'Oops... The request to the OpenAlex API failed'),
   );
 }
-
-const exportJson = (jsonString) => {
-  const link = document.createElement('a');
-  link.href = jsonString;
-  link.download = 'graph.json';
-  link.click();
-};
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -321,26 +311,8 @@ export default function Home() {
             </RadioGroup>
           )}
           {(selectedGraph in data.graph) && (
-            <Row gutters>
-              <Col>
-                <Graph data={data} selectedGraph={selectedGraph} />
-              </Col>
-              <Col>
-                <div key={selectedGraph} style={{ height: '400px' }}>
-                  <VOSviewerOnline
-                    data={graphEncodeToJson(data.graph[selectedGraph])}
-                    parameters={{ attraction: 1, largest_component: false, simple_ui: true }}
-                  />
-                </div>
-              </Col>
-            </Row>
+            <Graph data={data} selectedGraph={selectedGraph} />
           )}
-          <Button
-            className="fr-btn fr-btn--tertiary fr-btn--icon-right fr-icon-download-line"
-            onClick={() => exportJson(graphEncodeToJson(data.graph[selectedGraph]))}
-          >
-            Download graph
-          </Button>
         </Container>
       )}
     </Container>

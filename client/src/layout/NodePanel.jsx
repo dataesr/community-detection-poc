@@ -17,7 +17,7 @@ export default function NodePanel({ selectedNode, graph, publications }) {
             <Badge colorFamily="yellow-tournesol" text={`${selectedNode.id}`} />
             <Badge
               colorFamily="orange-terre-battue"
-              text={`Last publication: ${Object.keys(selectedNode?.years || {}) ?? Math.max(
+              text={`Last publication: ${selectedNode?.maxYear ?? Math.max(
                 ...graph.getNodeAttribute(selectedNode.id, 'publications').map((publicationId) => publications[publicationId].year),
               )}`}
             />
